@@ -33,7 +33,7 @@ Use the dual-list selector to choose which packets to log:
 Logs are saved to:
 
 ```
-.minecraft/config/package-logger/packets_2026-01-04_15-30-45_servername.log
+MINECRAFT_FOLDER/config/package-logger/packets_2026-01-04_15-30-45_servername.log
 ```
 
 A new log file is created when:
