@@ -72,7 +72,9 @@ Config saved at: `.minecraft/config/packet-logger-config.json`
 
 - Minecraft 1.21 - 1.21.11
 - Fabric Loader 0.16.0+
-- Fabric API <br> <a href="https://modrinth.com/mod/fabric-api"><img src="https://cdn.modrinth.com/data/cached_images/cf4bfd9c2896b8f63cd7db479ceccc0578610b21.webp" width="200" alt="Fabric API on Modrinth"></a>
+- Fabric API 
+
+<br> <a href="https://modrinth.com/mod/fabric-api"><img src="https://cdn.modrinth.com/data/cached_images/cf4bfd9c2896b8f63cd7db479ceccc0578610b21.webp" width="200" alt="Fabric API on Modrinth"></a>
 
 ### Download
 
