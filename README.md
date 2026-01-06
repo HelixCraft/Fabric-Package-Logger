@@ -4,7 +4,14 @@
 [![Java 21](https://img.shields.io/badge/Language-Java%2021-orange)](https://www.oracle.com/java/technologies/downloads/#java21)
 [![Modrinth](https://img.shields.io/badge/Modrinth-Packet--Logger-00AF5C?logo=modrinth)](https://modrinth.com/mod/packet-logger)
 
-
+<p align="left">
+  <a href="https://modrinth.com/mod/fabric-packet-logger">
+    <img src="https://github.com/user-attachments/assets/6bc92930-84f9-4eb1-ae1d-8f79775b87c6" width="200" alt="Download on Modrinth">
+  </a>
+  <a href="https://modrinth.com/mod/fabric-api">
+    <img src="https://cdn.modrinth.com/data/cached_images/cf4bfd9c2896b8f63cd7db479ceccc0578610b21.webp" width="200" alt="Fabric API on Modrinth">
+  </a>
+</p>
 A deep packet logging mod for Minecraft Fabric that captures all network traffic (´S2C´ and ´C2S´) with full NBT/Component data.
 
 ## Use Cases
