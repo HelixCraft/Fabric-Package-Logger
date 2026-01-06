@@ -137,13 +137,13 @@ public class PacketLogger {
     private static void logPacket(Packet<?> packet, boolean incoming) {
         ModConfig config = ModConfig.getInstance();
 
-        if (config.logPackages && !wasLoggingEnabled && config.logMode == ModConfig.LogMode.FILE) {
+        if (config.logPackets && !wasLoggingEnabled && config.logMode == ModConfig.LogMode.FILE) {
             currentSessionId = null;
             currentLogFile = null;
         }
-        wasLoggingEnabled = config.logPackages;
+        wasLoggingEnabled = config.logPackets;
 
-        if (!config.logPackages)
+        if (!config.logPackets)
             return;
 
         String simpleName = getDeobfuscatedName(packet);
@@ -180,9 +180,9 @@ public class PacketLogger {
     }
 
     private static boolean shouldLogS2C(String simpleName, ModConfig config) {
-        if (config.selectedS2CPackages.isEmpty())
+        if (config.selectedS2CPackets.isEmpty())
             return false;
-        for (String selected : config.selectedS2CPackages) {
+        for (String selected : config.selectedS2CPackets) {
             if (simpleName.equals(selected) || simpleName.endsWith(selected))
                 return true;
         }
@@ -190,9 +190,9 @@ public class PacketLogger {
     }
 
     private static boolean shouldLogC2S(String simpleName, ModConfig config) {
-        if (config.selectedC2SPackages.isEmpty())
+        if (config.selectedC2SPackets.isEmpty())
             return false;
-        for (String selected : config.selectedC2SPackages) {
+        for (String selected : config.selectedC2SPackets) {
             if (simpleName.equals(selected) || simpleName.endsWith(selected))
                 return true;
         }

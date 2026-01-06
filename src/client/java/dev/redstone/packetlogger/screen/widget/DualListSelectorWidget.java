@@ -32,8 +32,8 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private final String title;
 
     private final TextFieldWidget searchField;
-    private final List<String> allPackages;
-    private final Set<String> selectedPackages;
+    private final List<String> allPackets;
+    private final Set<String> selectedPackets;
     private final Consumer<Set<String>> onSelectionChanged;
 
     private List<String> filteredAvailable;
@@ -52,7 +52,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private static final int SEARCH_FIELD_HEIGHT = 20;
 
     public DualListSelectorWidget(int x, int y, int width, int height, String title,
-            List<String> packages, Set<String> initialSelection,
+            List<String> packets, Set<String> initialSelection,
             Consumer<Set<String>> onSelectionChanged) {
         this.x = x;
         this.y = y;
@@ -60,8 +60,8 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         this.height = height;
         this.title = title;
         this.textRenderer = MinecraftClient.getInstance().textRenderer;
-        this.allPackages = new ArrayList<>(packages);
-        this.selectedPackages = new HashSet<>(initialSelection);
+        this.allPackets = new ArrayList<>(packets);
+        this.selectedPackets = new HashSet<>(initialSelection);
         this.onSelectionChanged = onSelectionChanged;
 
         // Suchfeld - Position unter dem Titel
@@ -72,7 +72,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
                 width - PADDING * 2,
                 SEARCH_FIELD_HEIGHT,
                 Text.literal("Search"));
-        this.searchField.setPlaceholder(Text.literal("Search packages..."));
+        this.searchField.setPlaceholder(Text.literal("Search packets..."));
         this.searchField.setChangedListener(this::onSearchChanged);
         this.searchField.setDrawsBackground(true);
         this.searchField.setEditable(true);
@@ -115,13 +115,13 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         filteredAvailable = new ArrayList<>();
         filteredSelected = new ArrayList<>();
 
-        for (String pkg : allPackages) {
-            boolean matchesQuery = query.isEmpty() || pkg.toLowerCase().contains(query);
+        for (String pkt : allPackets) {
+            boolean matchesQuery = query.isEmpty() || pkt.toLowerCase().contains(query);
             if (matchesQuery) {
-                if (selectedPackages.contains(pkg)) {
-                    filteredSelected.add(pkg);
+                if (selectedPackets.contains(pkt)) {
+                    filteredSelected.add(pkt);
                 } else {
-                    filteredAvailable.add(pkg);
+                    filteredAvailable.add(pkt);
                 }
             }
         }
@@ -153,7 +153,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         // === RECHTE LISTE (Ausgewählt) ===
         int rightX = x + listWidth + GAP / 2;
         renderListPanel(context, rightX, listY, listWidth - PADDING, listHeight,
-                "Selected (" + selectedPackages.size() + ")", filteredSelected, rightScrollOffset,
+                "Selected (" + selectedPackets.size() + ")", filteredSelected, rightScrollOffset,
                 mouseX, mouseY, false, visibleItems);
 
         // Hover-Index aktualisieren
@@ -174,7 +174,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         int itemY = py + 2;
         for (int i = 0; i < visibleItems && (i + scrollOffset) < items.size(); i++) {
             int index = i + scrollOffset;
-            String pkg = items.get(index);
+            String pkt = items.get(index);
             int currentItemY = itemY + (i * itemHeight);
 
             boolean isHovered = (isLeft ? hoveredLeftIndex : hoveredRightIndex) == index;
@@ -192,7 +192,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             context.drawText(textRenderer, icon, px + 4, currentItemY + textYOffset, iconColor, false);
 
             // Package Name (gekürzt) - zentriert vertikal
-            String displayText = getShortPackageName(pkg, pw - 18);
+            String displayText = getShortPacketName(pkt, pw - 18);
             context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xFFDDDDDD, false);
         }
 
@@ -207,12 +207,12 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         }
     }
 
-    private String getShortPackageName(String pkg, int maxWidth) {
-        if (textRenderer.getWidth(pkg) <= maxWidth) {
-            return pkg;
+    private String getShortPacketName(String pkt, int maxWidth) {
+        if (textRenderer.getWidth(pkt) <= maxWidth) {
+            return pkt;
         }
         // Zeige nur den letzten Teil des Paketnamens
-        String[] parts = pkg.split("\\.");
+        String[] parts = pkt.split("\\.");
         StringBuilder result = new StringBuilder();
         for (int i = parts.length - 1; i >= 0; i--) {
             String test = (i < parts.length - 1 ? "..." : "") +
@@ -223,7 +223,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
                 break;
             }
         }
-        return result.length() > 0 ? result.toString() : textRenderer.trimToWidth(pkg, maxWidth - 10) + "...";
+        return result.length() > 0 ? result.toString() : textRenderer.trimToWidth(pkt, maxWidth - 10) + "...";
     }
 
     private void updateHoverIndices(int mouseX, int mouseY, int leftX, int rightX,
@@ -288,25 +288,25 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             int itemIndex = relativeY / itemHeight;
 
             if (itemIndex >= 0 && itemIndex < visibleItems) {
-                // Check left list (available packages)
+                // Check left list (available packets)
                 if (mouseX >= leftX && mouseX < leftX + actualListWidth) {
                     int actualIndex = itemIndex + leftScrollOffset;
                     if (actualIndex >= 0 && actualIndex < filteredAvailable.size()) {
-                        String pkg = filteredAvailable.get(actualIndex);
-                        selectedPackages.add(pkg);
+                        String pkt = filteredAvailable.get(actualIndex);
+                        selectedPackets.add(pkt);
                         updateFilteredLists();
-                        onSelectionChanged.accept(selectedPackages);
+                        onSelectionChanged.accept(selectedPackets);
                         return true;
                     }
                 }
-                // Check right list (selected packages)
+                // Check right list (selected packets)
                 else if (mouseX >= rightX && mouseX < rightX + actualListWidth) {
                     int actualIndex = itemIndex + rightScrollOffset;
                     if (actualIndex >= 0 && actualIndex < filteredSelected.size()) {
-                        String pkg = filteredSelected.get(actualIndex);
-                        selectedPackages.remove(pkg);
+                        String pkt = filteredSelected.get(actualIndex);
+                        selectedPackets.remove(pkt);
                         updateFilteredLists();
-                        onSelectionChanged.accept(selectedPackages);
+                        onSelectionChanged.accept(selectedPackets);
                         return true;
                     }
                 }
@@ -355,7 +355,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     }
 
     public Set<String> getSelectedPackages() {
-        return new HashSet<>(selectedPackages);
+        return new HashSet<>(selectedPackets);
     }
 
     @Override

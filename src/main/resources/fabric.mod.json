@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "id": "packet-logger",
   "version": "${version}",
-  "name": "Package Logger",
+  "name": "Packet Logger",
   "description": "Deep Packet Logger for Minecraft - logs all network packets with full NBT/Component data",
   "authors": [
     "HelixCraft"
   ],
   "contact": {
-    "homepage": "https://github.com/HelixCraft/Fabric-Package-Logger",
-    "sources": "https://github.com/HelixCraft/Fabric-Package-Logger"
+    "homepage": "https://github.com/HelixCraft/Fabric-Packet-Logger",
+    "sources": "https://github.com/HelixCraft/Fabric-Packet-Logger"
   },
   "license": "MIT",
   "icon": "assets/packet-logger/icon.png",

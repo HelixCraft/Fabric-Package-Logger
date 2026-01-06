@@ -1,10 +1,10 @@
-# Package Logger
+# Packet Logger
 
 Ein Minecraft Fabric Mod zum Loggen von Netzwerk-Paketen zwischen Client und Server.
 
 ## Funktionsweise
 
-Der Package Logger intercepted **alle** Netzwerk-Pakete über `ClientConnection`:
+Der Packet Logger intercepted **alle** Netzwerk-Pakete über `ClientConnection`:
 
 ### Eingehende Pakete (S2C - Server to Client)
 
@@ -34,7 +34,7 @@ Pakete werden direkt im Minecraft-Chat angezeigt mit Farbcodierung:
 
 Pakete werden in eine Datei geschrieben:
 
-- **Speicherort**: `MINECRAFT/config/packet-logger/packages-YYYY-MM-DD.txt`
+- **Speicherort**: `MINECRAFT/config/packet-logger/packets-YYYY-MM-DD.txt`
 - Neue Datei pro Tag
 - Format: `[HH:mm:ss] [Incoming/Outgoing] PacketName {data}`
 
@@ -65,10 +65,10 @@ Die geloggten Daten enthalten **alle Felder** des Pakets via Reflection:
 [18:44:01] [Outgoing] ClickSlotC2SPacket {syncId=1, slot=5, button=0}
 ```
 
-### File (config/packet-logger/packages-2026-01-04.txt):
+### File (config/packet-logger/packets-2026-01-04.txt):
 
 ```
-=== Package Logger - 2026-01-04 ===
+=== Packet Logger - 2026-01-04 ===
 Format: [TIME] [DIRECTION] PacketName {data}
 =========================================
 
@@ -82,13 +82,13 @@ Gespeichert unter: `MINECRAFT/config/packet-logger-config.json`
 
 ```json
 {
-  "logPackages": true,
+  "logPackets": true,
   "logMode": "CHAT",
-  "selectedS2CPackages": [
+  "selectedS2CPackets": [
     "InventoryS2CPacket",
     "ScreenHandlerSlotUpdateS2CPacket"
   ],
-  "selectedC2SPackages": ["ClickSlotC2SPacket"]
+  "selectedC2SPackets": ["ClickSlotC2SPacket"]
 }
 ```
 
