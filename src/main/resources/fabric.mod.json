@@ -4,7 +4,9 @@
   "version": "${version}",
   "name": "Package Logger",
   "description": "Deep Packet Logger for Minecraft - logs all network packets with full NBT/Component data",
-  "authors": ["HelixCraft"],
+  "authors": [
+    "HelixCraft"
+  ],
   "contact": {
     "homepage": "https://github.com/HelixCraft/Fabric-Package-Logger",
     "sources": "https://github.com/HelixCraft/Fabric-Package-Logger"
@@ -13,8 +15,12 @@
   "icon": "assets/package-logger/icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": ["dev.redstone.packagelogger.PackageLogger"],
-    "client": ["dev.redstone.packagelogger.PackageLoggerClient"]
+    "main": [
+      "dev.redstone.packagelogger.PackageLogger"
+    ],
+    "client": [
+      "dev.redstone.packagelogger.PackageLoggerClient"
+    ]
   },
   "mixins": [
     "package-logger.mixins.json",
@@ -25,7 +31,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.16.0",
-    "minecraft": "~1.21.4",
+    "minecraft": ">=1.21 <=1.21.5",
     "java": ">=21",
     "fabric-api": "*"
   }
