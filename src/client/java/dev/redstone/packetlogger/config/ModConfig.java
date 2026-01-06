@@ -22,12 +22,12 @@ public class ModConfig {
     
     private static ModConfig INSTANCE;
     
-    // Package Logger Settings
-    public boolean logPackages = true;
+    // Packet Logger Settings
+    public boolean logPackets = true;
     public LogMode logMode = LogMode.CHAT;
     public boolean deepLogging = true; // Detailliertes Logging mit NBT-Daten
-    public List<String> selectedS2CPackages = new ArrayList<>();
-    public List<String> selectedC2SPackages = new ArrayList<>();
+    public List<String> selectedS2CPackets = new ArrayList<>();
+    public List<String> selectedC2SPackets = new ArrayList<>();
     
     public enum LogMode {
         CHAT("Chat"),
@@ -57,11 +57,11 @@ public class ModConfig {
                 try {
                     String json = Files.readString(CONFIG_PATH);
                     INSTANCE = GSON.fromJson(json, ModConfig.class);
-                    if (INSTANCE.selectedS2CPackages == null) {
-                        INSTANCE.selectedS2CPackages = new ArrayList<>();
+                    if (INSTANCE.selectedS2CPackets == null) {
+                        INSTANCE.selectedS2CPackets = new ArrayList<>();
                     }
-                    if (INSTANCE.selectedC2SPackages == null) {
-                        INSTANCE.selectedC2SPackages = new ArrayList<>();
+                    if (INSTANCE.selectedC2SPackets == null) {
+                        INSTANCE.selectedC2SPackets = new ArrayList<>();
                     }
                 } catch (IOException e) {
                     System.err.println("Fehler beim Laden der Config: " + e.getMessage());

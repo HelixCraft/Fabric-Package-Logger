@@ -18,12 +18,12 @@ public class SimpleConfigScreen extends Screen {
     private final ModConfig config;
 
     // Widgets
-    private ButtonWidget logPackagesButton;
+    private ButtonWidget logPacketsButton;
     private ButtonWidget logModeButton;
     private DualListSelectorWidget s2cSelector;
     private DualListSelectorWidget c2sSelector;
 
-    private boolean logPackagesEnabled;
+    private boolean logPacketsEnabled;
     private LogMode currentLogMode;
 
     // Vollständige Liste S2C Pakete (Server to Client)
@@ -190,10 +190,10 @@ public class SimpleConfigScreen extends Screen {
             "VehicleMoveC2SPacket");
 
     public SimpleConfigScreen(Screen parent) {
-        super(Text.literal("Package Logger"));
+        super(Text.literal("Packet Logger"));
         this.parent = parent;
         this.config = ModConfig.getInstance();
-        this.logPackagesEnabled = config.logPackages;
+        this.logPacketsEnabled = config.logPackets;
         this.currentLogMode = config.logMode;
     }
 
@@ -209,15 +209,15 @@ public class SimpleConfigScreen extends Screen {
         int y = panelY + 5;
 
         // Log Packages Toggle Button
-        this.logPackagesButton = ButtonWidget.builder(
-                Text.literal("Logging: " + (logPackagesEnabled ? "§aON" : "§cOFF")),
+        this.logPacketsButton = ButtonWidget.builder(
+                Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
                 button -> {
-                    logPackagesEnabled = !logPackagesEnabled;
-                    button.setMessage(Text.literal("Logging: " + (logPackagesEnabled ? "§aON" : "§cOFF")));
+                    logPacketsEnabled = !logPacketsEnabled;
+                    button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
                 })
                 .dimensions(panelX, y, buttonWidth, 20)
                 .build();
-        this.addDrawableChild(logPackagesButton);
+        this.addDrawableChild(logPacketsButton);
 
         // Log Mode Toggle Button
         this.logModeButton = ButtonWidget.builder(
@@ -239,7 +239,7 @@ public class SimpleConfigScreen extends Screen {
                 panelX, y, panelWidth, selectorHeight,
                 "S2C Packets (Server → Client)",
                 S2C_PACKAGES,
-                new HashSet<>(config.selectedS2CPackages),
+                new HashSet<>(config.selectedS2CPackets),
                 selection -> {
                 });
         this.addDrawableChild(s2cSelector);
@@ -251,7 +251,7 @@ public class SimpleConfigScreen extends Screen {
                 panelX, y, panelWidth, selectorHeight,
                 "C2S Packets (Client → Server)",
                 C2S_PACKAGES,
-                new HashSet<>(config.selectedC2SPackages),
+                new HashSet<>(config.selectedC2SPackets),
                 selection -> {
                 });
         this.addDrawableChild(c2sSelector);
@@ -293,10 +293,10 @@ public class SimpleConfigScreen extends Screen {
     }
 
     private void saveAndClose() {
-        config.logPackages = logPackagesEnabled;
+        config.logPackets = logPacketsEnabled;
         config.logMode = currentLogMode;
-        config.selectedS2CPackages = new ArrayList<>(s2cSelector.getSelectedPackages());
-        config.selectedC2SPackages = new ArrayList<>(c2sSelector.getSelectedPackages());
+        config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackages());
+        config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackages());
         config.save();
         this.close();
     }

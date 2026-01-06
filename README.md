@@ -1,4 +1,4 @@
-# Package Logger
+# Packet Logger
 
 A deep packet logging mod for Minecraft Fabric that captures all network traffic (´S2C´ and ´C2S´) with full NBT/Component data.
 
@@ -53,11 +53,11 @@ Config saved at: `.minecraft/config/packet-logger-config.json`
 
 ```json
 {
-  "logPackages": true,
+  "logPackets": true,
   "logMode": "FILE",
   "deepLogging": true,
-  "selectedS2CPackages": ["InventoryS2CPacket"],
-  "selectedC2SPackages": ["ClickSlotC2SPacket"]
+  "selectedS2CPackets": ["InventoryS2CPacket"],
+  "selectedC2SPackets": ["ClickSlotC2SPacket"]
 }
 ```
 
@@ -71,7 +71,7 @@ Config saved at: `.minecraft/config/packet-logger-config.json`
 
 ### Download
 
-Download the latest release from the [Releases](https://github.com/HelixCraft/Fabric-Package-Logger/releases) page and place it in your `mods` folder.
+Download the latest release from the [Releases](https://github.com/HelixCraft/Fabric-Packet-Logger/releases) page and place it in your `mods` folder.
 
 ## For Developers
 
