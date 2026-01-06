@@ -15,6 +15,10 @@ A deep packet logging mod for Minecraft Fabric that captures all network traffic
 - **Anti-Cheat Analysis**: Understand what data the server sends and receives
 - **Learning**: Understand how Minecraft's network protocol works
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e41a36c0-6f4e-4cfb-af4a-8cc0864bb76f" width="700" />
+</div>
+
 ## Usage
 
 ### Keybind
