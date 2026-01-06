@@ -33,7 +33,7 @@ Use the dual-list selector to choose which packets to log:
 Logs are saved to:
 
 ```
-MINECRAFT_FOLDER/config/package-logger/packets_2026-01-04_15-30-45_servername.log
+MINECRAFT_FOLDER/config/packet-logger/packets_2026-01-04_15-30-45_servername.log
 ```
 
 A new log file is created when:
@@ -49,7 +49,7 @@ A new log file is created when:
 
 ### Configuration
 
-Config saved at: `.minecraft/config/package-logger-config.json`
+Config saved at: `.minecraft/config/packet-logger-config.json`
 
 ```json
 {
@@ -81,13 +81,13 @@ Download the latest release from the [Releases](https://github.com/HelixCraft/Fa
 ./gradlew build
 ```
 
-Output: `build/libs/package-logger-1.0.0.jar`
+Output: `build/libs/packet-logger-1.0.0.jar`
 
 ### Project Structure
 
 ```
-src/client/java/dev/redstone/packagelogger/
-├── PackageLoggerClient.java       # Client entrypoint
+src/client/java/dev/redstone/packetlogger/
+├── PacketLoggerClient.java       # Client entrypoint
 ├── config/
 │   └── ModConfig.java             # Configuration
 ├── logger/

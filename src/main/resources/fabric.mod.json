@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "package-logger",
+  "id": "packet-logger",
   "version": "${version}",
   "name": "Package Logger",
   "description": "Deep Packet Logger for Minecraft - logs all network packets with full NBT/Component data",
@@ -12,20 +12,20 @@
     "sources": "https://github.com/HelixCraft/Fabric-Package-Logger"
   },
   "license": "MIT",
-  "icon": "assets/package-logger/icon.png",
+  "icon": "assets/packet-logger/icon.png",
   "environment": "client",
   "entrypoints": {
     "main": [
-      "dev.redstone.packagelogger.PackageLogger"
+      "dev.redstone.packetlogger.PacketLogger"
     ],
     "client": [
-      "dev.redstone.packagelogger.PackageLoggerClient"
+      "dev.redstone.packetlogger.PacketLoggerClient"
     ]
   },
   "mixins": [
-    "package-logger.mixins.json",
+    "packet-logger.mixins.json",
     {
-      "config": "package-logger.client.mixins.json",
+      "config": "packet-logger.client.mixins.json",
       "environment": "client"
     }
   ],

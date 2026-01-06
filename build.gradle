@@ -65,7 +65,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"package-logger" {
+		"packet-logger" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
