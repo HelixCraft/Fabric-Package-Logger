@@ -34,7 +34,7 @@ Pakete werden direkt im Minecraft-Chat angezeigt mit Farbcodierung:
 
 Pakete werden in eine Datei geschrieben:
 
-- **Speicherort**: `MINECRAFT/config/package-logger/packages-YYYY-MM-DD.txt`
+- **Speicherort**: `MINECRAFT/config/packet-logger/packages-YYYY-MM-DD.txt`
 - Neue Datei pro Tag
 - Format: `[HH:mm:ss] [Incoming/Outgoing] PacketName {data}`
 
@@ -65,7 +65,7 @@ Die geloggten Daten enthalten **alle Felder** des Pakets via Reflection:
 [18:44:01] [Outgoing] ClickSlotC2SPacket {syncId=1, slot=5, button=0}
 ```
 
-### File (config/package-logger/packages-2026-01-04.txt):
+### File (config/packet-logger/packages-2026-01-04.txt):
 
 ```
 === Package Logger - 2026-01-04 ===
@@ -78,7 +78,7 @@ Format: [TIME] [DIRECTION] PacketName {data}
 
 ## Konfiguration
 
-Gespeichert unter: `MINECRAFT/config/package-logger-config.json`
+Gespeichert unter: `MINECRAFT/config/packet-logger-config.json`
 
 ```json
 {

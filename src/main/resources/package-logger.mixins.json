@@ -1,9 +1,0 @@
-{
-  "required": true,
-  "package": "dev.redstone.packagelogger.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": ["ExampleMixin"],
-  "injectors": {
-    "defaultRequire": 1
-  }
-}
