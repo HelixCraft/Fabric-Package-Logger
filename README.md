@@ -2,7 +2,7 @@
 
 ![Environment](https://img.shields.io/badge/Environment-Client-purple)
 [![Java 21](https://img.shields.io/badge/Language-Java%2021-orange)](https://www.oracle.com/java/technologies/downloads/#java21)
-[![Modrinth](https://img.shields.io/badge/Modrinth-Packet--Logger-00AF5C?logo=modrinth)](https://modrinth.com/mod/packet-logger)
+[![Modrinth](https://img.shields.io/badge/Modrinth-Packet--Logger-00AF5C?logo=modrinth)](https://modrinth.com/mod/fabric-packet-logger)
 
 <p align="left">
   <a href="https://modrinth.com/mod/fabric-packet-logger">
