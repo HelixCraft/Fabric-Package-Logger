@@ -1,6 +1,5 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.network.packet.s2c.play.LightData;
@@ -8,6 +7,7 @@ import net.minecraft.registry.Registries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Unpacker für ChunkDataS2CPacket.
@@ -40,12 +40,12 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
     private void appendChunkDataDetails(StringBuilder sb, ChunkDataS2CPacket packet) {
         var chunkData = packet.getChunkData();
 
-        NbtCompound heightmap = chunkData.getHeightmap();
+        Map<?, ?> heightmap = chunkData.getHeightmap();
         if (heightmap != null && !heightmap.isEmpty()) {
             sb.append(",heightmapKeys:[");
             List<String> keys = new ArrayList<>();
-            for (String key : heightmap.getKeys()) {
-                keys.add(TextFormatter.formatPlainString(key));
+            for (Object key : heightmap.keySet()) {
+                keys.add(TextFormatter.formatPlainString(String.valueOf(key)));
             }
             sb.append(String.join(",", keys));
             sb.append("]");
@@ -77,7 +77,7 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
         sb.append(",initializedBlockSections:").append(lightData.getInitedBlock().cardinality());
     }
 
-    private String formatBlockEntityData(net.minecraft.util.math.BlockPos pos, net.minecraft.block.entity.BlockEntityType<?> type, NbtCompound nbt) {
+    private String formatBlockEntityData(net.minecraft.util.math.BlockPos pos, net.minecraft.block.entity.BlockEntityType<?> type, net.minecraft.nbt.NbtCompound nbt) {
         StringBuilder sb = new StringBuilder("{");
         sb.append("pos:{x:").append(pos.getX())
                 .append(",y:").append(pos.getY())
@@ -88,7 +88,7 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
         }
 
         if (nbt != null && !nbt.isEmpty()) {
-            sb.append(",nbt:").append(nbt.asString());
+            sb.append(",nbt:").append(nbt.asString().orElse(nbt.toString()));
         }
 
         sb.append("}");
