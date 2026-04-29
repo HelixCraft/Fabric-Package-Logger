@@ -16,10 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 
 public class SimpleConfigScreen extends Screen {
+    public static final String ALL_CUSTOM_PACKETS = "All Custom Packets";
+
     private final Screen parent;
     private final ModConfig config;
 
-    // Widgets
     private ButtonWidget logPacketsButton;
     private ButtonWidget logModeButton;
     private DualListSelectorWidget s2cSelector;
@@ -28,8 +29,8 @@ public class SimpleConfigScreen extends Screen {
     private boolean logPacketsEnabled;
     private LogMode currentLogMode;
 
-    // Vollständige Liste S2C Pakete (Server to Client)
-    private static final List<String> S2C_PACKAGES = Arrays.asList(
+    public static final List<String> S2C_PACKETS = Arrays.asList(
+            ALL_CUSTOM_PACKETS,
             "AdvancementUpdateS2CPacket",
             "BlockBreakingProgressS2CPacket",
             "BlockEntityUpdateS2CPacket",
@@ -140,8 +141,8 @@ public class SimpleConfigScreen extends Screen {
             "WorldEventS2CPacket",
             "WorldTimeUpdateS2CPacket");
 
-    // Vollständige Liste C2S Pakete (Client to Server)
-    private static final List<String> C2S_PACKAGES = Arrays.asList(
+    public static final List<String> C2S_PACKETS = Arrays.asList(
+            ALL_CUSTOM_PACKETS,
             "AcknowledgeChunksC2SPacket",
             "AcknowledgeReconfigurationC2SPacket",
             "AdvancementTabC2SPacket",
@@ -210,7 +211,6 @@ public class SimpleConfigScreen extends Screen {
         int buttonWidth = (panelWidth - 10) / 2;
         int y = panelY + 5;
 
-        // Log Packages Toggle Button
         this.logPacketsButton = ButtonWidget.builder(
                 Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
                 button -> {
@@ -221,7 +221,6 @@ public class SimpleConfigScreen extends Screen {
                 .build();
         this.addDrawableChild(logPacketsButton);
 
-        // Log Mode Toggle Button
         this.logModeButton = ButtonWidget.builder(
                 Text.literal("Output: " + currentLogMode.getDisplayName()),
                 button -> {
@@ -236,26 +235,22 @@ public class SimpleConfigScreen extends Screen {
 
         int selectorHeight = (this.height - y - 50) / 2 - 5;
 
-        // S2C Selector
         this.s2cSelector = new DualListSelectorWidget(
                 panelX, y, panelWidth, selectorHeight,
                 "S2C Packets (Server → Client)",
-                S2C_PACKAGES,
+                S2C_PACKETS,
                 new HashSet<>(config.selectedS2CPackets),
-                selection -> {
-                });
+                selection -> {});
         this.addDrawableChild(s2cSelector);
 
         y += selectorHeight + 10;
 
-        // C2S Selector
         this.c2sSelector = new DualListSelectorWidget(
                 panelX, y, panelWidth, selectorHeight,
                 "C2S Packets (Client → Server)",
-                C2S_PACKAGES,
+                C2S_PACKETS,
                 new HashSet<>(config.selectedC2SPackets),
-                selection -> {
-                });
+                selection -> {});
         this.addDrawableChild(c2sSelector);
 
         int bottomY = this.height - 28;
@@ -297,8 +292,8 @@ public class SimpleConfigScreen extends Screen {
     private void saveAndClose() {
         config.logPackets = logPacketsEnabled;
         config.logMode = currentLogMode;
-        config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackages());
-        config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackages());
+        config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+        config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
         config.save();
         this.close();
     }

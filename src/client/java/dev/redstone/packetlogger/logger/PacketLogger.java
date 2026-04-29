@@ -2,6 +2,7 @@ package dev.redstone.packetlogger.logger;
 
 import dev.redstone.packetlogger.config.ModConfig;
 import dev.redstone.packetlogger.logger.unpacker.*;
+import dev.redstone.packetlogger.screen.SimpleConfigScreen;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
@@ -23,8 +24,10 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Deep Packet Logger - Loggt alle Netzwerk-Pakete mit vollständigen Daten.
@@ -32,14 +35,15 @@ import java.util.Map;
 public class PacketLogger {
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
     private static final DateTimeFormatter FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-
+    private static final String ALL_CUSTOM_PACKETS = SimpleConfigScreen.ALL_CUSTOM_PACKETS;
     private static Path currentLogFile = null;
     private static String currentSessionId = null;
     private static boolean wasLoggingEnabled = false;
 
     private static final Map<Class<?>, PacketUnpacker<?>> UNPACKERS = new HashMap<>();
     private static final Map<Class<?>, String> PACKET_NAMES = new HashMap<>();
-
+    private static final Set<String> KNOWN_S2C_PACKETS = new HashSet<>(SimpleConfigScreen.S2C_PACKETS);
+    private static final Set<String> KNOWN_C2S_PACKETS = new HashSet<>(SimpleConfigScreen.C2S_PACKETS);
     static {
         registerUnpackers();
     }
@@ -67,12 +71,12 @@ public class PacketLogger {
 
         // Chunk Pakete
         registerPacket(ChunkDataS2CPacket.class, "ChunkDataS2CPacket", new ChunkDataS2CUnpacker());
-
+        registerPacket(BundleS2CPacket.class, "BundleS2CPacket", new BundleS2CUnpacker());
         // NBT/Custom Pakete
         registerPacket(NbtQueryResponseS2CPacket.class, "NbtQueryResponseS2CPacket", new NbtQueryResponseS2CUnpacker());
         registerPacket(CustomPayloadS2CPacket.class, "CustomPayloadS2CPacket", new CustomPayloadS2CUnpacker());
         registerPacket(CustomPayloadC2SPacket.class, "CustomPayloadC2SPacket", new CustomPayloadC2SUnpacker());
-
+        registerPacket(GameMessageS2CPacket.class, "GameMessageS2CPacket", new GameMessageS2CUnpacker());
         // Weitere Pakete (nur Namen-Mapping)
         registerPacketName(GameJoinS2CPacket.class, "GameJoinS2CPacket");
         registerPacketName(PlayerPositionLookS2CPacket.class, "PlayerPositionLookS2CPacket");
@@ -84,7 +88,6 @@ public class PacketLogger {
         registerPacketName(HealthUpdateS2CPacket.class, "HealthUpdateS2CPacket");
         registerPacketName(ExperienceBarUpdateS2CPacket.class, "ExperienceBarUpdateS2CPacket");
         registerPacketName(ChatMessageS2CPacket.class, "ChatMessageS2CPacket");
-        registerPacketName(GameMessageS2CPacket.class, "GameMessageS2CPacket");
         registerPacketName(ParticleS2CPacket.class, "ParticleS2CPacket");
         registerPacketName(PlaySoundS2CPacket.class, "PlaySoundS2CPacket");
         registerPacketName(WorldTimeUpdateS2CPacket.class, "WorldTimeUpdateS2CPacket");
@@ -183,8 +186,8 @@ public class PacketLogger {
         if (config.selectedS2CPackets.isEmpty())
             return false;
         for (String selected : config.selectedS2CPackets) {
-            if (simpleName.equals(selected) || simpleName.endsWith(selected))
-                return true;
+            if (ALL_CUSTOM_PACKETS.equals(selected) && !KNOWN_S2C_PACKETS.contains(simpleName)) return true;
+            if (simpleName.equals(selected) || simpleName.endsWith(selected)) return true;
         }
         return false;
     }
@@ -193,8 +196,8 @@ public class PacketLogger {
         if (config.selectedC2SPackets.isEmpty())
             return false;
         for (String selected : config.selectedC2SPackets) {
-            if (simpleName.equals(selected) || simpleName.endsWith(selected))
-                return true;
+            if (ALL_CUSTOM_PACKETS.equals(selected) && !KNOWN_C2S_PACKETS.contains(simpleName)) return true;
+            if (simpleName.equals(selected) || simpleName.endsWith(selected)) return true;
         }
         return false;
     }
