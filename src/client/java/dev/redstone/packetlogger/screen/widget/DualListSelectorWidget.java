@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * Zwei-Spalten Widget: Links alle verfügbaren Pakete, rechts die ausgewählten.
+ * Zwei-Spalten Widget: Links alle verfügbaren Packets, rechts die ausgewählten.
  * Mit Suchfunktion und Buttons zum Hinzufügen/Entfernen.
  */
 public class DualListSelectorWidget implements Drawable, Element, Selectable {
@@ -29,8 +29,8 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private final String title;
     
     private final TextFieldWidget searchField;
-    private final List<String> allPackets;
-    private final Set<String> selectedPackets;
+    private final List<String> allPacketNames;
+    private final Set<String> selectedPacketNames;
     private final Consumer<Set<String>> onSelectionChanged;
     
     private List<String> filteredAvailable;
@@ -57,8 +57,8 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         this.height = height;
         this.title = title;
         this.textRenderer = MinecraftClient.getInstance().textRenderer;
-        this.allPackets = new ArrayList<>(packets);
-        this.selectedPackets = new HashSet<>(initialSelection);
+        this.allPacketNames = new ArrayList<>(packets);
+        this.selectedPacketNames = new HashSet<>(initialSelection);
         this.onSelectionChanged = onSelectionChanged;
         
         // Suchfeld - Position unter dem Titel
@@ -70,7 +70,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             SEARCH_FIELD_HEIGHT, 
             Text.literal("Search")
         );
-        this.searchField.setPlaceholder(Text.literal("Search packets..."));
+        this.searchField.setPlaceholder(Text.literal("Search packets or type custom name..."));
         this.searchField.setChangedListener(this::onSearchChanged);
         this.searchField.setDrawsBackground(true);
         this.searchField.setEditable(true);
@@ -113,10 +113,10 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         filteredAvailable = new ArrayList<>();
         filteredSelected = new ArrayList<>();
         
-        for (String pkt : allPackets) {
+        for (String pkt : allPacketNames) {
             boolean matchesQuery = query.isEmpty() || pkt.toLowerCase().contains(query);
             if (matchesQuery) {
-                if (selectedPackets.contains(pkt)) {
+                if (selectedPacketNames.contains(pkt)) {
                     filteredSelected.add(pkt);
                 } else {
                     filteredAvailable.add(pkt);
@@ -151,7 +151,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         // === RECHTE LISTE (Ausgewählt) ===
         int rightX = x + listWidth + GAP / 2;
         renderListPanel(context, rightX, listY, listWidth - PADDING, listHeight,
-                       "Selected (" + selectedPackets.size() + ")", filteredSelected, rightScrollOffset,
+                       "Selected (" + selectedPacketNames.size() + ")", filteredSelected, rightScrollOffset,
                        mouseX, mouseY, false, visibleItems);
         
         // Hover-Index aktualisieren
@@ -189,7 +189,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             int textYOffset = (itemHeight - 9) / 2;
             context.drawText(textRenderer, icon, px + 4, currentItemY + textYOffset, iconColor, false);
             
-            // Package Name (gekürzt) - zentriert vertikal
+            // Packet-Name (gekürzt) - zentriert vertikal
             String displayText = getShortPacketName(pkt, pw - 18);
             context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xDDDDDD, false);
         }
@@ -249,25 +249,26 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        // Check if click is on search field (use our known coordinates)
+        if (!isMouseOver(mouseX, mouseY)) {
+            setFocused(false);
+            return false;
+        }
+
         int sfX = x + PADDING;
         int sfY = y + SEARCH_FIELD_Y_OFFSET;
         int sfW = width - PADDING * 2;
         int sfH = SEARCH_FIELD_HEIGHT;
-        
+
         if (mouseX >= sfX && mouseX < sfX + sfW && mouseY >= sfY && mouseY < sfY + sfH) {
+            setFocused(true);
             searchField.setFocused(true);
-            this.focused = true;
+            searchField.setCursorToEnd(false);
             searchField.mouseClicked(mouseX, mouseY, button);
             return true;
-        } else {
-            searchField.setFocused(false);
         }
-        
-        // Check if click is within widget bounds
-        boolean withinBounds = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-        
-        // Calculate list dimensions for click detection
+
+        setFocused(true);
+
         int listWidth = (width - GAP) / 2;
         int listY = y + HEADER_HEIGHT;
         int listHeight = height - HEADER_HEIGHT - PADDING;
@@ -275,39 +276,35 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         int leftX = x + PADDING;
         int rightX = x + listWidth + GAP / 2;
         int actualListWidth = listWidth - PADDING;
-        
-        // Check if click is in list area
+
         if (mouseY >= listY && mouseY < listY + listHeight) {
-            int relativeY = (int)mouseY - listY - 2;
+            int relativeY = (int) mouseY - listY - 2;
             int itemIndex = relativeY / itemHeight;
-            
+
             if (itemIndex >= 0 && itemIndex < visibleItems) {
-                // Check left list (available packets)
                 if (mouseX >= leftX && mouseX < leftX + actualListWidth) {
                     int actualIndex = itemIndex + leftScrollOffset;
                     if (actualIndex >= 0 && actualIndex < filteredAvailable.size()) {
                         String pkt = filteredAvailable.get(actualIndex);
-                        selectedPackets.add(pkt);
+                        selectedPacketNames.add(pkt);
                         updateFilteredLists();
-                        onSelectionChanged.accept(selectedPackets);
+                        onSelectionChanged.accept(selectedPacketNames);
                         return true;
                     }
-                }
-                // Check right list (selected packets)
-                else if (mouseX >= rightX && mouseX < rightX + actualListWidth) {
+                } else if (mouseX >= rightX && mouseX < rightX + actualListWidth) {
                     int actualIndex = itemIndex + rightScrollOffset;
                     if (actualIndex >= 0 && actualIndex < filteredSelected.size()) {
                         String pkt = filteredSelected.get(actualIndex);
-                        selectedPackets.remove(pkt);
+                        selectedPacketNames.remove(pkt);
                         updateFilteredLists();
-                        onSelectionChanged.accept(selectedPackets);
+                        onSelectionChanged.accept(selectedPacketNames);
                         return true;
                     }
                 }
             }
         }
-        
-        return withinBounds;
+
+        return false;
     }
     
     @Override
@@ -336,6 +333,19 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (searchField.isFocused() && (keyCode == 257 || keyCode == 335)) {
+            String customPacketName = searchField.getText().trim();
+            if (!customPacketName.isEmpty()) {
+                if (!allPacketNames.contains(customPacketName)) {
+                    allPacketNames.add(customPacketName);
+                }
+                selectedPacketNames.add(customPacketName);
+                updateFilteredLists();
+                onSelectionChanged.accept(selectedPacketNames);
+                return true;
+            }
+        }
+
         return searchField.keyPressed(keyCode, scanCode, modifiers);
     }
     
@@ -348,8 +358,8 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         return searchField;
     }
     
-    public Set<String> getSelectedPackages() {
-        return new HashSet<>(selectedPackets);
+    public Set<String> getSelectedPackets() {
+        return new HashSet<>(selectedPacketNames);
     }
     
     @Override

@@ -70,7 +70,7 @@ public class ItemStackFormatter {
             if (stack.contains(DataComponentTypes.CUSTOM_NAME)) {
                 Text name = stack.get(DataComponentTypes.CUSTOM_NAME);
                 if (name != null) {
-                    parts.add("\"minecraft:custom_name\":\"" + escapeString(name.getString()) + "\"");
+                    parts.add("\"minecraft:custom_name\":" + TextFormatter.format(name));
                 }
             }
             
@@ -78,7 +78,7 @@ public class ItemStackFormatter {
             if (stack.contains(DataComponentTypes.ITEM_NAME)) {
                 Text name = stack.get(DataComponentTypes.ITEM_NAME);
                 if (name != null) {
-                    parts.add("\"minecraft:item_name\":\"" + escapeString(name.getString()) + "\"");
+                    parts.add("\"minecraft:item_name\":" + TextFormatter.format(name));
                 }
             }
             
@@ -137,7 +137,7 @@ public class ItemStackFormatter {
                     StringBuilder loreSb = new StringBuilder("\"minecraft:lore\":[");
                     List<String> loreLines = new ArrayList<>();
                     for (Text line : lore.lines()) {
-                        loreLines.add("\"" + escapeString(line.getString()) + "\"");
+                        loreLines.add(TextFormatter.format(line));
                     }
                     loreSb.append(String.join(",", loreLines));
                     loreSb.append("]");
@@ -245,8 +245,8 @@ public class ItemStackFormatter {
                 WrittenBookContentComponent book = stack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT);
                 if (book != null) {
                     StringBuilder bookSb = new StringBuilder("\"minecraft:written_book_content\":{");
-                    bookSb.append("title:\"").append(escapeString(book.title().raw())).append("\"");
-                    bookSb.append(",author:\"").append(escapeString(book.author())).append("\"");
+                    bookSb.append("title:").append(TextFormatter.formatPlainString(book.title().raw()));
+                    bookSb.append(",author:").append(TextFormatter.formatPlainString(book.author()));
                     bookSb.append(",generation:").append(book.generation());
                     bookSb.append("}");
                     parts.add(bookSb.toString());
@@ -260,7 +260,7 @@ public class ItemStackFormatter {
                     StringBuilder bookSb = new StringBuilder("\"minecraft:writable_book_content\":{pages:[");
                     List<String> pages = new ArrayList<>();
                     for (var page : book.pages()) {
-                        pages.add("\"" + escapeString(page.raw()) + "\"");
+                        pages.add(TextFormatter.formatPlainString(page.raw()));
                     }
                     bookSb.append(String.join(",", pages));
                     bookSb.append("]}");
@@ -276,11 +276,6 @@ public class ItemStackFormatter {
     }
     
     private static String escapeString(String s) {
-        if (s == null) return "";
-        return s.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\n", "\\n")
-                .replace("\r", "\\r")
-                .replace("\t", "\\t");
+        return TextFormatter.escapeString(s);
     }
 }

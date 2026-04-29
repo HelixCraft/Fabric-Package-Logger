@@ -3,7 +3,8 @@ package dev.redstone.packetlogger.logger.unpacker;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.network.packet.BundlePacket;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -11,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.RecordComponent;
 import java.util.*;
 
 /**
@@ -47,7 +49,7 @@ public class ReflectionUnpacker {
                 return ((NbtElement) obj).asString();
             }
             if (obj instanceof Text) {
-                return "\"" + escapeString(((Text) obj).getString()) + "\"";
+                return TextFormatter.format((Text) obj);
             }
             if (obj instanceof BlockPos) {
                 BlockPos pos = (BlockPos) obj;
@@ -72,6 +74,12 @@ public class ReflectionUnpacker {
             }
             if (obj instanceof Number || obj instanceof Boolean) {
                 return obj.toString();
+            }
+            if (obj instanceof CustomPayload) {
+                return formatCustomPayload((CustomPayload) obj, depth, visited);
+            }
+            if (obj instanceof BundlePacket<?>) {
+                return formatBundlePacket((BundlePacket<?>) obj, depth, visited);
             }
             
             // Arrays
@@ -173,6 +181,10 @@ public class ReflectionUnpacker {
     }
     
     private static String formatObject(Object obj, int depth, Set<Integer> visited) {
+        if (obj.getClass().isRecord()) {
+            return formatRecord(obj, depth, visited);
+        }
+
         StringBuilder sb = new StringBuilder("{");
         List<String> fields = new ArrayList<>();
         
@@ -196,6 +208,50 @@ public class ReflectionUnpacker {
         sb.append(String.join(",", fields));
         sb.append("}");
         return sb.toString();
+    }
+
+    private static String formatRecord(Object obj, int depth, Set<Integer> visited) {
+        List<String> fields = new ArrayList<>();
+
+        for (RecordComponent component : obj.getClass().getRecordComponents()) {
+            try {
+                Object value = component.getAccessor().invoke(obj);
+                fields.add(component.getName() + ":" + unpackWithReflection(value, depth + 1, visited));
+            } catch (Exception ignored) {
+            }
+        }
+
+        return "{" + String.join(",", fields) + "}";
+    }
+
+    private static String formatCustomPayload(CustomPayload payload, int depth, Set<Integer> visited) {
+        List<String> parts = new ArrayList<>();
+        parts.add("id:\"" + escapeString(payload.getId().id().toString()) + "\"");
+        parts.add("payloadType:\"" + escapeString(payload.getClass().getSimpleName()) + "\"");
+
+        if (payload.getClass().isRecord()) {
+            for (RecordComponent component : payload.getClass().getRecordComponents()) {
+                if ("id".equals(component.getName()) || "getId".equals(component.getName())) continue;
+
+                try {
+                    Object value = component.getAccessor().invoke(payload);
+                    parts.add(component.getName() + ":" + unpackWithReflection(value, depth + 1, visited));
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        return "{" + String.join(",", parts) + "}";
+    }
+
+    private static String formatBundlePacket(BundlePacket<?> packet, int depth, Set<Integer> visited) {
+        List<String> packets = new ArrayList<>();
+
+        for (Object innerPacket : packet.getPackets()) {
+            packets.add(unpackWithReflection(innerPacket, depth + 1, visited));
+        }
+
+        return "{packetCount:" + packets.size() + ",packets:[" + String.join(",", packets) + "]}";
     }
     
     private static String escapeString(String s) {
