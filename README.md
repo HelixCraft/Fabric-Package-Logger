@@ -304,9 +304,4 @@ src/client/java/dev/redstone/packetlogger/
 
 ## License
 
-MIT
-
-## Credits
-
-- Fabric API Team
-- Minecraft Modding Community
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
