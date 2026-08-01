@@ -84,6 +84,18 @@ public class PacketLogger {
         registerPacketName(ClientboundLevelParticlesPacket.class, "ParticleS2CPacket");
         registerPacketName(ClientboundSoundPacket.class, "PlaySoundS2CPacket");
         registerPacketName(ClientboundSetTimePacket.class, "WorldTimeUpdateS2CPacket");
+
+        // Bindung/Bewegung von Entities - fehlten in PACKET_NAMES, daher wurde ihr Mojang-Name
+        // (z.B. "ClientboundSetPassengersPacket") nie gegen den Yarn-Namen im Whitelist gematcht
+        // und sie tauchten NIE im Log auf. Jetzt korrekt gemappt:
+        registerPacketName(ClientboundBundlePacket.class, "BundleS2CPacket");
+        registerPacketName(ClientboundSetPassengersPacket.class, "EntityPassengersSetS2CPacket");
+        registerPacketName(ClientboundSetEntityLinkPacket.class, "EntityAttachS2CPacket");
+        registerPacketName(ClientboundTeleportEntityPacket.class, "EntityPositionS2CPacket");
+        registerPacketName(ClientboundMoveEntityPacket.Pos.class, "EntityS2CPacket");
+        registerPacketName(ClientboundMoveEntityPacket.Rot.class, "EntityS2CPacket");
+        registerPacketName(ClientboundMoveEntityPacket.PosRot.class, "EntityS2CPacket");
+        registerPacketName(ClientboundRemoveEntitiesPacket.class, "EntitiesDestroyS2CPacket");
     }
 
     private static <T extends Packet<?>> void registerPacket(Class<T> clazz, String name, PacketUnpacker<T> unpacker) {
@@ -121,6 +133,15 @@ public class PacketLogger {
     }
 
     public static void logIncoming(Packet<?> packet) {
+        // BundleS2CPacket ist ein Container: der Server packt Spawn/Metadata/SetPassengers/Teleport
+        // haeufig hier hinein. Er kommt als EIN Objekt durch channelRead0 - ohne Entpacken bleiben
+        // alle inneren Pakete (u.a. EntityPassengersSetS2CPacket) unsichtbar. Also rekursiv entpacken.
+        if (packet instanceof ClientboundBundlePacket bundle) {
+            for (Packet<?> sub : bundle.subPackets()) {
+                logIncoming(sub);
+            }
+            return;
+        }
         logPacket(packet, true);
     }
 
