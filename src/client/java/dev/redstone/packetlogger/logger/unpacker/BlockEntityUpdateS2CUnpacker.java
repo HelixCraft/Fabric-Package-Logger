@@ -1,18 +1,18 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.BlockPos;
 
 /**
- * Unpacker für BlockEntityUpdateS2CPacket.
+ * Unpacker für ClientboundBlockEntityDataPacket.
  * Zeigt Position, BlockEntity-Typ und komplettes NBT.
  */
-public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<BlockEntityUpdateS2CPacket> {
-    
+public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockEntityDataPacket> {
+
     @Override
-    public String unpack(BlockEntityUpdateS2CPacket packet) {
+    public String unpack(ClientboundBlockEntityDataPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         
@@ -24,16 +24,16 @@ public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<BlockEntityU
         
         // BlockEntity Type
         try {
-            String typeId = Registries.BLOCK_ENTITY_TYPE.getId(packet.getBlockEntityType()).toString();
+            String typeId = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(packet.getType()).toString();
             sb.append(",type:\"").append(typeId).append("\"");
         } catch (Exception e) {
             sb.append(",type:\"unknown\"");
         }
-        
+
         // NBT Data
-        NbtCompound nbt = packet.getNbt();
+        CompoundTag nbt = packet.getTag();
         if (nbt != null && !nbt.isEmpty()) {
-            sb.append(",nbt:").append(nbt.asString());
+            sb.append(",nbt:").append(nbt.toString());
         } else {
             sb.append(",nbt:{}");
         }

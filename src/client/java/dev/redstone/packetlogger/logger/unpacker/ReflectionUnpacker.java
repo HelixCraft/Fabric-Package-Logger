@@ -1,13 +1,12 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.phys.Vec3;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -40,26 +39,26 @@ public class ReflectionUnpacker {
             if (obj instanceof ItemStack) {
                 return ItemStackFormatter.format((ItemStack) obj);
             }
-            if (obj instanceof NbtCompound) {
-                return ((NbtCompound) obj).asString();
+            if (obj instanceof CompoundTag) {
+                return ((CompoundTag) obj).toString();
             }
-            if (obj instanceof NbtElement) {
-                return ((NbtElement) obj).asString();
+            if (obj instanceof Tag) {
+                return ((Tag) obj).toString();
             }
-            if (obj instanceof Text) {
-                return "\"" + escapeString(((Text) obj).getString()) + "\"";
+            if (obj instanceof Component) {
+                return "\"" + escapeString(((Component) obj).getString()) + "\"";
             }
             if (obj instanceof BlockPos) {
                 BlockPos pos = (BlockPos) obj;
                 return "{x:" + pos.getX() + ",y:" + pos.getY() + ",z:" + pos.getZ() + "}";
             }
-            if (obj instanceof Vec3d) {
-                Vec3d vec = (Vec3d) obj;
+            if (obj instanceof Vec3) {
+                Vec3 vec = (Vec3) obj;
                 return "{x:" + vec.x + ",y:" + vec.y + ",z:" + vec.z + "}";
             }
             if (obj instanceof ChunkPos) {
                 ChunkPos pos = (ChunkPos) obj;
-                return "{x:" + pos.x + ",z:" + pos.z + "}";
+                return "{x:" + pos.x() + ",z:" + pos.z() + "}";
             }
             if (obj instanceof UUID) {
                 return "\"" + obj.toString() + "\"";

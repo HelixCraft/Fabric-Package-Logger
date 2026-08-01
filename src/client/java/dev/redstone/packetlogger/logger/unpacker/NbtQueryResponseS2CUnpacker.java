@@ -1,24 +1,24 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.NbtQueryResponseS2CPacket;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundTagQueryPacket;
 
 /**
- * Unpacker für NbtQueryResponseS2CPacket.
+ * Unpacker für ClientboundTagQueryPacket.
  * Zeigt das komplette empfangene NBT.
  */
-public class NbtQueryResponseS2CUnpacker implements PacketUnpacker<NbtQueryResponseS2CPacket> {
-    
+public class NbtQueryResponseS2CUnpacker implements PacketUnpacker<ClientboundTagQueryPacket> {
+
     @Override
-    public String unpack(NbtQueryResponseS2CPacket packet) {
+    public String unpack(ClientboundTagQueryPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
+
         sb.append("transactionId:").append(packet.getTransactionId());
-        
-        NbtCompound nbt = packet.getNbt();
+
+        CompoundTag nbt = packet.getTag();
         if (nbt != null && !nbt.isEmpty()) {
-            sb.append(",nbt:").append(nbt.asString());
+            sb.append(",nbt:").append(nbt.toString());
         } else {
             sb.append(",nbt:null");
         }

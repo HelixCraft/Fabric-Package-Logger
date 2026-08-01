@@ -1,27 +1,26 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Unpacker für ChunkDataS2CPacket.
+ * Unpacker für ClientboundLevelChunkWithLightPacket.
  * Loggt nicht den rohen Buffer, aber alle BlockEntity-Daten mit NBT.
  */
-public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> {
-    
+public class ChunkDataS2CUnpacker implements PacketUnpacker<ClientboundLevelChunkWithLightPacket> {
+
     @Override
-    public String unpack(ChunkDataS2CPacket packet) {
+    public String unpack(ClientboundLevelChunkWithLightPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
+
         // Chunk Position
-        sb.append("chunkX:").append(packet.getChunkX());
-        sb.append(",chunkZ:").append(packet.getChunkZ());
+        sb.append("chunkX:").append(packet.getX());
+        sb.append(",chunkZ:").append(packet.getZ());
         
         try {
             // Chunk Data via Reflection (API kann sich ändern)
@@ -30,11 +29,11 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
                 // Heightmaps
                 try {
                     Method heightmapMethod = chunkData.getClass().getMethod("heightmap");
-                    NbtCompound heightmaps = (NbtCompound) heightmapMethod.invoke(chunkData);
+                    CompoundTag heightmaps = (CompoundTag) heightmapMethod.invoke(chunkData);
                     if (heightmaps != null && !heightmaps.isEmpty()) {
                         sb.append(",heightmapKeys:[");
                         List<String> keys = new ArrayList<>();
-                        for (String key : heightmaps.getKeys()) {
+                        for (String key : heightmaps.keySet()) {
                             keys.add("\"" + key + "\"");
                         }
                         sb.append(String.join(",", keys));
@@ -61,7 +60,7 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
                         sb.append(",blockEntities:[");
                         List<String> entities = new ArrayList<>();
                         for (Object beData : blockEntities) {
-                            entities.add(formatBlockEntityData(beData, packet.getChunkX(), packet.getChunkZ()));
+                            entities.add(formatBlockEntityData(beData, packet.getX(), packet.getZ()));
                         }
                         sb.append(String.join(",", entities));
                         sb.append("]");
@@ -123,9 +122,9 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> 
             // NBT
             try {
                 Method nbtMethod = clazz.getMethod("nbt");
-                NbtCompound nbt = (NbtCompound) nbtMethod.invoke(beData);
+                CompoundTag nbt = (CompoundTag) nbtMethod.invoke(beData);
                 if (nbt != null && !nbt.isEmpty()) {
-                    sb.append(",nbt:").append(nbt.asString());
+                    sb.append(",nbt:").append(nbt.toString());
                 }
             } catch (Exception e) {
                 // Ignore

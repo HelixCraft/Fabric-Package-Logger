@@ -1,27 +1,26 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
+import net.minecraft.resources.Identifier;
 
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 
 /**
- * Unpacker für CustomPayloadS2CPacket.
+ * Unpacker für ClientboundCustomPayloadPacket.
  * Versucht den Channel und Payload-Inhalt zu lesen.
  */
-public class CustomPayloadS2CUnpacker implements PacketUnpacker<CustomPayloadS2CPacket> {
-    
+public class CustomPayloadS2CUnpacker implements PacketUnpacker<ClientboundCustomPayloadPacket> {
+
     @Override
-    public String unpack(CustomPayloadS2CPacket packet) {
+    public String unpack(ClientboundCustomPayloadPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
-        CustomPayload payload = packet.payload();
-        
+
+        CustomPacketPayload payload = packet.payload();
+
         // Channel ID
-        Identifier channelId = payload.getId().id();
+        Identifier channelId = payload.type().id();
         sb.append("channel:\"").append(channelId.toString()).append("\"");
         
         // Payload Type
@@ -37,7 +36,7 @@ public class CustomPayloadS2CUnpacker implements PacketUnpacker<CustomPayloadS2C
         return sb.toString();
     }
     
-    private String extractPayloadData(CustomPayload payload) {
+    private String extractPayloadData(CustomPacketPayload payload) {
         try {
             // Bekannte Payload-Typen
             String className = payload.getClass().getSimpleName();
@@ -55,7 +54,7 @@ public class CustomPayloadS2CUnpacker implements PacketUnpacker<CustomPayloadS2C
         }
     }
     
-    private String extractBrandPayload(CustomPayload payload) {
+    private String extractBrandPayload(CustomPacketPayload payload) {
         try {
             // Versuche das "brand" Feld zu finden
             for (Field field : payload.getClass().getDeclaredFields()) {

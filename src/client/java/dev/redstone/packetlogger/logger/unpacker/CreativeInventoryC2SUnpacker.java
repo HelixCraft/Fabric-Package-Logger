@@ -1,60 +1,29 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.protocol.game.ServerboundSetCreativeModeSlotPacket;
 
 /**
- * Unpacker für CreativeInventoryActionC2SPacket.
+ * Unpacker für ServerboundSetCreativeModeSlotPacket.
  * Zeigt welches Item in welchen Slot gesetzt wird.
  */
-public class CreativeInventoryC2SUnpacker implements PacketUnpacker<CreativeInventoryActionC2SPacket> {
-    
+public class CreativeInventoryC2SUnpacker implements PacketUnpacker<ServerboundSetCreativeModeSlotPacket> {
+
     @Override
-    public String unpack(CreativeInventoryActionC2SPacket packet) {
+    public String unpack(ServerboundSetCreativeModeSlotPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
-        // Slot via Reflection (API kann sich ändern)
-        int slot = getFieldValue(packet, "slot", Integer.class, -1);
+
+        // Slot (record accessor)
+        int slot = packet.slotNum();
         sb.append("slot:").append(slot);
-        
-        // ItemStack via Reflection
-        ItemStack stack = getFieldValue(packet, "stack", ItemStack.class, ItemStack.EMPTY);
+
+        // ItemStack (record accessor)
+        ItemStack stack = packet.itemStack();
         if (stack == null) stack = ItemStack.EMPTY;
         sb.append(",item:").append(ItemStackFormatter.format(stack));
-        
+
         sb.append("}");
         return sb.toString();
-    }
-    
-    @SuppressWarnings("unchecked")
-    private <T> T getFieldValue(Object obj, String fieldName, Class<T> type, T defaultValue) {
-        try {
-            // Versuche Getter
-            try {
-                String getterName = "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                Method getter = obj.getClass().getMethod(getterName);
-                return (T) getter.invoke(obj);
-            } catch (NoSuchMethodException e) {
-                // Ignore
-            }
-            
-            // Versuche direktes Feld
-            for (Field field : obj.getClass().getDeclaredFields()) {
-                if (field.getName().equalsIgnoreCase(fieldName) || field.getName().contains(fieldName)) {
-                    field.setAccessible(true);
-                    Object value = field.get(obj);
-                    if (type.isInstance(value)) {
-                        return (T) value;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            // Ignore
-        }
-        return defaultValue;
     }
 }

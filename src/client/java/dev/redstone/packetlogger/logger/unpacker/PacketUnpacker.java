@@ -1,6 +1,6 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.protocol.Packet;
 
 /**
  * Interface für spezialisierte Packet-Unpacker.

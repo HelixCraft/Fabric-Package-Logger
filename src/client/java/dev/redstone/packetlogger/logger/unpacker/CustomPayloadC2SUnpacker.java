@@ -1,26 +1,24 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
-import net.minecraft.util.Identifier;
-
-import java.lang.reflect.Field;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
+import net.minecraft.resources.Identifier;
 
 /**
- * Unpacker für CustomPayloadC2SPacket.
+ * Unpacker für ServerboundCustomPayloadPacket.
  * Versucht den Channel und Payload-Inhalt zu lesen.
  */
-public class CustomPayloadC2SUnpacker implements PacketUnpacker<CustomPayloadC2SPacket> {
-    
+public class CustomPayloadC2SUnpacker implements PacketUnpacker<ServerboundCustomPayloadPacket> {
+
     @Override
-    public String unpack(CustomPayloadC2SPacket packet) {
+    public String unpack(ServerboundCustomPayloadPacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
-        CustomPayload payload = packet.payload();
-        
+
+        CustomPacketPayload payload = packet.payload();
+
         // Channel ID
-        Identifier channelId = payload.getId().id();
+        Identifier channelId = payload.type().id();
         sb.append("channel:\"").append(channelId.toString()).append("\"");
         
         // Payload Type
@@ -36,7 +34,7 @@ public class CustomPayloadC2SUnpacker implements PacketUnpacker<CustomPayloadC2S
         return sb.toString();
     }
     
-    private String extractPayloadData(CustomPayload payload) {
+    private String extractPayloadData(CustomPacketPayload payload) {
         try {
             // Generisch: Alle Felder via Reflection
             return ReflectionUnpacker.unpackWithReflection(payload);
