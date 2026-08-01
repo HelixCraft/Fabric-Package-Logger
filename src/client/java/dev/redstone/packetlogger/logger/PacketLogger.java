@@ -96,6 +96,148 @@ public class PacketLogger {
         registerPacketName(ClientboundMoveEntityPacket.Rot.class, "EntityS2CPacket");
         registerPacketName(ClientboundMoveEntityPacket.PosRot.class, "EntityS2CPacket");
         registerPacketName(ClientboundRemoveEntitiesPacket.class, "EntitiesDestroyS2CPacket");
+
+        // --- Restliche Whitelist-Pakete (waren in der GUI auswaehlbar, aber nie gemappt) ---
+        // Ohne diese Zeilen matchte der Yarn-Name aus der Whitelist nie gegen den Mojang-Klassennamen,
+        // d.h. Sounds/Titles/Subtitles/Scoreboard/WorldBorder etc. tauchten NIE im Log auf.
+        // S2C (alle in net.minecraft.network.protocol.game.*):
+        registerPacketName(ClientboundUpdateAdvancementsPacket.class, "AdvancementUpdateS2CPacket");
+        registerPacketName(ClientboundBlockDestructionPacket.class, "BlockBreakingProgressS2CPacket");
+        registerPacketName(ClientboundBlockEventPacket.class, "BlockEventS2CPacket");
+        registerPacketName(ClientboundBossEventPacket.class, "BossBarS2CPacket");
+        registerPacketName(ClientboundCustomChatCompletionsPacket.class, "ChatSuggestionsS2CPacket");
+        registerPacketName(ClientboundChunksBiomesPacket.class, "ChunkBiomeDataS2CPacket");
+        registerPacketName(ClientboundSetChunkCacheRadiusPacket.class, "ChunkLoadDistanceS2CPacket");
+        registerPacketName(ClientboundSetChunkCacheCenterPacket.class, "ChunkRenderDistanceCenterS2CPacket");
+        registerPacketName(ClientboundChunkBatchFinishedPacket.class, "ChunkSentS2CPacket");
+        registerPacketName(ClientboundClearTitlesPacket.class, "ClearTitleS2CPacket");
+        registerPacketName(ClientboundCommandSuggestionsPacket.class, "CommandSuggestionsS2CPacket");
+        registerPacketName(ClientboundCommandsPacket.class, "CommandTreeS2CPacket");
+        registerPacketName(ClientboundCooldownPacket.class, "CooldownUpdateS2CPacket");
+        registerPacketName(ClientboundPlaceGhostRecipePacket.class, "CraftFailedResponseS2CPacket");
+        registerPacketName(ClientboundHurtAnimationPacket.class, "DamageTiltS2CPacket");
+        registerPacketName(ClientboundPlayerCombatKillPacket.class, "DeathMessageS2CPacket");
+        registerPacketName(ClientboundDebugSamplePacket.class, "DebugSampleS2CPacket");
+        registerPacketName(ClientboundChangeDifficultyPacket.class, "DifficultyS2CPacket");
+        registerPacketName(ClientboundPlayerCombatEndPacket.class, "EndCombatS2CPacket");
+        registerPacketName(ClientboundPlayerCombatEnterPacket.class, "EnterCombatS2CPacket");
+        registerPacketName(ClientboundStartConfigurationPacket.class, "EnterReconfigurationS2CPacket");
+        registerPacketName(ClientboundAnimatePacket.class, "EntityAnimationS2CPacket");
+        registerPacketName(ClientboundDamageEventPacket.class, "EntityDamageS2CPacket");
+        registerPacketName(ClientboundRotateHeadPacket.class, "EntitySetHeadYawS2CPacket");
+        registerPacketName(ClientboundUpdateMobEffectPacket.class, "EntityStatusEffectS2CPacket");
+        registerPacketName(ClientboundEntityEventPacket.class, "EntityStatusS2CPacket");
+        registerPacketName(ClientboundExplodePacket.class, "ExplosionS2CPacket");
+        registerPacketName(ClientboundGameEventPacket.class, "GameStateChangeS2CPacket");
+        registerPacketName(ClientboundTakeItemEntityPacket.class, "ItemPickupAnimationS2CPacket");
+        registerPacketName(ClientboundLightUpdatePacket.class, "LightUpdateS2CPacket");
+        registerPacketName(ClientboundPlayerLookAtPacket.class, "LookAtS2CPacket");
+        registerPacketName(ClientboundMapItemDataPacket.class, "MapUpdateS2CPacket");
+        registerPacketName(ClientboundMountScreenOpenPacket.class, "OpenHorseScreenS2CPacket");
+        registerPacketName(ClientboundOpenBookPacket.class, "OpenWrittenBookS2CPacket");
+        registerPacketName(ClientboundSetActionBarTextPacket.class, "OverlayMessageS2CPacket");
+        registerPacketName(ClientboundSoundEntityPacket.class, "PlaySoundFromEntityS2CPacket");
+        registerPacketName(ClientboundPlayerAbilitiesPacket.class, "PlayerAbilitiesS2CPacket");
+        registerPacketName(ClientboundBlockChangedAckPacket.class, "PlayerActionResponseS2CPacket");
+        registerPacketName(ClientboundTabListPacket.class, "PlayerListHeaderS2CPacket");
+        registerPacketName(ClientboundPlayerInfoUpdatePacket.class, "PlayerListS2CPacket");
+        registerPacketName(ClientboundPlayerInfoRemovePacket.class, "PlayerRemoveS2CPacket");
+        registerPacketName(ClientboundRespawnPacket.class, "PlayerRespawnS2CPacket");
+        registerPacketName(ClientboundSetDefaultSpawnPositionPacket.class, "PlayerSpawnPositionS2CPacket");
+        registerPacketName(ClientboundDisguisedChatPacket.class, "ProfilelessChatMessageS2CPacket");
+        registerPacketName(ClientboundProjectilePowerPacket.class, "ProjectilePowerS2CPacket");
+        registerPacketName(ClientboundRemoveMobEffectPacket.class, "RemoveEntityStatusEffectS2CPacket");
+        registerPacketName(ClientboundDeleteChatPacket.class, "RemoveMessageS2CPacket");
+        registerPacketName(ClientboundSetDisplayObjectivePacket.class, "ScoreboardDisplayS2CPacket");
+        registerPacketName(ClientboundSetObjectivePacket.class, "ScoreboardObjectiveUpdateS2CPacket");
+        registerPacketName(ClientboundResetScorePacket.class, "ScoreboardScoreResetS2CPacket");
+        registerPacketName(ClientboundSetScorePacket.class, "ScoreboardScoreUpdateS2CPacket");
+        registerPacketName(ClientboundContainerSetDataPacket.class, "ScreenHandlerPropertyUpdateS2CPacket");
+        registerPacketName(ClientboundSelectAdvancementsTabPacket.class, "SelectAdvancementTabS2CPacket");
+        registerPacketName(ClientboundServerDataPacket.class, "ServerMetadataS2CPacket");
+        registerPacketName(ClientboundSetCameraPacket.class, "SetCameraEntityS2CPacket");
+        registerPacketName(ClientboundMerchantOffersPacket.class, "SetTradeOffersS2CPacket");
+        registerPacketName(ClientboundOpenSignEditorPacket.class, "SignEditorOpenS2CPacket");
+        registerPacketName(ClientboundSetSimulationDistancePacket.class, "SimulationDistanceS2CPacket");
+        registerPacketName(ClientboundChunkBatchStartPacket.class, "StartChunkSendS2CPacket");
+        registerPacketName(ClientboundAwardStatsPacket.class, "StatisticsS2CPacket");
+        registerPacketName(ClientboundStopSoundPacket.class, "StopSoundS2CPacket");
+        registerPacketName(ClientboundSetSubtitleTextPacket.class, "SubtitleS2CPacket");
+        registerPacketName(ClientboundUpdateRecipesPacket.class, "SynchronizeRecipesS2CPacket");
+        registerPacketName(ClientboundSetPlayerTeamPacket.class, "TeamS2CPacket");
+        registerPacketName(ClientboundTickingStepPacket.class, "TickStepS2CPacket");
+        registerPacketName(ClientboundSetTitlesAnimationPacket.class, "TitleFadeS2CPacket");
+        registerPacketName(ClientboundSetTitleTextPacket.class, "TitleS2CPacket");
+        registerPacketName(ClientboundForgetLevelChunkPacket.class, "UnloadChunkS2CPacket");
+        registerPacketName(ClientboundSetHeldSlotPacket.class, "UpdateSelectedSlotS2CPacket");
+        registerPacketName(ClientboundTickingStatePacket.class, "UpdateTickRateS2CPacket");
+        registerPacketName(ClientboundMoveVehiclePacket.class, "VehicleMoveS2CPacket");
+        registerPacketName(ClientboundSetBorderCenterPacket.class, "WorldBorderCenterChangedS2CPacket");
+        registerPacketName(ClientboundInitializeBorderPacket.class, "WorldBorderInitializeS2CPacket");
+        registerPacketName(ClientboundSetBorderLerpSizePacket.class, "WorldBorderInterpolateSizeS2CPacket");
+        registerPacketName(ClientboundSetBorderSizePacket.class, "WorldBorderSizeChangedS2CPacket");
+        registerPacketName(ClientboundSetBorderWarningDistancePacket.class, "WorldBorderWarningBlocksChangedS2CPacket");
+        registerPacketName(ClientboundSetBorderWarningDelayPacket.class, "WorldBorderWarningTimeChangedS2CPacket");
+        registerPacketName(ClientboundLevelEventPacket.class, "WorldEventS2CPacket");
+        // ChangeUnlockedRecipes wurde in 26.2 in drei Pakete aufgeteilt -> alle auf den alten Namen mappen:
+        registerPacketName(ClientboundRecipeBookAddPacket.class, "ChangeUnlockedRecipesS2CPacket");
+        registerPacketName(ClientboundRecipeBookRemovePacket.class, "ChangeUnlockedRecipesS2CPacket");
+        registerPacketName(ClientboundRecipeBookSettingsPacket.class, "ChangeUnlockedRecipesS2CPacket");
+        // ExperienceOrbSpawnS2CPacket: in 26.2 entfernt (Orbs spawnen via ClientboundAddEntityPacket) -> kein Mapping.
+
+        // C2S (alle in net.minecraft.network.protocol.game.*):
+        registerPacketName(ServerboundChunkBatchReceivedPacket.class, "AcknowledgeChunksC2SPacket");
+        registerPacketName(ServerboundConfigurationAcknowledgedPacket.class, "AcknowledgeReconfigurationC2SPacket");
+        registerPacketName(ServerboundSeenAdvancementsPacket.class, "AdvancementTabC2SPacket");
+        registerPacketName(ServerboundPaddleBoatPacket.class, "BoatPaddleStateC2SPacket");
+        registerPacketName(ServerboundEditBookPacket.class, "BookUpdateC2SPacket");
+        registerPacketName(ServerboundContainerButtonClickPacket.class, "ButtonClickC2SPacket");
+        registerPacketName(ServerboundChatCommandSignedPacket.class, "ChatCommandSignedC2SPacket");
+        registerPacketName(ServerboundChatPacket.class, "ChatMessageC2SPacket");
+        registerPacketName(ServerboundPlayerCommandPacket.class, "ClientCommandC2SPacket");
+        registerPacketName(ServerboundClientCommandPacket.class, "ClientStatusC2SPacket");
+        registerPacketName(ServerboundContainerClosePacket.class, "CloseHandledScreenC2SPacket");
+        registerPacketName(ServerboundChatCommandPacket.class, "CommandExecutionC2SPacket");
+        registerPacketName(ServerboundPlaceRecipePacket.class, "CraftRequestC2SPacket");
+        registerPacketName(ServerboundDebugSubscriptionRequestPacket.class, "DebugSampleSubscriptionC2SPacket");
+        registerPacketName(ServerboundSwingPacket.class, "HandSwingC2SPacket");
+        registerPacketName(ServerboundJigsawGeneratePacket.class, "JigsawGeneratingC2SPacket");
+        registerPacketName(ServerboundChatAckPacket.class, "MessageAcknowledgmentC2SPacket");
+        registerPacketName(ServerboundPlayerActionPacket.class, "PlayerActionC2SPacket");
+        registerPacketName(ServerboundPlayerInputPacket.class, "PlayerInputC2SPacket");
+        registerPacketName(ServerboundUseItemOnPacket.class, "PlayerInteractBlockC2SPacket");
+        registerPacketName(ServerboundInteractPacket.class, "PlayerInteractEntityC2SPacket");
+        registerPacketName(ServerboundUseItemPacket.class, "PlayerInteractItemC2SPacket");
+        // PlayerMove: Basis ServerboundMovePlayerPacket ist abstrakt -> 4 Wire-Subklassen einzeln mappen:
+        registerPacketName(ServerboundMovePlayerPacket.Pos.class, "PlayerMoveC2SPacket");
+        registerPacketName(ServerboundMovePlayerPacket.PosRot.class, "PlayerMoveC2SPacket");
+        registerPacketName(ServerboundMovePlayerPacket.Rot.class, "PlayerMoveC2SPacket");
+        registerPacketName(ServerboundMovePlayerPacket.StatusOnly.class, "PlayerMoveC2SPacket");
+        registerPacketName(ServerboundChatSessionUpdatePacket.class, "PlayerSessionC2SPacket");
+        registerPacketName(ServerboundBlockEntityTagQueryPacket.class, "QueryBlockNbtC2SPacket");
+        registerPacketName(ServerboundEntityTagQueryPacket.class, "QueryEntityNbtC2SPacket");
+        registerPacketName(ServerboundRecipeBookSeenRecipePacket.class, "RecipeBookDataC2SPacket");
+        registerPacketName(ServerboundRecipeBookChangeSettingsPacket.class, "RecipeCategoryOptionsC2SPacket");
+        registerPacketName(ServerboundRenameItemPacket.class, "RenameItemC2SPacket");
+        registerPacketName(ServerboundCommandSuggestionPacket.class, "RequestCommandCompletionsC2SPacket");
+        registerPacketName(ServerboundSelectTradePacket.class, "SelectMerchantTradeC2SPacket");
+        registerPacketName(ServerboundContainerSlotStateChangedPacket.class, "SlotChangedStateC2SPacket");
+        registerPacketName(ServerboundTeleportToEntityPacket.class, "SpectatorTeleportC2SPacket");
+        registerPacketName(ServerboundAcceptTeleportationPacket.class, "TeleportConfirmC2SPacket");
+        registerPacketName(ServerboundSetBeaconPacket.class, "UpdateBeaconC2SPacket");
+        registerPacketName(ServerboundSetCommandBlockPacket.class, "UpdateCommandBlockC2SPacket");
+        registerPacketName(ServerboundSetCommandMinecartPacket.class, "UpdateCommandBlockMinecartC2SPacket");
+        registerPacketName(ServerboundChangeDifficultyPacket.class, "UpdateDifficultyC2SPacket");
+        registerPacketName(ServerboundLockDifficultyPacket.class, "UpdateDifficultyLockC2SPacket");
+        registerPacketName(ServerboundSetJigsawBlockPacket.class, "UpdateJigsawC2SPacket");
+        registerPacketName(ServerboundPlayerAbilitiesPacket.class, "UpdatePlayerAbilitiesC2SPacket");
+        registerPacketName(ServerboundSetCarriedItemPacket.class, "UpdateSelectedSlotC2SPacket");
+        registerPacketName(ServerboundSignUpdatePacket.class, "UpdateSignC2SPacket");
+        registerPacketName(ServerboundSetStructureBlockPacket.class, "UpdateStructureBlockC2SPacket");
+        registerPacketName(ServerboundMoveVehiclePacket.class, "VehicleMoveC2SPacket");
+        // PickFromInventory wurde in 26.2 in zwei Pakete aufgeteilt:
+        registerPacketName(ServerboundPickItemFromBlockPacket.class, "PickFromInventoryC2SPacket");
+        registerPacketName(ServerboundPickItemFromEntityPacket.class, "PickFromInventoryC2SPacket");
     }
 
     private static <T extends Packet<?>> void registerPacket(Class<T> clazz, String name, PacketUnpacker<T> unpacker) {
