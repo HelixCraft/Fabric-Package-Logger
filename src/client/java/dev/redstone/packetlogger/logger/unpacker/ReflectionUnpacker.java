@@ -4,6 +4,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +48,7 @@ public class ReflectionUnpacker {
                 return ((Tag) obj).toString();
             }
             if (obj instanceof Component) {
-                return "\"" + escapeString(((Component) obj).getString()) + "\"";
+                return formatComponent((Component) obj);
             }
             if (obj instanceof BlockPos) {
                 BlockPos pos = (BlockPos) obj;
@@ -197,6 +199,40 @@ public class ReflectionUnpacker {
         return sb.toString();
     }
     
+    /**
+     * Formatiert eine Component inkl. Style (Farbe, Formatierung) und Siblings.
+     * getString() allein verwirft den Style — daher hier manuell ausgelesen.
+     */
+    private static String formatComponent(Component component) {
+        StringBuilder sb = new StringBuilder("{");
+        sb.append("text:\"").append(escapeString(component.getContents() instanceof net.minecraft.network.chat.contents.PlainTextContents
+                ? ((net.minecraft.network.chat.contents.PlainTextContents) component.getContents()).text()
+                : component.getString())).append("\"");
+
+        Style style = component.getStyle();
+        TextColor color = style.getColor();
+        if (color != null) {
+            sb.append(",color:\"").append(color.serialize()).append("\"");
+        }
+        if (style.isBold())          sb.append(",bold:true");
+        if (style.isItalic())        sb.append(",italic:true");
+        if (style.isUnderlined())    sb.append(",underlined:true");
+        if (style.isStrikethrough()) sb.append(",strikethrough:true");
+        if (style.isObfuscated())    sb.append(",obfuscated:true");
+
+        List<Component> siblings = component.getSiblings();
+        if (siblings != null && !siblings.isEmpty()) {
+            List<String> parts = new ArrayList<>();
+            for (Component sibling : siblings) {
+                parts.add(formatComponent(sibling));
+            }
+            sb.append(",extra:[").append(String.join(",", parts)).append("]");
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
+
     private static String escapeString(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\")
