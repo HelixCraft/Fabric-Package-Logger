@@ -1,19 +1,19 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
+import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Unpacker für ChunkDeltaUpdateS2CPacket (MultiBlockChange).
+ * Unpacker für ClientboundSectionBlocksUpdatePacket (MultiBlockChange).
  * Zeigt alle geänderten Blöcke mit Position und BlockState.
  */
-public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ChunkDeltaUpdateS2CPacket> {
-    
+public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ClientboundSectionBlocksUpdatePacket> {
+
     @Override
-    public String unpack(ChunkDeltaUpdateS2CPacket packet) {
+    public String unpack(ClientboundSectionBlocksUpdatePacket packet) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         
@@ -21,7 +21,7 @@ public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ChunkDeltaUpd
         try {
             Object sectionPos = null;
             for (Field field : packet.getClass().getDeclaredFields()) {
-                if (field.getType().getSimpleName().contains("ChunkSectionPos")) {
+                if (field.getType().getSimpleName().contains("SectionPos")) {
                     field.setAccessible(true);
                     sectionPos = field.get(packet);
                     break;
@@ -41,7 +41,7 @@ public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ChunkDeltaUpd
         // Alle Block-Änderungen via visitUpdates
         List<String> changes = new ArrayList<>();
         try {
-            packet.visitUpdates((pos, state) -> {
+            packet.runUpdates((pos, state) -> {
                 StringBuilder change = new StringBuilder();
                 change.append("{pos:{x:").append(pos.getX())
                       .append(",y:").append(pos.getY())

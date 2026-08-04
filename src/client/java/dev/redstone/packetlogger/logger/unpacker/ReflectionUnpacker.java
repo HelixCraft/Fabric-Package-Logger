@@ -1,13 +1,14 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.phys.Vec3;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -40,26 +41,26 @@ public class ReflectionUnpacker {
             if (obj instanceof ItemStack) {
                 return ItemStackFormatter.format((ItemStack) obj);
             }
-            if (obj instanceof NbtCompound) {
-                return ((NbtCompound) obj).asString();
+            if (obj instanceof CompoundTag) {
+                return ((CompoundTag) obj).toString();
             }
-            if (obj instanceof NbtElement) {
-                return ((NbtElement) obj).asString();
+            if (obj instanceof Tag) {
+                return ((Tag) obj).toString();
             }
-            if (obj instanceof Text) {
-                return "\"" + escapeString(((Text) obj).getString()) + "\"";
+            if (obj instanceof Component) {
+                return formatComponent((Component) obj);
             }
             if (obj instanceof BlockPos) {
                 BlockPos pos = (BlockPos) obj;
                 return "{x:" + pos.getX() + ",y:" + pos.getY() + ",z:" + pos.getZ() + "}";
             }
-            if (obj instanceof Vec3d) {
-                Vec3d vec = (Vec3d) obj;
+            if (obj instanceof Vec3) {
+                Vec3 vec = (Vec3) obj;
                 return "{x:" + vec.x + ",y:" + vec.y + ",z:" + vec.z + "}";
             }
             if (obj instanceof ChunkPos) {
                 ChunkPos pos = (ChunkPos) obj;
-                return "{x:" + pos.x + ",z:" + pos.z + "}";
+                return "{x:" + pos.x() + ",z:" + pos.z() + "}";
             }
             if (obj instanceof UUID) {
                 return "\"" + obj.toString() + "\"";
@@ -198,6 +199,40 @@ public class ReflectionUnpacker {
         return sb.toString();
     }
     
+    /**
+     * Formatiert eine Component inkl. Style (Farbe, Formatierung) und Siblings.
+     * getString() allein verwirft den Style — daher hier manuell ausgelesen.
+     */
+    private static String formatComponent(Component component) {
+        StringBuilder sb = new StringBuilder("{");
+        sb.append("text:\"").append(escapeString(component.getContents() instanceof net.minecraft.network.chat.contents.PlainTextContents
+                ? ((net.minecraft.network.chat.contents.PlainTextContents) component.getContents()).text()
+                : component.getString())).append("\"");
+
+        Style style = component.getStyle();
+        TextColor color = style.getColor();
+        if (color != null) {
+            sb.append(",color:\"").append(color.serialize()).append("\"");
+        }
+        if (style.isBold())          sb.append(",bold:true");
+        if (style.isItalic())        sb.append(",italic:true");
+        if (style.isUnderlined())    sb.append(",underlined:true");
+        if (style.isStrikethrough()) sb.append(",strikethrough:true");
+        if (style.isObfuscated())    sb.append(",obfuscated:true");
+
+        List<Component> siblings = component.getSiblings();
+        if (siblings != null && !siblings.isEmpty()) {
+            List<String> parts = new ArrayList<>();
+            for (Component sibling : siblings) {
+                parts.add(formatComponent(sibling));
+            }
+            sb.append(",extra:[").append(String.join(",", parts)).append("]");
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
+
     private static String escapeString(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\")

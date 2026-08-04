@@ -1,9 +1,8 @@
 {
   "required": true,
   "package": "dev.redstone.packetlogger.mixin.client",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
-    "ExampleClientMixin",
     "ClientConnectionMixin",
     "ClientPlayNetworkHandlerMixin",
     "MinecraftClientMixin"

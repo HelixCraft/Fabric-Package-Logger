@@ -1,35 +1,31 @@
 package dev.redstone.packetlogger.mixin.client;
 
 import dev.redstone.packetlogger.logger.PacketLogger;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.network.ClientConnection;
-import net.minecraft.network.PacketCallbacks;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Mixin für ClientConnection um alle Pakete zu loggen.
+ * Mixin für Connection (ehem. ClientConnection) um alle Pakete zu loggen.
  * Basiert auf dem Meteor Client Ansatz.
  */
-@Mixin(ClientConnection.class)
+@Mixin(Connection.class)
 public class ClientConnectionMixin {
-    
+
     private static boolean debugLogged = false;
-    
+
     /**
-     * Intercepted alle eingehenden Pakete (Server -> Client)
-     * Wird aufgerufen bevor handlePacket ausgeführt wird.
+     * Intercepted alle eingehenden Pakete (Server -> Client).
+     * channelRead0(ChannelHandlerContext, Packet) wird für jedes empfangene Paket aufgerufen.
      */
     @Inject(
-        method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/packet/Packet;)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/network/ClientConnection;handlePacket(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/listener/PacketListener;)V",
-            shift = At.Shift.BEFORE
-        )
+        method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/protocol/Packet;)V",
+        at = @At("HEAD")
     )
     private void onReceivePacket(ChannelHandlerContext context, Packet<?> packet, CallbackInfo ci) {
         if (!debugLogged) {
@@ -45,15 +41,17 @@ public class ClientConnectionMixin {
             System.err.println("[PacketLogger] Error in onReceivePacket: " + e.getMessage());
         }
     }
-    
+
     /**
-     * Intercepted alle ausgehenden Pakete (Client -> Server)
+     * Intercepted alle ausgehenden Pakete (Client -> Server).
+     * Die 3-arg-Variante send(Packet, ChannelFutureListener, boolean) ist der gemeinsame
+     * Funnel: sowohl send(Packet) als auch send(Packet, listener) delegieren hierher.
      */
     @Inject(
-        method = "send(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/PacketCallbacks;)V",
+        method = "send(Lnet/minecraft/network/protocol/Packet;Lio/netty/channel/ChannelFutureListener;Z)V",
         at = @At("HEAD")
     )
-    private void onSendPacket(Packet<?> packet, PacketCallbacks callbacks, CallbackInfo ci) {
+    private void onSendPacket(Packet<?> packet, ChannelFutureListener listener, boolean flush, CallbackInfo ci) {
         try {
             // Alle ausgehenden Pakete sind C2S
             PacketLogger.logOutgoing(packet);

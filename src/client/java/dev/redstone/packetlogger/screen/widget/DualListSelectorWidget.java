@@ -1,14 +1,17 @@
 package dev.redstone.packetlogger.screen.widget;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.Selectable;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,19 +23,19 @@ import java.util.function.Consumer;
  * Zwei-Spalten Widget: Links alle verfügbaren Pakete, rechts die ausgewählten.
  * Mit Suchfunktion und Buttons zum Hinzufügen/Entfernen.
  */
-public class DualListSelectorWidget implements Drawable, Element, Selectable {
+public class DualListSelectorWidget implements Renderable, GuiEventListener, NarratableEntry {
     private final int x;
     private final int y;
     private final int width;
     private final int height;
-    private final TextRenderer textRenderer;
+    private final Font font;
     private final String title;
-    
-    private final TextFieldWidget searchField;
+
+    private final EditBox searchField;
     private final List<String> allPackets;
     private final Set<String> selectedPackets;
     private final Consumer<Set<String>> onSelectionChanged;
-    
+
     private List<String> filteredAvailable;
     private List<String> filteredSelected;
     private int leftScrollOffset = 0;
@@ -41,13 +44,13 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private int hoveredLeftIndex = -1;
     private int hoveredRightIndex = -1;
     private boolean focused = false;
-    
+
     private static final int HEADER_HEIGHT = 50;
     private static final int PADDING = 4;
     private static final int GAP = 8;
     private static final int SEARCH_FIELD_Y_OFFSET = 18; // Position des Suchfelds unter dem Titel
     private static final int SEARCH_FIELD_HEIGHT = 20;
-    
+
     public DualListSelectorWidget(int x, int y, int width, int height, String title,
                                    List<String> packets, Set<String> initialSelection,
                                    Consumer<Set<String>> onSelectionChanged) {
@@ -56,63 +59,63 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         this.width = width;
         this.height = height;
         this.title = title;
-        this.textRenderer = MinecraftClient.getInstance().textRenderer;
+        this.font = Minecraft.getInstance().font;
         this.allPackets = new ArrayList<>(packets);
         this.selectedPackets = new HashSet<>(initialSelection);
         this.onSelectionChanged = onSelectionChanged;
-        
+
         // Suchfeld - Position unter dem Titel
-        this.searchField = new TextFieldWidget(
-            textRenderer, 
-            x + PADDING, 
-            y + SEARCH_FIELD_Y_OFFSET, 
-            width - PADDING * 2, 
-            SEARCH_FIELD_HEIGHT, 
-            Text.literal("Search")
+        this.searchField = new EditBox(
+            font,
+            x + PADDING,
+            y + SEARCH_FIELD_Y_OFFSET,
+            width - PADDING * 2,
+            SEARCH_FIELD_HEIGHT,
+            Component.literal("Search")
         );
-        this.searchField.setPlaceholder(Text.literal("Search packets..."));
-        this.searchField.setChangedListener(this::onSearchChanged);
-        this.searchField.setDrawsBackground(true);
+        this.searchField.setHint(Component.literal("Search packets..."));
+        this.searchField.setResponder(this::onSearchChanged);
+        this.searchField.setBordered(true);
         this.searchField.setEditable(true);
         this.searchField.setMaxLength(256);
-        
+
         updateFilteredLists();
     }
-    
+
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
         return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
     }
-    
+
     // Getter für das Suchfeld - wird von SimpleConfigScreen benötigt
     public int getSearchFieldX() {
         return x + PADDING;
     }
-    
+
     public int getSearchFieldY() {
         return y + SEARCH_FIELD_Y_OFFSET;
     }
-    
+
     public int getSearchFieldWidth() {
         return width - PADDING * 2;
     }
-    
+
     public int getSearchFieldHeight() {
         return SEARCH_FIELD_HEIGHT;
     }
-    
+
     private void onSearchChanged(String query) {
         updateFilteredLists();
         leftScrollOffset = 0;
         rightScrollOffset = 0;
     }
-    
+
     private void updateFilteredLists() {
-        String query = searchField.getText().toLowerCase();
-        
+        String query = searchField.getValue().toLowerCase();
+
         filteredAvailable = new ArrayList<>();
         filteredSelected = new ArrayList<>();
-        
+
         for (String pkt : allPackets) {
             boolean matchesQuery = query.isEmpty() || pkt.toLowerCase().contains(query);
             if (matchesQuery) {
@@ -124,115 +127,115 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             }
         }
     }
-    
+
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         int listWidth = (width - GAP) / 2;
         int listY = y + HEADER_HEIGHT;
         int listHeight = height - HEADER_HEIGHT - PADDING;
         int visibleItems = listHeight / itemHeight;
-        
+
         // Hintergrund Panel
         context.fill(x, y, x + width, y + height, 0xC0101010);
-        context.drawBorder(x, y, width, height, 0xFF3A3A3A);
-        
+        context.outline(x, y, width, height, 0xFF3A3A3A);
+
         // Titel
-        context.drawText(textRenderer, title, x + PADDING, y + 2, 0xFFFFFF, false);
-        
+        context.text(font, title, x + PADDING, y + 2, 0xFFFFFFFF, false);
+
         // Suchfeld
-        searchField.render(context, mouseX, mouseY, delta);
-        
+        searchField.extractRenderState(context, mouseX, mouseY, delta);
+
         // === LINKE LISTE (Verfügbar) ===
         int leftX = x + PADDING;
-        renderListPanel(context, leftX, listY, listWidth - PADDING, listHeight, 
-                       "Available", filteredAvailable, leftScrollOffset, 
+        renderListPanel(context, leftX, listY, listWidth - PADDING, listHeight,
+                       "Available", filteredAvailable, leftScrollOffset,
                        mouseX, mouseY, true, visibleItems);
-        
+
         // === RECHTE LISTE (Ausgewählt) ===
         int rightX = x + listWidth + GAP / 2;
         renderListPanel(context, rightX, listY, listWidth - PADDING, listHeight,
                        "Selected (" + selectedPackets.size() + ")", filteredSelected, rightScrollOffset,
                        mouseX, mouseY, false, visibleItems);
-        
+
         // Hover-Index aktualisieren
         updateHoverIndices(mouseX, mouseY, leftX, rightX, listY, listWidth - PADDING, listHeight, visibleItems);
     }
-    
-    private void renderListPanel(DrawContext context, int px, int py, int pw, int ph,
+
+    private void renderListPanel(GuiGraphicsExtractor context, int px, int py, int pw, int ph,
                                   String label, List<String> items, int scrollOffset,
                                   int mouseX, int mouseY, boolean isLeft, int visibleItems) {
         // Panel Hintergrund
         context.fill(px, py, px + pw, py + ph, 0xFF1A1A1A);
-        context.drawBorder(px, py, pw, ph, 0xFF4A4A4A);
-        
+        context.outline(px, py, pw, ph, 0xFF4A4A4A);
+
         // Label
-        context.drawText(textRenderer, label, px + 2, py - 10, 0xAAAAAA, false);
-        
+        context.text(font, label, px + 2, py - 10, 0xFFAAAAAA, false);
+
         // Items
         int itemY = py + 2;
         for (int i = 0; i < visibleItems && (i + scrollOffset) < items.size(); i++) {
             int index = i + scrollOffset;
             String pkt = items.get(index);
             int currentItemY = itemY + (i * itemHeight);
-            
+
             boolean isHovered = (isLeft ? hoveredLeftIndex : hoveredRightIndex) == index;
-            
+
             // Hover Hintergrund
             if (isHovered) {
-                context.fill(px + 1, currentItemY, px + pw - 1, currentItemY + itemHeight, 
+                context.fill(px + 1, currentItemY, px + pw - 1, currentItemY + itemHeight,
                            isLeft ? 0xFF2A4A2A : 0xFF4A2A2A);
             }
-            
+
             // Icon (+ oder -) - zentriert vertikal (Minecraft font height ist 9)
             String icon = isLeft ? "+" : "-";
             int iconColor = isLeft ? 0xFF55FF55 : 0xFFFF5555;
             int textYOffset = (itemHeight - 9) / 2;
-            context.drawText(textRenderer, icon, px + 4, currentItemY + textYOffset, iconColor, false);
-            
+            context.text(font, icon, px + 4, currentItemY + textYOffset, iconColor, false);
+
             // Packet Name (gekürzt) - zentriert vertikal
             String displayText = getShortPacketName(pkt, pw - 18);
-            context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xDDDDDD, false);
+            context.text(font, displayText, px + 14, currentItemY + textYOffset, 0xFFDDDDDD, false);
         }
-        
+
         // Scrollbar
         if (items.size() > visibleItems) {
             int scrollbarHeight = Math.max(10, (int)((float)visibleItems / items.size() * (ph - 4)));
             int maxScroll = items.size() - visibleItems;
             int scrollbarY = py + 2 + (int)((float)scrollOffset / maxScroll * (ph - 4 - scrollbarHeight));
-            
+
             context.fill(px + pw - 4, py + 2, px + pw - 1, py + ph - 2, 0xFF0A0A0A);
             context.fill(px + pw - 3, scrollbarY, px + pw - 1, scrollbarY + scrollbarHeight, 0xFF555555);
         }
     }
-    
+
     private String getShortPacketName(String pkt, int maxWidth) {
-        if (textRenderer.getWidth(pkt) <= maxWidth) {
+        if (font.width(pkt) <= maxWidth) {
             return pkt;
         }
         // Zeige nur den letzten Teil des Paketnamens
         String[] parts = pkt.split("\\.");
         StringBuilder result = new StringBuilder();
         for (int i = parts.length - 1; i >= 0; i--) {
-            String test = (i < parts.length - 1 ? "..." : "") + 
+            String test = (i < parts.length - 1 ? "..." : "") +
                          String.join(".", java.util.Arrays.copyOfRange(parts, i, parts.length));
-            if (textRenderer.getWidth(test) <= maxWidth) {
+            if (font.width(test) <= maxWidth) {
                 result = new StringBuilder(test);
             } else {
                 break;
             }
         }
-        return result.length() > 0 ? result.toString() : textRenderer.trimToWidth(pkt, maxWidth - 10) + "...";
+        return result.length() > 0 ? result.toString() : font.plainSubstrByWidth(pkt, maxWidth - 10) + "...";
     }
-    
-    private void updateHoverIndices(int mouseX, int mouseY, int leftX, int rightX, 
+
+    private void updateHoverIndices(int mouseX, int mouseY, int leftX, int rightX,
                                      int listY, int listWidth, int listHeight, int visibleItems) {
         hoveredLeftIndex = -1;
         hoveredRightIndex = -1;
-        
+
         if (mouseY >= listY && mouseY < listY + listHeight) {
             int relativeY = mouseY - listY - 2;
             int itemIndex = relativeY / itemHeight;
-            
+
             if (mouseX >= leftX && mouseX < leftX + listWidth && itemIndex >= 0) {
                 int actualIndex = itemIndex + leftScrollOffset;
                 if (actualIndex < filteredAvailable.size()) {
@@ -246,27 +249,30 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             }
         }
     }
-    
+
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubled) {
+        double mouseX = event.x();
+        double mouseY = event.y();
+
         // Check if click is on search field (use our known coordinates)
         int sfX = x + PADDING;
         int sfY = y + SEARCH_FIELD_Y_OFFSET;
         int sfW = width - PADDING * 2;
         int sfH = SEARCH_FIELD_HEIGHT;
-        
+
         if (mouseX >= sfX && mouseX < sfX + sfW && mouseY >= sfY && mouseY < sfY + sfH) {
             searchField.setFocused(true);
             this.focused = true;
-            searchField.mouseClicked(mouseX, mouseY, button);
+            searchField.mouseClicked(event, doubled);
             return true;
         } else {
             searchField.setFocused(false);
         }
-        
+
         // Check if click is within widget bounds
         boolean withinBounds = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-        
+
         // Calculate list dimensions for click detection
         int listWidth = (width - GAP) / 2;
         int listY = y + HEADER_HEIGHT;
@@ -275,12 +281,12 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         int leftX = x + PADDING;
         int rightX = x + listWidth + GAP / 2;
         int actualListWidth = listWidth - PADDING;
-        
+
         // Check if click is in list area
         if (mouseY >= listY && mouseY < listY + listHeight) {
             int relativeY = (int)mouseY - listY - 2;
             int itemIndex = relativeY / itemHeight;
-            
+
             if (itemIndex >= 0 && itemIndex < visibleItems) {
                 // Check left list (available packets)
                 if (mouseX >= leftX && mouseX < leftX + actualListWidth) {
@@ -306,20 +312,20 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
                 }
             }
         }
-        
+
         return withinBounds;
     }
-    
+
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         int listWidth = (width - GAP) / 2;
         int listY = y + HEADER_HEIGHT;
         int listHeight = height - HEADER_HEIGHT - PADDING;
         int visibleItems = listHeight / itemHeight;
-        
+
         int leftX = x + PADDING;
         int rightX = x + listWidth + GAP / 2;
-        
+
         if (mouseY >= listY && mouseY < listY + listHeight) {
             if (mouseX >= leftX && mouseX < leftX + listWidth) {
                 int maxScroll = Math.max(0, filteredAvailable.size() - visibleItems);
@@ -333,25 +339,25 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         }
         return false;
     }
-    
+
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        return searchField.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyEvent event) {
+        return searchField.keyPressed(event);
     }
-    
+
     @Override
-    public boolean charTyped(char chr, int modifiers) {
-        return searchField.charTyped(chr, modifiers);
+    public boolean charTyped(CharacterEvent event) {
+        return searchField.charTyped(event);
     }
-    
-    public TextFieldWidget getSearchField() {
+
+    public EditBox getSearchField() {
         return searchField;
     }
-    
+
     public Set<String> getSelectedPackets() {
         return new HashSet<>(selectedPackets);
     }
-    
+
     @Override
     public void setFocused(boolean focused) {
         this.focused = focused;
@@ -359,18 +365,18 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             searchField.setFocused(false);
         }
     }
-    
+
     @Override
     public boolean isFocused() {
         return focused || searchField.isFocused();
     }
-    
+
     @Override
-    public SelectionType getType() {
-        return SelectionType.NONE;
+    public NarrationPriority narrationPriority() {
+        return NarrationPriority.NONE;
     }
-    
+
     @Override
-    public void appendNarrations(NarrationMessageBuilder builder) {
+    public void updateNarration(NarrationElementOutput builder) {
     }
 }

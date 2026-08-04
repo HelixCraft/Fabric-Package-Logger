@@ -3,10 +3,12 @@ package dev.redstone.packetlogger.screen;
 import dev.redstone.packetlogger.config.ModConfig;
 import dev.redstone.packetlogger.config.ModConfig.LogMode;
 import dev.redstone.packetlogger.screen.widget.DualListSelectorWidget;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +20,8 @@ public class SimpleConfigScreen extends Screen {
     private final ModConfig config;
     
     // Widgets
-    private ButtonWidget logPacketsButton;
-    private ButtonWidget logModeButton;
+    private Button logPacketsButton;
+    private Button logModeButton;
     private DualListSelectorWidget s2cSelector;
     private DualListSelectorWidget c2sSelector;
     
@@ -192,7 +194,7 @@ public class SimpleConfigScreen extends Screen {
     );
 
     public SimpleConfigScreen(Screen parent) {
-        super(Text.literal("Packet Logger"));
+        super(Component.literal("Packet Logger"));
         this.parent = parent;
         this.config = ModConfig.getInstance();
         this.logPacketsEnabled = config.logPackets;
@@ -211,26 +213,26 @@ public class SimpleConfigScreen extends Screen {
         int y = panelY + 5;
         
         // Log Packets Toggle Button
-        this.logPacketsButton = ButtonWidget.builder(
-            Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
+        this.logPacketsButton = Button.builder(
+            Component.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
             button -> {
                 logPacketsEnabled = !logPacketsEnabled;
-                button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
+                button.setMessage(Component.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
             })
-            .dimensions(panelX, y, buttonWidth, 20)
+            .bounds(panelX, y, buttonWidth, 20)
             .build();
-        this.addDrawableChild(logPacketsButton);
-        
+        this.addRenderableWidget(logPacketsButton);
+
         // Log Mode Toggle Button
-        this.logModeButton = ButtonWidget.builder(
-            Text.literal("Output: " + currentLogMode.getDisplayName()),
+        this.logModeButton = Button.builder(
+            Component.literal("Output: " + currentLogMode.getDisplayName()),
             button -> {
                 currentLogMode = currentLogMode.next();
-                button.setMessage(Text.literal("Output: " + currentLogMode.getDisplayName()));
+                button.setMessage(Component.literal("Output: " + currentLogMode.getDisplayName()));
             })
-            .dimensions(panelX + buttonWidth + 10, y, buttonWidth, 20)
+            .bounds(panelX + buttonWidth + 10, y, buttonWidth, 20)
             .build();
-        this.addDrawableChild(logModeButton);
+        this.addRenderableWidget(logModeButton);
         
         y += 30;
         
@@ -244,7 +246,7 @@ public class SimpleConfigScreen extends Screen {
             new HashSet<>(config.selectedS2CPackets),
             selection -> {}
         );
-        this.addDrawableChild(s2cSelector);
+        this.addRenderableWidget(s2cSelector);
         
         y += selectorHeight + 10;
         
@@ -256,44 +258,42 @@ public class SimpleConfigScreen extends Screen {
             new HashSet<>(config.selectedC2SPackets),
             selection -> {}
         );
-        this.addDrawableChild(c2sSelector);
-        
+        this.addRenderableWidget(c2sSelector);
+
         int bottomY = this.height - 28;
         int bottomButtonWidth = 100;
-        
-        this.addDrawableChild(
-            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
-                .dimensions(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
+
+        this.addRenderableWidget(
+            Button.builder(Component.literal("Save"), button -> this.saveAndClose())
+                .bounds(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
                 .build()
         );
-        
-        this.addDrawableChild(
-            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
-                .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+
+        this.addRenderableWidget(
+            Button.builder(Component.literal("Cancel"), button -> this.onClose())
+                .bounds(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
                 .build()
         );
     }
-    
+
     @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void extractBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
     }
-    
+
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
-        
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         int panelWidth = Math.min(500, this.width - 40);
         int panelX = (this.width - panelWidth) / 2;
         int panelY = 20;
         int panelHeight = this.height - 55;
-        
+
         context.fill(panelX - 2, panelY - 2, panelX + panelWidth + 2, panelY + panelHeight + 2, 0xFF2A2A2A);
         context.fill(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 0xE0181818);
-        
-        super.render(context, mouseX, mouseY, delta);
-        
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+
+        super.extractRenderState(context, mouseX, mouseY, delta);
+
+        context.centeredText(this.font, this.title, this.width / 2, 8, 0xFFFFFFFF);
     }
     
     private void saveAndClose() {
@@ -302,35 +302,35 @@ public class SimpleConfigScreen extends Screen {
         config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
         config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
         config.save();
-        this.close();
+        this.onClose();
     }
-    
+
     @Override
-    public void close() {
-        if (this.client != null) {
-            this.client.setScreen(this.parent);
+    public void onClose() {
+        if (this.minecraft != null) {
+            this.minecraft.setScreenAndShow(this.parent);
         }
     }
-    
+
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (s2cSelector != null && s2cSelector.keyPressed(keyCode, scanCode, modifiers)) {
+    public boolean keyPressed(KeyEvent event) {
+        if (s2cSelector != null && s2cSelector.keyPressed(event)) {
             return true;
         }
-        if (c2sSelector != null && c2sSelector.keyPressed(keyCode, scanCode, modifiers)) {
+        if (c2sSelector != null && c2sSelector.keyPressed(event)) {
             return true;
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
-    
+
     @Override
-    public boolean charTyped(char chr, int modifiers) {
-        if (s2cSelector != null && s2cSelector.charTyped(chr, modifiers)) {
+    public boolean charTyped(CharacterEvent event) {
+        if (s2cSelector != null && s2cSelector.charTyped(event)) {
             return true;
         }
-        if (c2sSelector != null && c2sSelector.charTyped(chr, modifiers)) {
+        if (c2sSelector != null && c2sSelector.charTyped(event)) {
             return true;
         }
-        return super.charTyped(chr, modifiers);
+        return super.charTyped(event);
     }
 }
