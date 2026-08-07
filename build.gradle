@@ -1,135 +1,122 @@
+buildscript {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "net.fabricmc:fabric-loom:${property('loom_version')}"
+    }
+}
+
 plugins {
-	id 'fabric-loom' version "${loom_version}"
-	id 'maven-publish'
+    id 'maven-publish'
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-	archivesName = "${project.archives_base_name}-${project.active_mc_version}"
-}
-
-// --- DYNAMIC VERSION CONFIGURATION ---
-def mcVersionData = [
-    // Format: "MC_VERSION": ["YARN_MAPPINGS", "LOADER_VERSION", "FABRIC_API_VERSION"]
-    "1.20":    ["1.20+build.1", "0.18.4", "0.83.0+1.20"],
-    "1.20.1":  ["1.20.1+build.10", "0.18.4", "0.92.6+1.20.1"],
-    "1.20.2":  ["1.20.2+build.4", "0.18.4", "0.91.6+1.20.2"],
-    "1.20.3":  ["1.20.3+build.1", "0.18.4", "0.91.1+1.20.3"],
-    "1.20.4":  ["1.20.4+build.3", "0.18.4", "0.97.3+1.20.4"],
-    "1.20.5":  ["1.20.5+build.1", "0.18.4", "0.97.8+1.20.5"],
-    "1.20.6":  ["1.20.6+build.3", "0.18.4", "0.100.8+1.20.6"],
-    "1.21":    ["1.21+build.9", "0.18.4", "0.102.0+1.21"],
-    "1.21.1":  ["1.21.1+build.3", "0.18.4", "0.116.7+1.21.1"],
-    "1.21.2":  ["1.21.2+build.1", "0.18.4", "0.106.1+1.21.2"],
-    "1.21.3":  ["1.21.3+build.2", "0.18.4", "0.114.1+1.21.3"],
-    "1.21.4":  ["1.21.4+build.8", "0.18.4", "0.119.4+1.21.4"],
-    "1.21.5":  ["1.21.5+build.1", "0.18.4", "0.128.2+1.21.5"],
-    "1.21.6":  ["1.21.6+build.1", "0.18.4", "0.128.2+1.21.6"],
-    "1.21.7":  ["1.21.7+build.8", "0.18.4", "0.129.0+1.21.7"],
-    "1.21.8":  ["1.21.8+build.1", "0.18.4", "0.136.1+1.21.8"],
-    "1.21.9":  ["1.21.9+build.1", "0.18.4", "0.134.1+1.21.9"],
-    "1.21.10": ["1.21.10+build.3", "0.18.4", "0.138.4+1.21.10"],
-    "1.21.11": ["1.21.11+build.4", "0.18.4", "0.141.0+1.21.11"]
-]
-def activeVersion = project.active_mc_version.trim()
-if (!mcVersionData.containsKey(activeVersion)) {
-    throw new GradleException("Unsupported Minecraft version: '${activeVersion}'. Supported versions: ${mcVersionData.keySet()}")
-}
-
-project.ext.minecraft_version = activeVersion
-project.ext.yarn_mappings     = mcVersionData[activeVersion][0]
-project.ext.loader_version    = mcVersionData[activeVersion][1]
-project.ext.fabric_version    = mcVersionData[activeVersion][2]
-
-println "Building for Minecraft ${project.minecraft_version} (Yarn: ${project.yarn_mappings}, Loader: ${project.loader_version}, API: ${project.fabric_version})"
-// -------------------------------------
-
-
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-	
-	// Cloth Config Repository
-	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/releases/"
-	}
+if (sc.current.parsed >= "26.1") {
+    apply plugin: 'net.fabricmc.fabric-loom'
+} else {
+    apply plugin: 'net.fabricmc.fabric-loom-remap'
 }
 
 loom {
-	splitEnvironmentSourceSets()
-
-	mods {
-		"packet-logger" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
-
+    runs {
+        client {
+            runDir = "${rootProject.projectDir}/run"
+            programArg "--username=dev"
+        }
+        server {
+            runDir = "${rootProject.projectDir}/run"
+        }
+    }
 }
+
+version = "${property('mod_version')}+mc${sc.current.version}"
+group = property('maven_group') as String
+base.archivesName = 'packet-logger'
+
+repositories {
+    maven { name = "Terraformers"; url = "https://maven.terraformersmc.com/" }
+}
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(["${layout.buildDirectory.get()}/generated/stonecutter/main/java"])
+        }
+        resources {
+            setSrcDirs(["${rootProject.projectDir}/src/main/resources"])
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('stonecutterGenerate')
+}
+
+def loaderDep = property('loader_version') as String
+def apiDep = property('deps.fabric_api') as String
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    minecraft "com.mojang:minecraft:${sc.current.version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	// Gson für JSON-Serialisierung (bereits in Minecraft enthalten)
-	implementation "com.google.code.gson:gson:2.10.1"
+    if (sc.current.parsed >= "26.1") {
+        implementation "net.fabricmc:fabric-loader:${loaderDep}"
+        implementation "net.fabricmc.fabric-api:fabric-api:${apiDep}"
+        // Die einzelnen Module werden fürs Kompilieren gebraucht, da die JIJ-Nested-Jars
+        // aus dem Meta-Paket bei 'implementation' nicht auf den Compile-Classpath gelangen.
+        implementation "net.fabricmc.fabric-api:fabric-lifecycle-events-v1:${apiDep}"
+        implementation "net.fabricmc.fabric-api:fabric-key-mapping-api-v1:${apiDep}"
+    } else {
+        mappings "net.fabricmc:yarn:${property('deps.yarn_mappings')}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${loaderDep}"
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${apiDep}"
+    }
+
+    // Gson für JSON-Serialisierung (bereits in Minecraft enthalten)
+    implementation "com.google.code.gson:gson:2.10.1"
 }
 
-processResources {
-	inputs.property "version", project.version
+def javaVersion = sc.current.parsed >= "26.1" ? 25 : 21
 
-	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
-	}
+processResources {
+    def ver = project.version
+    def mcVer = sc.current.version
+    def javaReq = sc.current.parsed >= "26.1" ? ">=25" : ">=21"
+    inputs.property "version", ver
+    inputs.property "minecraft_version", mcVer
+    inputs.property "java_version", javaReq
+    filesMatching("fabric.mod.json") {
+        expand "version": ver, "minecraft_version": mcVer, "java_version": javaReq
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+    it.options.release = javaVersion
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+    withSourcesJar()
+}
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+tasks.matching { it.name == 'sourcesJar' }.configureEach {
+    dependsOn tasks.named('stonecutterGenerate')
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
-
-	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
-	}
+    inputs.property "projectName", project.name
+    from("LICENSE") {
+        rename { "${it}_${project.name}" }
+    }
 }
 
-// configure the maven publication
 publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
 }

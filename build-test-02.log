@@ -1,0 +1,1983 @@
+timon@Timon-YogaX1G3-Debian:~/devhub/Fabric-Package-Logger 1.21.4$ /home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh . 1.21-26.2 build
+=== Versions-Test (build) fuer Range '1.21-26.2' ===
+    Versionen: 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11 26.1 26.2
+
+----- 1.21 (build) -----
+[1.21] clean (BUILD SUCCESSFUL)
+
+----- 1.21.1 (build) -----
+[1.21.1] clean (BUILD SUCCESSFUL)
+
+----- 1.21.2 (build) -----
+[1.21.2] clean (BUILD SUCCESSFUL)
+
+----- 1.21.3 (build) -----
+[1.21.3] clean (BUILD SUCCESSFUL)
+
+----- 1.21.4 (build) -----
+[1.21.4] clean (BUILD SUCCESSFUL)
+
+----- 1.21.5 (build) -----
+[1.21.5] clean (BUILD SUCCESSFUL)
+
+----- 1.21.6 (build) -----
+[1.21.6] clean (BUILD SUCCESSFUL)
+
+----- 1.21.7 (build) -----
+[1.21.7] clean (BUILD SUCCESSFUL)
+
+----- 1.21.8 (build) -----
+[1.21.8] clean (BUILD SUCCESSFUL)
+
+----- 1.21.9 (build) -----
+[1.21.9] clean (BUILD SUCCESSFUL)
+
+----- 1.21.10 (build) -----
+[1.21.10] clean (BUILD SUCCESSFUL)
+
+----- 1.21.11 (build) -----
+[1.21.11] clean (BUILD SUCCESSFUL)
+----- 26.1 (build) -----
+[26.1] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :26.1:stonecutterPrepare UP-TO-DATE
+> Task :26.1:stonecutterGenerate UP-TO-DATE
+
+> Task :26.1:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:22: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:6: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:7: Fehler: Package net.minecraft.client.gui.screen ist nicht vorhanden
+import net.minecraft.client.gui.screen.Screen;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:8: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ButtonWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:11: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:13: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:20: Fehler: Symbol nicht gefunden
+public class SimpleConfigScreen extends Screen {
+                                        ^
+  Symbol: Klasse Screen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:21: Fehler: Symbol nicht gefunden
+    private final Screen parent;
+                  ^
+  Symbol: Klasse Screen
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:25: Fehler: Symbol nicht gefunden
+    private ButtonWidget logPacketsButton;
+            ^
+  Symbol: Klasse ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:26: Fehler: Symbol nicht gefunden
+    private ButtonWidget logModeButton;
+            ^
+  Symbol: Klasse ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:4: Fehler: Package net.minecraft.client.font ist nicht vorhanden
+import net.minecraft.client.font.TextRenderer;
+                                ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:5: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:6: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Drawable;
+                               ^
+  Symbol: Klasse Drawable
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:7: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Element;
+                               ^
+  Symbol: Klasse Element
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:8: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Selectable;
+                               ^
+  Symbol: Klasse Selectable
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:9: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+                                                ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:10: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.TextFieldWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:13: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:14: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:16: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                               ^
+  Symbol: Klasse Drawable
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                         ^
+  Symbol: Klasse Element
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                                  ^
+  Symbol: Klasse Selectable
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:198: Fehler: Symbol nicht gefunden
+    public SimpleConfigScreen(Screen parent) {
+                              ^
+  Symbol: Klasse Screen
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:282: Fehler: Symbol nicht gefunden
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:287: Fehler: Symbol nicht gefunden
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                       ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:321: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:345: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:33: Fehler: Symbol nicht gefunden
+    private final TextRenderer textRenderer;
+                  ^
+  Symbol: Klasse TextRenderer
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:36: Fehler: Symbol nicht gefunden
+    private final TextFieldWidget searchField;
+                  ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:134: Fehler: Symbol nicht gefunden
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                       ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:170: Fehler: Symbol nicht gefunden
+    private void renderListPanel(DrawContext context, int px, int py, int pw, int ph,
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:265: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:420: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:432: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:442: Fehler: Symbol nicht gefunden
+    public TextFieldWidget getSearchField() {
+           ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:464: Fehler: Symbol nicht gefunden
+    public SelectionType getType() {
+           ^
+  Symbol: Klasse SelectionType
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:469: Fehler: Symbol nicht gefunden
+    public void appendNarrations(NarrationMessageBuilder builder) {
+                                 ^
+  Symbol: Klasse NarrationMessageBuilder
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:4: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ClickableWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:6: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:7: Fehler: Package net.minecraft.util.math ist nicht vorhanden
+import net.minecraft.util.math.MathHelper;
+                              ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:24: Fehler: Symbol nicht gefunden
+public class ColorPickerWidget extends ClickableWidget {
+                                       ^
+  Symbol: Klasse ClickableWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:72: Fehler: Symbol nicht gefunden
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                             ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:100: Fehler: Symbol nicht gefunden
+    private void renderSVPicker(DrawContext context, int x, int y) {
+                                ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:124: Fehler: Symbol nicht gefunden
+    private void renderHueSlider(DrawContext context, int x, int y) {
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:138: Fehler: Symbol nicht gefunden
+    private void renderAlphaSlider(DrawContext context, int x, int y) {
+                                   ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+    private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                  ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+    private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                     ^
+  Symbol: Klasse MinecraftClient
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+    private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                     ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+    private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                        ^
+  Symbol: Klasse MinecraftClient
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:212: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:307: Fehler: Symbol nicht gefunden
+    public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:388: Fehler: Symbol nicht gefunden
+    public boolean mouseReleased(Click click) {
+                                 ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:493: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+    protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:4: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ClickableWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:6: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.TextFieldWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:7: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:11: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:21: Fehler: Symbol nicht gefunden
+public class ColorSelectorWidget extends ClickableWidget {
+                                         ^
+  Symbol: Klasse ClickableWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:22: Fehler: Symbol nicht gefunden
+    private final TextFieldWidget hexField;
+                  ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:80: Fehler: Symbol nicht gefunden
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                             ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:118: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:156: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:168: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:190: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+    protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:61: Fehler: Symbol nicht gefunden
+				if (client.gui.screen() == null) {
+				              ^
+  Symbol: Methode screen()
+  Ort: Variable gui von Typ Gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:62: Fehler: Inkompatible Typen: SimpleConfigScreen kann nicht in Screen konvertiert werden
+					client.setScreenAndShow(new SimpleConfigScreen(null));
+					                        ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:206: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+    @Override
+    ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:208: Fehler: Symbol nicht gefunden
+        super.init();
+        ^
+  Symbol: Variable super
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:210: Fehler: Symbol nicht gefunden
+        int panelWidth = Math.min(500, this.width - 40);
+                                           ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:211: Fehler: Symbol nicht gefunden
+        int panelX = (this.width - panelWidth) / 2;
+                          ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:218: Fehler: Symbol nicht gefunden
+        this.logPacketsButton = ButtonWidget.builder(
+                                ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:219: Fehler: Symbol nicht gefunden
+            Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
+            ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:222: Fehler: Symbol nicht gefunden
+                button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
+                                  ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:229: Fehler: Symbol nicht gefunden
+        this.logModeButton = ButtonWidget.builder(
+                             ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:230: Fehler: Symbol nicht gefunden
+            Text.literal("Output: " + currentLogMode.getDisplayName()),
+            ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:233: Fehler: Symbol nicht gefunden
+                button.setMessage(Text.literal("Output: " + currentLogMode.getDisplayName()));
+                                  ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:241: Fehler: Symbol nicht gefunden
+        int selectorHeight = (this.height - y - 50) / 2 - 5;
+                                  ^
+  Symbol: Variable height
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:251: Fehler: Symbol nicht gefunden
+        this.addDrawableChild(s2cSelector);
+            ^
+  Symbol: Methode addDrawableChild(DualListSelectorWidget)
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:263: Fehler: Symbol nicht gefunden
+        this.addDrawableChild(c2sSelector);
+            ^
+  Symbol: Methode addDrawableChild(DualListSelectorWidget)
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:265: Fehler: Symbol nicht gefunden
+        int bottomY = this.height - 28;
+                          ^
+  Symbol: Variable height
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:270: Fehler: Symbol nicht gefunden
+                .dimensions(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
+                                ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+            ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+                                 ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:276: Fehler: Symbol nicht gefunden
+                .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+                                ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+            ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+                                 ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:281: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+    @Override
+    ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+        context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                       ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+        context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                                   ^
+  Symbol: Variable height
+Hinweis: Einige Meldungen wurden vereinfacht. Wiederholen Sie die Kompilierung mit -Xdiags:verbose, um die vollständige Ausgabe abzurufen
+100 Fehler
+
+> Task :26.1:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':26.1:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:251: Fehler: Symbol nicht gefunden
+          this.addDrawableChild(s2cSelector);
+              ^
+    Symbol: Methode addDrawableChild(DualListSelectorWidget)
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:263: Fehler: Symbol nicht gefunden
+          this.addDrawableChild(c2sSelector);
+              ^
+    Symbol: Methode addDrawableChild(DualListSelectorWidget)
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:62: Fehler: Inkompatible Typen: SimpleConfigScreen kann nicht in Screen konvertiert werden
+  					client.setScreenAndShow(new SimpleConfigScreen(null));
+  					                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:22: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:6: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:11: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:21: Fehler: Symbol nicht gefunden
+      private final Screen parent;
+                    ^
+    Symbol: Klasse Screen
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:25: Fehler: Symbol nicht gefunden
+      private ButtonWidget logPacketsButton;
+              ^
+    Symbol: Klasse ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:26: Fehler: Symbol nicht gefunden
+      private ButtonWidget logModeButton;
+              ^
+    Symbol: Klasse ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:5: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:6: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Drawable;
+                                 ^
+    Symbol: Klasse Drawable
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:7: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Element;
+                                 ^
+    Symbol: Klasse Element
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:8: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Selectable;
+                                 ^
+    Symbol: Klasse Selectable
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:13: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:14: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:198: Fehler: Symbol nicht gefunden
+      public SimpleConfigScreen(Screen parent) {
+                                ^
+    Symbol: Klasse Screen
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:282: Fehler: Symbol nicht gefunden
+      public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:287: Fehler: Symbol nicht gefunden
+      public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                         ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:321: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:345: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:33: Fehler: Symbol nicht gefunden
+      private final TextRenderer textRenderer;
+                    ^
+    Symbol: Klasse TextRenderer
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:36: Fehler: Symbol nicht gefunden
+      private final TextFieldWidget searchField;
+                    ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:134: Fehler: Symbol nicht gefunden
+      public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                         ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:170: Fehler: Symbol nicht gefunden
+      private void renderListPanel(DrawContext context, int px, int py, int pw, int ph,
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:265: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:420: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:432: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:442: Fehler: Symbol nicht gefunden
+      public TextFieldWidget getSearchField() {
+             ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:464: Fehler: Symbol nicht gefunden
+      public SelectionType getType() {
+             ^
+    Symbol: Klasse SelectionType
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:469: Fehler: Symbol nicht gefunden
+      public void appendNarrations(NarrationMessageBuilder builder) {
+                                   ^
+    Symbol: Klasse NarrationMessageBuilder
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:4: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:72: Fehler: Symbol nicht gefunden
+      public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                               ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:100: Fehler: Symbol nicht gefunden
+      private void renderSVPicker(DrawContext context, int x, int y) {
+                                  ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:124: Fehler: Symbol nicht gefunden
+      private void renderHueSlider(DrawContext context, int x, int y) {
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:138: Fehler: Symbol nicht gefunden
+      private void renderAlphaSlider(DrawContext context, int x, int y) {
+                                     ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+      private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                    ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+      private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                       ^
+    Symbol: Klasse MinecraftClient
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+      private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                       ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+      private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                          ^
+    Symbol: Klasse MinecraftClient
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:212: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:307: Fehler: Symbol nicht gefunden
+      public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:388: Fehler: Symbol nicht gefunden
+      public boolean mouseReleased(Click click) {
+                                   ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:4: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:11: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:22: Fehler: Symbol nicht gefunden
+      private final TextFieldWidget hexField;
+                    ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:80: Fehler: Symbol nicht gefunden
+      public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                               ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:118: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:156: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:168: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:208: Fehler: Symbol nicht gefunden
+          super.init();
+          ^
+    Symbol: Variable super
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:218: Fehler: Symbol nicht gefunden
+          this.logPacketsButton = ButtonWidget.builder(
+                                  ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:219: Fehler: Symbol nicht gefunden
+              Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
+              ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:222: Fehler: Symbol nicht gefunden
+                  button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
+                                    ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:229: Fehler: Symbol nicht gefunden
+          this.logModeButton = ButtonWidget.builder(
+                               ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:230: Fehler: Symbol nicht gefunden
+              Text.literal("Output: " + currentLogMode.getDisplayName()),
+              ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:233: Fehler: Symbol nicht gefunden
+                  button.setMessage(Text.literal("Output: " + currentLogMode.getDisplayName()));
+                                    ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+              ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+                                   ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+              ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+                                   ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:206: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+      @Override
+      ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:281: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+      @Override
+      ^
+  Hinweis: Einige Meldungen wurden vereinfacht. Wiederholen Sie die Kompilierung mit -Xdiags:verbose, um die vollständige Ausgabe abzurufen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:20: Fehler: Symbol nicht gefunden
+  public class SimpleConfigScreen extends Screen {
+                                          ^
+    Symbol: Klasse Screen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                 ^
+    Symbol: Klasse Drawable
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                           ^
+    Symbol: Klasse Element
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                                    ^
+    Symbol: Klasse Selectable
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:24: Fehler: Symbol nicht gefunden
+  public class ColorPickerWidget extends ClickableWidget {
+                                         ^
+    Symbol: Klasse ClickableWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:21: Fehler: Symbol nicht gefunden
+  public class ColorSelectorWidget extends ClickableWidget {
+                                           ^
+    Symbol: Klasse ClickableWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:210: Fehler: Symbol nicht gefunden
+          int panelWidth = Math.min(500, this.width - 40);
+                                             ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:211: Fehler: Symbol nicht gefunden
+          int panelX = (this.width - panelWidth) / 2;
+                            ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:241: Fehler: Symbol nicht gefunden
+          int selectorHeight = (this.height - y - 50) / 2 - 5;
+                                    ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:265: Fehler: Symbol nicht gefunden
+          int bottomY = this.height - 28;
+                            ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:270: Fehler: Symbol nicht gefunden
+                  .dimensions(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
+                                  ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:276: Fehler: Symbol nicht gefunden
+                  .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+                                  ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+          context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                         ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+          context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                                     ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:61: Fehler: Symbol nicht gefunden
+  				if (client.gui.screen() == null) {
+  				              ^
+    Symbol: Methode screen()
+    Ort: Variable gui von Typ Gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:7: Fehler: Package net.minecraft.client.gui.screen ist nicht vorhanden
+  import net.minecraft.client.gui.screen.Screen;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:8: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ButtonWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:13: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:4: Fehler: Package net.minecraft.client.font ist nicht vorhanden
+  import net.minecraft.client.font.TextRenderer;
+                                  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:9: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+  import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+                                                  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:10: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.TextFieldWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:16: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ClickableWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:6: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:7: Fehler: Package net.minecraft.util.math ist nicht vorhanden
+  import net.minecraft.util.math.MathHelper;
+                                ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:493: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+      protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ClickableWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:6: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.TextFieldWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:7: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:190: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+      protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                        ^
+  100 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 25s
+3 actionable tasks: 1 executed, 2 up-to-date
+----------------------------------------
+
+----- 26.2 (build) -----
+[26.2] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :26.2:stonecutterPrepare UP-TO-DATE
+> Task :26.2:stonecutterGenerate UP-TO-DATE
+
+> Task :26.2:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:22: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:6: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:7: Fehler: Package net.minecraft.client.gui.screen ist nicht vorhanden
+import net.minecraft.client.gui.screen.Screen;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:8: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ButtonWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:11: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:13: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:20: Fehler: Symbol nicht gefunden
+public class SimpleConfigScreen extends Screen {
+                                        ^
+  Symbol: Klasse Screen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:21: Fehler: Symbol nicht gefunden
+    private final Screen parent;
+                  ^
+  Symbol: Klasse Screen
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:25: Fehler: Symbol nicht gefunden
+    private ButtonWidget logPacketsButton;
+            ^
+  Symbol: Klasse ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:26: Fehler: Symbol nicht gefunden
+    private ButtonWidget logModeButton;
+            ^
+  Symbol: Klasse ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:4: Fehler: Package net.minecraft.client.font ist nicht vorhanden
+import net.minecraft.client.font.TextRenderer;
+                                ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:5: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:6: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Drawable;
+                               ^
+  Symbol: Klasse Drawable
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:7: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Element;
+                               ^
+  Symbol: Klasse Element
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:8: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Selectable;
+                               ^
+  Symbol: Klasse Selectable
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:9: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+                                                ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:10: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.TextFieldWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:13: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:14: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:16: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                               ^
+  Symbol: Klasse Drawable
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                         ^
+  Symbol: Klasse Element
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                                  ^
+  Symbol: Klasse Selectable
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:198: Fehler: Symbol nicht gefunden
+    public SimpleConfigScreen(Screen parent) {
+                              ^
+  Symbol: Klasse Screen
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:282: Fehler: Symbol nicht gefunden
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:287: Fehler: Symbol nicht gefunden
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                       ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:321: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:345: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:33: Fehler: Symbol nicht gefunden
+    private final TextRenderer textRenderer;
+                  ^
+  Symbol: Klasse TextRenderer
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:36: Fehler: Symbol nicht gefunden
+    private final TextFieldWidget searchField;
+                  ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:134: Fehler: Symbol nicht gefunden
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                       ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:170: Fehler: Symbol nicht gefunden
+    private void renderListPanel(DrawContext context, int px, int py, int pw, int ph,
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:265: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:420: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:432: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:442: Fehler: Symbol nicht gefunden
+    public TextFieldWidget getSearchField() {
+           ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:464: Fehler: Symbol nicht gefunden
+    public SelectionType getType() {
+           ^
+  Symbol: Klasse SelectionType
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:469: Fehler: Symbol nicht gefunden
+    public void appendNarrations(NarrationMessageBuilder builder) {
+                                 ^
+  Symbol: Klasse NarrationMessageBuilder
+  Ort: Klasse DualListSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:4: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ClickableWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:6: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:7: Fehler: Package net.minecraft.util.math ist nicht vorhanden
+import net.minecraft.util.math.MathHelper;
+                              ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:24: Fehler: Symbol nicht gefunden
+public class ColorPickerWidget extends ClickableWidget {
+                                       ^
+  Symbol: Klasse ClickableWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:72: Fehler: Symbol nicht gefunden
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                             ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:100: Fehler: Symbol nicht gefunden
+    private void renderSVPicker(DrawContext context, int x, int y) {
+                                ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:124: Fehler: Symbol nicht gefunden
+    private void renderHueSlider(DrawContext context, int x, int y) {
+                                 ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:138: Fehler: Symbol nicht gefunden
+    private void renderAlphaSlider(DrawContext context, int x, int y) {
+                                   ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+    private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                  ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+    private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                     ^
+  Symbol: Klasse MinecraftClient
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+    private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                     ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+    private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                        ^
+  Symbol: Klasse MinecraftClient
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:212: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:307: Fehler: Symbol nicht gefunden
+    public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:388: Fehler: Symbol nicht gefunden
+    public boolean mouseReleased(Click click) {
+                                 ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorPickerWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:493: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+    protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+import net.minecraft.client.MinecraftClient;
+                           ^
+  Symbol: Klasse MinecraftClient
+  Ort: Package net.minecraft.client
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:4: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.DrawContext;
+                               ^
+  Symbol: Klasse DrawContext
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.ClickableWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:6: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+import net.minecraft.client.gui.widget.TextFieldWidget;
+                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:7: Fehler: Package net.minecraft.text ist nicht vorhanden
+import net.minecraft.text.Text;
+                         ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:10: Fehler: Symbol nicht gefunden
+import net.minecraft.client.gui.Click;
+                               ^
+  Symbol: Klasse Click
+  Ort: Package net.minecraft.client.gui
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:11: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.KeyInput;
+                                 ^
+  Symbol: Klasse KeyInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+import net.minecraft.client.input.CharInput;
+                                 ^
+  Symbol: Klasse CharInput
+  Ort: Package net.minecraft.client.input
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:21: Fehler: Symbol nicht gefunden
+public class ColorSelectorWidget extends ClickableWidget {
+                                         ^
+  Symbol: Klasse ClickableWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:22: Fehler: Symbol nicht gefunden
+    private final TextFieldWidget hexField;
+                  ^
+  Symbol: Klasse TextFieldWidget
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:80: Fehler: Symbol nicht gefunden
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                             ^
+  Symbol: Klasse DrawContext
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:118: Fehler: Symbol nicht gefunden
+    public boolean mouseClicked(Click click, boolean isRelease) {
+                                ^
+  Symbol: Klasse Click
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:156: Fehler: Symbol nicht gefunden
+    public boolean keyPressed(KeyInput input) {
+                              ^
+  Symbol: Klasse KeyInput
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:168: Fehler: Symbol nicht gefunden
+    public boolean charTyped(CharInput input) {
+                             ^
+  Symbol: Klasse CharInput
+  Ort: Klasse ColorSelectorWidget
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:190: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+    protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                      ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:62: Fehler: Inkompatible Typen: SimpleConfigScreen kann nicht in Screen konvertiert werden
+					client.setScreenAndShow(new SimpleConfigScreen(null));
+					                        ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:206: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+    @Override
+    ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:208: Fehler: Symbol nicht gefunden
+        super.init();
+        ^
+  Symbol: Variable super
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:210: Fehler: Symbol nicht gefunden
+        int panelWidth = Math.min(500, this.width - 40);
+                                           ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:211: Fehler: Symbol nicht gefunden
+        int panelX = (this.width - panelWidth) / 2;
+                          ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:218: Fehler: Symbol nicht gefunden
+        this.logPacketsButton = ButtonWidget.builder(
+                                ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:219: Fehler: Symbol nicht gefunden
+            Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
+            ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:222: Fehler: Symbol nicht gefunden
+                button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
+                                  ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:229: Fehler: Symbol nicht gefunden
+        this.logModeButton = ButtonWidget.builder(
+                             ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:230: Fehler: Symbol nicht gefunden
+            Text.literal("Output: " + currentLogMode.getDisplayName()),
+            ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:233: Fehler: Symbol nicht gefunden
+                button.setMessage(Text.literal("Output: " + currentLogMode.getDisplayName()));
+                                  ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:241: Fehler: Symbol nicht gefunden
+        int selectorHeight = (this.height - y - 50) / 2 - 5;
+                                  ^
+  Symbol: Variable height
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:251: Fehler: Symbol nicht gefunden
+        this.addDrawableChild(s2cSelector);
+            ^
+  Symbol: Methode addDrawableChild(DualListSelectorWidget)
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:263: Fehler: Symbol nicht gefunden
+        this.addDrawableChild(c2sSelector);
+            ^
+  Symbol: Methode addDrawableChild(DualListSelectorWidget)
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:265: Fehler: Symbol nicht gefunden
+        int bottomY = this.height - 28;
+                          ^
+  Symbol: Variable height
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:270: Fehler: Symbol nicht gefunden
+                .dimensions(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
+                                ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+            ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+                                 ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:276: Fehler: Symbol nicht gefunden
+                .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+                                ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+            ^
+  Symbol: Variable ButtonWidget
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+                                 ^
+  Symbol: Variable Text
+  Ort: Klasse SimpleConfigScreen
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:281: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+    @Override
+    ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+        context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                       ^
+  Symbol: Variable width
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+        context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                                   ^
+  Symbol: Variable height
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:286: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+    @Override
+    ^
+Hinweis: Einige Meldungen wurden vereinfacht. Wiederholen Sie die Kompilierung mit -Xdiags:verbose, um die vollständige Ausgabe abzurufen
+100 Fehler
+
+> Task :26.2:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':26.2:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:251: Fehler: Symbol nicht gefunden
+          this.addDrawableChild(s2cSelector);
+              ^
+    Symbol: Methode addDrawableChild(DualListSelectorWidget)
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:263: Fehler: Symbol nicht gefunden
+          this.addDrawableChild(c2sSelector);
+              ^
+    Symbol: Methode addDrawableChild(DualListSelectorWidget)
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/PacketLoggerClient.java:62: Fehler: Inkompatible Typen: SimpleConfigScreen kann nicht in Screen konvertiert werden
+  					client.setScreenAndShow(new SimpleConfigScreen(null));
+  					                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:22: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:6: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:11: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:21: Fehler: Symbol nicht gefunden
+      private final Screen parent;
+                    ^
+    Symbol: Klasse Screen
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:25: Fehler: Symbol nicht gefunden
+      private ButtonWidget logPacketsButton;
+              ^
+    Symbol: Klasse ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:26: Fehler: Symbol nicht gefunden
+      private ButtonWidget logModeButton;
+              ^
+    Symbol: Klasse ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:5: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:6: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Drawable;
+                                 ^
+    Symbol: Klasse Drawable
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:7: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Element;
+                                 ^
+    Symbol: Klasse Element
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:8: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Selectable;
+                                 ^
+    Symbol: Klasse Selectable
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:13: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:14: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:198: Fehler: Symbol nicht gefunden
+      public SimpleConfigScreen(Screen parent) {
+                                ^
+    Symbol: Klasse Screen
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:282: Fehler: Symbol nicht gefunden
+      public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:287: Fehler: Symbol nicht gefunden
+      public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                         ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:321: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:345: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:33: Fehler: Symbol nicht gefunden
+      private final TextRenderer textRenderer;
+                    ^
+    Symbol: Klasse TextRenderer
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:36: Fehler: Symbol nicht gefunden
+      private final TextFieldWidget searchField;
+                    ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:134: Fehler: Symbol nicht gefunden
+      public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+                         ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:170: Fehler: Symbol nicht gefunden
+      private void renderListPanel(DrawContext context, int px, int py, int pw, int ph,
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:265: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:420: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:432: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:442: Fehler: Symbol nicht gefunden
+      public TextFieldWidget getSearchField() {
+             ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:464: Fehler: Symbol nicht gefunden
+      public SelectionType getType() {
+             ^
+    Symbol: Klasse SelectionType
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:469: Fehler: Symbol nicht gefunden
+      public void appendNarrations(NarrationMessageBuilder builder) {
+                                   ^
+    Symbol: Klasse NarrationMessageBuilder
+    Ort: Klasse DualListSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:4: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:72: Fehler: Symbol nicht gefunden
+      public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                               ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:100: Fehler: Symbol nicht gefunden
+      private void renderSVPicker(DrawContext context, int x, int y) {
+                                  ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:124: Fehler: Symbol nicht gefunden
+      private void renderHueSlider(DrawContext context, int x, int y) {
+                                   ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:138: Fehler: Symbol nicht gefunden
+      private void renderAlphaSlider(DrawContext context, int x, int y) {
+                                     ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+      private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                    ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:161: Fehler: Symbol nicht gefunden
+      private void renderRGBSliders(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                       ^
+    Symbol: Klasse MinecraftClient
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+      private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                       ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:185: Fehler: Symbol nicht gefunden
+      private void renderHexAndPreview(DrawContext context, int x, int y, MinecraftClient client) {
+                                                                          ^
+    Symbol: Klasse MinecraftClient
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:212: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:307: Fehler: Symbol nicht gefunden
+      public boolean mouseDragged(Click click, double deltaX, double deltaY) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:388: Fehler: Symbol nicht gefunden
+      public boolean mouseReleased(Click click) {
+                                   ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorPickerWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:3: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.MinecraftClient;
+                             ^
+    Symbol: Klasse MinecraftClient
+    Ort: Package net.minecraft.client
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:4: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.DrawContext;
+                                 ^
+    Symbol: Klasse DrawContext
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:10: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.gui.Click;
+                                 ^
+    Symbol: Klasse Click
+    Ort: Package net.minecraft.client.gui
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:11: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.KeyInput;
+                                   ^
+    Symbol: Klasse KeyInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:12: Fehler: Symbol nicht gefunden
+  import net.minecraft.client.input.CharInput;
+                                   ^
+    Symbol: Klasse CharInput
+    Ort: Package net.minecraft.client.input
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:22: Fehler: Symbol nicht gefunden
+      private final TextFieldWidget hexField;
+                    ^
+    Symbol: Klasse TextFieldWidget
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:80: Fehler: Symbol nicht gefunden
+      public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+                               ^
+    Symbol: Klasse DrawContext
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:118: Fehler: Symbol nicht gefunden
+      public boolean mouseClicked(Click click, boolean isRelease) {
+                                  ^
+    Symbol: Klasse Click
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:156: Fehler: Symbol nicht gefunden
+      public boolean keyPressed(KeyInput input) {
+                                ^
+    Symbol: Klasse KeyInput
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:168: Fehler: Symbol nicht gefunden
+      public boolean charTyped(CharInput input) {
+                               ^
+    Symbol: Klasse CharInput
+    Ort: Klasse ColorSelectorWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:208: Fehler: Symbol nicht gefunden
+          super.init();
+          ^
+    Symbol: Variable super
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:218: Fehler: Symbol nicht gefunden
+          this.logPacketsButton = ButtonWidget.builder(
+                                  ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:219: Fehler: Symbol nicht gefunden
+              Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")),
+              ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:222: Fehler: Symbol nicht gefunden
+                  button.setMessage(Text.literal("Logging: " + (logPacketsEnabled ? "§aON" : "§cOFF")));
+                                    ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:229: Fehler: Symbol nicht gefunden
+          this.logModeButton = ButtonWidget.builder(
+                               ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:230: Fehler: Symbol nicht gefunden
+              Text.literal("Output: " + currentLogMode.getDisplayName()),
+              ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:233: Fehler: Symbol nicht gefunden
+                  button.setMessage(Text.literal("Output: " + currentLogMode.getDisplayName()));
+                                    ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+              ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:269: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+                                   ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+              ^
+    Symbol: Variable ButtonWidget
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:275: Fehler: Symbol nicht gefunden
+              ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+                                   ^
+    Symbol: Variable Text
+    Ort: Klasse SimpleConfigScreen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:206: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+      @Override
+      ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:281: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+      @Override
+      ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:286: Fehler: Methode überschreibt oder implementiert keine Methode aus einem Supertyp
+      @Override
+      ^
+  Hinweis: Einige Meldungen wurden vereinfacht. Wiederholen Sie die Kompilierung mit -Xdiags:verbose, um die vollständige Ausgabe abzurufen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:20: Fehler: Symbol nicht gefunden
+  public class SimpleConfigScreen extends Screen {
+                                          ^
+    Symbol: Klasse Screen
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                 ^
+    Symbol: Klasse Drawable
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                           ^
+    Symbol: Klasse Element
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:28: Fehler: Symbol nicht gefunden
+  public class DualListSelectorWidget implements Drawable, Element, Selectable {
+                                                                    ^
+    Symbol: Klasse Selectable
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:24: Fehler: Symbol nicht gefunden
+  public class ColorPickerWidget extends ClickableWidget {
+                                         ^
+    Symbol: Klasse ClickableWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:21: Fehler: Symbol nicht gefunden
+  public class ColorSelectorWidget extends ClickableWidget {
+                                           ^
+    Symbol: Klasse ClickableWidget
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:210: Fehler: Symbol nicht gefunden
+          int panelWidth = Math.min(500, this.width - 40);
+                                             ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:211: Fehler: Symbol nicht gefunden
+          int panelX = (this.width - panelWidth) / 2;
+                            ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:241: Fehler: Symbol nicht gefunden
+          int selectorHeight = (this.height - y - 50) / 2 - 5;
+                                    ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:265: Fehler: Symbol nicht gefunden
+          int bottomY = this.height - 28;
+                            ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:270: Fehler: Symbol nicht gefunden
+                  .dimensions(this.width / 2 - bottomButtonWidth - 5, bottomY, bottomButtonWidth, 20)
+                                  ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:276: Fehler: Symbol nicht gefunden
+                  .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+                                  ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+          context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                         ^
+    Symbol: Variable width
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:283: Fehler: Symbol nicht gefunden
+          context.fillGradient(0, 0, this.width, this.height, 0xA0101010, 0xB0101010);
+                                                     ^
+    Symbol: Variable height
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:7: Fehler: Package net.minecraft.client.gui.screen ist nicht vorhanden
+  import net.minecraft.client.gui.screen.Screen;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:8: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ButtonWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java:13: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:4: Fehler: Package net.minecraft.client.font ist nicht vorhanden
+  import net.minecraft.client.font.TextRenderer;
+                                  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:9: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+  import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+                                                  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:10: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.TextFieldWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java:16: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ClickableWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:6: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:7: Fehler: Package net.minecraft.util.math ist nicht vorhanden
+  import net.minecraft.util.math.MathHelper;
+                                ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorPickerWidget.java:493: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+      protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:5: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.ClickableWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:6: Fehler: Package net.minecraft.client.gui.widget ist nicht vorhanden
+  import net.minecraft.client.gui.widget.TextFieldWidget;
+                                        ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:7: Fehler: Package net.minecraft.text ist nicht vorhanden
+  import net.minecraft.text.Text;
+                           ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/26.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/screen/widget/ColorSelectorWidget.java:190: Fehler: Package net.minecraft.client.gui.screen.narration ist nicht vorhanden
+      protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
+                                                                                        ^
+  100 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 25s
+3 actionable tasks: 1 executed, 2 up-to-date
+----------------------------------------
+
+=== Zusammenfassung ===
+Fehlgeschlagen (2/2): 26.1 26.2
+timon@Timon-YogaX1G3-Debian:~/devhub/Fabric-Package-Logger 1.21.4$ 
+

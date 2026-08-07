@@ -1,0 +1,1095 @@
+timon@Timon-YogaX1G3-Debian:~/devhub/Fabric-Package-Logger 1.21.4$ /home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh . 1.21-1.21.11 build
+=== Versions-Test (build) fuer Range '1.21-1.21.11' ===
+    Versionen: 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11
+
+----- 1.21 (build) -----
+[1.21] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+"Lock for cache='/media/timon/Daten/DEBIAN-PROGRAM-SYMLINKS/.gradle/caches/fabric-loom', project=':1.21.10'" is currently held by pid '94975'.
+Locking process does not exist, assuming abrupt termination and deleting lock file.
+Found existing cache lock file (ACQUIRED_PREVIOUS_OWNER_MISSING), rebuilding loom cache. This may have been caused by a failed or canceled build.
+:remapping sources
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21:stonecutterPrepare
+> Task :1.21:stonecutterGenerate
+
+> Task :1.21:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+Mixin(ClientConnection.class)
+^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                       ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                            ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+package dev.redstone.packetlogger.mixin.client;
+^
+4 Fehler
+
+> Task :1.21:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+  package dev.redstone.packetlogger.mixin.client;
+  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                         ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                              ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+  Mixin(ClientConnection.class)
+  ^
+  4 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 2m 33s
+3 actionable tasks: 3 executed
+----------------------------------------
+
+----- 1.21.1 (build) -----
+[1.21.1] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.1:stonecutterPrepare
+> Task :1.21.1:stonecutterGenerate
+
+> Task :1.21.1:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+Mixin(ClientConnection.class)
+^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                       ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                            ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+package dev.redstone.packetlogger.mixin.client;
+^
+4 Fehler
+
+> Task :1.21.1:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.1:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+  package dev.redstone.packetlogger.mixin.client;
+  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                         ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                              ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.1/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+  Mixin(ClientConnection.class)
+  ^
+  4 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 40s
+3 actionable tasks: 3 executed
+----------------------------------------
+
+----- 1.21.2 (build) -----
+[1.21.2] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.2:stonecutterPrepare
+> Task :1.21.2:stonecutterGenerate
+
+> Task :1.21.2:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+Mixin(ClientConnection.class)
+^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                       ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                            ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+package dev.redstone.packetlogger.mixin.client;
+^
+4 Fehler
+
+> Task :1.21.2:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.2:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+  package dev.redstone.packetlogger.mixin.client;
+  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                         ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                              ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.2/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+  Mixin(ClientConnection.class)
+  ^
+  4 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 39s
+3 actionable tasks: 3 executed
+----------------------------------------
+
+----- 1.21.3 (build) -----
+[1.21.3] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.3:stonecutterPrepare
+> Task :1.21.3:stonecutterGenerate
+
+> Task :1.21.3:compileJava
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+Mixin(ClientConnection.class)
+^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                       ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                            ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+package dev.redstone.packetlogger.mixin.client;
+^
+4 Fehler
+
+> Task :1.21.3:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.3:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+  package dev.redstone.packetlogger.mixin.client;
+  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                         ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                              ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.3/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+  Mixin(ClientConnection.class)
+  ^
+  4 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 35s
+3 actionable tasks: 3 executed
+----------------------------------------
+
+----- 1.21.4 (build) -----
+[1.21.4] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.4:stonecutterPrepare
+> Task :1.21.4:stonecutterGenerate
+
+> Task :1.21.4:compileJava FAILED
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+Mixin(ClientConnection.class)
+^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                       ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+Mixin(ClientConnection.class)
+                            ^
+/home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+package dev.redstone.packetlogger.mixin.client;
+^
+4 Fehler
+
+[Incubating] Problems report is available at: file:///home/timon/devhub/Fabric-Package-Logger%201.21.4/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.4:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:1: Fehler: Kompakte Quelldatei darf keine Packagedeklaration aufweisen
+  package dev.redstone.packetlogger.mixin.client;
+  ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                         ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: <ID> erwartet
+  Mixin(ClientConnection.class)
+                              ^
+  /home/timon/devhub/Fabric-Package-Logger 1.21.4/versions/1.21.4/build/generated/stonecutter/main/java/dev/redstone/packetlogger/mixin/client/ClientConnectionMixin.java:72: Fehler: Ungültige Methodendeklaration. Rückgabetyp erforderlich
+  Mixin(ClientConnection.class)
+  ^
+  4 Fehler
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 35s
+3 actionable tasks: 3 executed
+----------------------------------------
+
+----- 1.21.5 (build) -----
+[1.21.5] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.5:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.5:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 33s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.6 (build) -----
+[1.21.6] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.6:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.6:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 33s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.7 (build) -----
+[1.21.7] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.7:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.7:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 31s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.8 (build) -----
+[1.21.8] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.8:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.8:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 31s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.9 (build) -----
+[1.21.9] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.9:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 ~
+Roses are red; Violets are blue; Unmatched scope closer on line 432
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.9:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 28s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.10 (build) -----
+[1.21.10] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.10:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 ~
+Roses are red; Violets are blue; Unmatched scope closer on line 432
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.10:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 26s
+1 actionable task: 1 executed
+----------------------------------------
+
+----- 1.21.11 (build) -----
+[1.21.11] BUILD FAILED (Exit 1) - voller Output:
+----------------------------------------
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Running Stonecutter 0.9.6
+
+> Configure project :1.21
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.1
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.10
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.11
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.2
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.3
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.4
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.5
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.6
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.7
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.8
+Fabric Loom: 1.17.17
+
+> Configure project :1.21.9
+Fabric Loom: 1.17.17
+
+> Configure project :26.1
+Fabric Loom: 1.17.17
+
+> Configure project :26.2
+Fabric Loom: 1.17.17
+
+> Task :1.21.11:stonecutterPrepare FAILED
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 ~
+Roses are red; Violets are blue; Unclosed scope on line 162
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 ~
+Roses are red; Violets are blue; Unmatched scope closer on line 432
+> The definition must have a corresponding `? ... {` opener.
+
+e: file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+> Missing closing `?}` comment.
+- Docs: https://stonecutter.kikugie.dev/wiki/config/params#closed
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':1.21.11:stonecutterPrepare' (registered by plugin class 'dev.kikugie.stonecutter.StonecutterPlugin').
+> File processing failed; see logs for more details.
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:47:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/EntitySpawnS2CUnpacker.java:111:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:66:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/logger/unpacker/InventoryS2CUnpacker.java:162:9 Unclosed scope
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:432:3 Unmatched scope closer
+    file:///home/timon/devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/ColorEditorScreen.java:1038:9 Unclosed scope
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 25s
+1 actionable task: 1 executed
+----------------------------------------
+
+=== Zusammenfassung ===
+Fehlgeschlagen (12/12): 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11
+timon@Timon-YogaX1G3-Debian:~/devhub/Fabric-Package-Logger 1.21.4$ 
