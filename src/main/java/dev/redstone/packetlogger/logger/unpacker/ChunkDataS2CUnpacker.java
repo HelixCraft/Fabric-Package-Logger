@@ -1,13 +1,13 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.nbt.CompoundTag;
+/*import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.core.BlockPos;
-//?} else {
-/*import net.minecraft.nbt.NbtCompound;
+*///?} else {
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
-*///?}
+//?}
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,7 +19,7 @@ import java.util.List;
  * Loggt nicht den rohen Buffer, aber alle BlockEntity-Daten mit NBT.
  */
 //? if >=26.1 {
-public class ChunkDataS2CUnpacker implements PacketUnpacker<ClientboundLevelChunkWithLightPacket> {
+/*public class ChunkDataS2CUnpacker implements PacketUnpacker<ClientboundLevelChunkWithLightPacket> {
 
     @Override
     public String unpack(ClientboundLevelChunkWithLightPacket packet) {
@@ -146,8 +146,8 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ClientboundLevelChun
         return sb.toString();
     }
 }
-//?} else {
-/*public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> {
+*///?} else {
+public class ChunkDataS2CUnpacker implements PacketUnpacker<ChunkDataS2CPacket> {
     
     @Override
     public String unpack(ChunkDataS2CPacket packet) {
@@ -274,4 +274,4 @@ public class ChunkDataS2CUnpacker implements PacketUnpacker<ClientboundLevelChun
         return sb.toString();
     }
 }
-*///?}
+//?}

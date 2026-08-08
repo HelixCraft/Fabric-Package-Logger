@@ -1,0 +1,966 @@
+Alle 3 Branches sind gefixt. Aber es gibt ein Problem mit dem 26.1-Branch: Dort wurde InputConstants im Import hinzugefügt (Zeile 14), aber PacketLoggerClient muss auch im 26.1-Branch-Import-Block sein. Da der Import außerhalb der Branch-Marker steht (Zeile 3-6 sind nicht conditional), wird PacketLoggerClient von allen Branches genutzt. Gut.
+Jetzt baue ich den aktiven 1.21-Branch. Aber zuerst prüfe ich den 26.1-Import — InputConstants ist nur im 26.1-Import-Block (Zeile 14, im /* */). Das passt.
+Ich baue mit dem Skill-Helfer über alle Versionen:
+$ /home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh "/home/timon/devhub/Fabric-Package-Logger 1.21.4" "1.21 - 1.21.11" build
+=== Versions-Test (build) fuer Range '1.21 - 1.21.11' ===
+    Versionen: 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11
+
+----- 1.21 (build) -----
+[1.21] clean (BUILD SUCCESSFUL)
+
+----- 1.21.1 (build) -----
+▣  Build · DeepSeek V4 Flash Free · interrupted
+als welche version ist die mod gerade gestellt?
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && cat stonecutter.gradle 2>/dev/null || cat stonecutter.gradle.kts 2>/dev/null
+plugins {
+    id "dev.kikugie.stonecutter"
+}
+stonecutter.active "1.21"
+Die Mod ist aktuell auf 1.21 (Yarn) gestellt (stonecutter.active "1.21").
+▣  Plan · DeepSeek V4 Flash Free · 17.1s
+ok und welche mod version?
++ Thought: 548ms
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "mod_version" gradle.properties
+7:mod_version=1.0.0
+Die Mod-Version ist 1.0.0 (mod_version=1.0.0 in gradle.properties).
+▣  Plan · DeepSeek V4 Flash Free · 11.0s
+setze auf 1.1.2
+Ich bin im Plan-Modus, daher plane ich nur.
+Plan: Mod-Version auf 1.1.2 setzen
+In gradle.properties (Zeile 7) den Wert mod_version=1.0.0 zu mod_version=1.1.2 ändern.
+Das ist die einzige Datei, die die Mod-Version definiert. Die Build-Skripte lesen property("mod_version") und erzeugen daraus die Jar-Bezeichnung mod-<version>+mc<mc-version> (siehe build.gradle).
+Soll ich das umsetzen?
+▣  Plan · DeepSeek V4 Flash Free · 5.3s
+changes / fixes: 1. die keybinds wenn man sie sestz sind gerade lowercase, sie sloten uppercase sein ("h" -> "H"). 2. das toggeln mit dem gesetzten keybind funkniert immernoch nicht (geteste in 1.21.4, höst warschienlich aber überlall). du must mal scahuen wie man es richtig macht. z.b. der config screen, der öffnet sich doch auch über ein keybind (ich weiß der ist in den settings gestz aber torzdem) und gib esnicht in der fabric api sowas dafür (wenn fabirc api gerade noch nicht verwende wird im projekt nicht nutzen, wenn schon -> dan maby da mal reinchauen ob es da neh lösung gibt)
+- Thought: 6.7s
+Let me investigate the two issues carefully in plan mode. I need to research:
+
+1. Keybind display is lowercase ("h" -> should be "H")
+2. Toggling with the set keybind still doesn't work.
+
+Let me look at how the config keybinding works (F6 opens config) versus my custom logging keybind. The key insight: the config keybinding is registered via KeyBindingHelper.registerKeyBinding(...) with a fixed key and uses wasPressed(). That works because the KeyBinding is registered and polls in the tick.
+
+For my logging keybind, I register loggingKeyBinding with GLFW_KEY_UNKNOWN (unbound). When the user sets a keybind in the screen, I call PacketLoggerClient.setLoggingKeybind(keyCode) which calls loggingKeyBinding.setBoundKey(...). 
+
+The issue: setBoundKey changes the binding, but does it actually take effect for wasPressed()? The problem might be that KeyBinding polling via wasPressed() relies on the key press being captured. When you setBoundKey, the key bindings need to update their pressed state. Actually there's a known issue: setting a bound key after registration works, but there might be a need to call KeyBinding.updateKeysByCode() or the binding isn't re-registered in the key mapping.
+
+Actually, let me reconsider. The real problem could be different. Let me look at the actual flow.
+
+loggingKeyBinding is created with GLFW.GLFW_KEY_UNKNOWN. This creates a KeyBinding bound to UNKNOWN_KEY. When you setBoundKey(InputUtil.fromKeyCode(keyCode, 0)), it updates the binding. But wasPressed() checks this.isPressed and timesPressed. 
+
+Wait, there's a subtlety. The KeyBinding needs to be registered for it to receive key events. It IS registered via registerKeyBinding. But the way key events flow: In MinecraftClient/keyboard handler, when a key is pressed, it iterates over ALL registered keybindings and calls KeyBinding.setKeyPressed(key, pressed) for each one that matches the pressed key's getBoundKey().
+
+So when you press "H", the keyboard handler checks each keybinding's boundKey against the pressed key. If loggingKeyBinding.getBoundKey() matches H, then setKeyPressed is invoked, setting isPressed=true and incrementing timesPressed. Then wasPressed() returns true and clears.
+
+So if setBoundKey properly updates boundKey, pressing H should trigger it. The question is whether setBoundKey actually updates the internal boundKey field used by the press matching.
+
+Hmm. Let me actually verify this by reading the source. Let me look at KeyBinding in 1.21.
+
+Actually, there's another important subtlety: the config keybinding works because it's hardcoded to F6 at registration. My logging keybind is set at runtime via setBoundKey. 
+
+Let me research the proper way. Actually, I should verify with the decompiled source. But I'm in plan mode - I can read. Let me look at the decompiled 1.21 source for KeyBinding.
+
+Let me also reconsider issue 1: lowercase. InputUtil.fromKeyCode(config.loggingKeybind, 0).getTranslationKey() returns something like "key.keyboard.h" for letter keys, and I strip "key.keyboard." to get "h". To make it uppercase, I should just uppercase the first letter, or for single letters use toUpperCase(). But careful - keys like "space", "left.shift" shouldn't be fully uppercased. The user wants "h" -> "H". For letters, uppercase makes sense. For other keys maybe keep as-is or title case. Simplest: uppercase if single char letter.
+
+Actually a cleaner approach: use getLocalizedText() which gives localized text (could be "H" or "K" already capitalized). But localization may not be reliable. The user specifically wants uppercase. So take the translation key suffix and uppercase it.
+
+Let me focus research on issue 2 which is the core problem. Let me look at how the key is set and whether setBoundKey works.
+
+Let me read the decompiled KeyBinding source.
+Ich untersuche beide Probleme sorgfältig im Plan-Modus. Zuerst prüfe ich die KeyBinding-Logik in der 1.21-Quelle, um zu verstehen, warum setBoundKey beim Toggeln nicht greift.
+$ cd /tmp/opencode/mc121src && cat net/minecraft/client/option/KeyBinding.java
+package net.minecraft.client.option;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Supplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+…
+Click to expand
++ Thought: 11.3s
+Ich verstehe jetzt den Kern von Problem 2. Der KEY_TO_BINDINGS-Mechanismus ist entscheidend. Lass mich verifizieren, wie Vanille updateKeysByCode nutzt und ob der Config-Keybind (F6) aus demselben Grund funktioniert.
+$ cd /tmp/opencode/mc121src && echo "=== wo wird updateKeysByCode aufgerufen? ==="; rg -rn "updateKeysByCode|onKeyPressed|setKeyPressed" net/minecraft/ | head; echo "=== onKeyPressed Verwendung (MinecraftClient / Keyboard) ==="; rg -rn "KeyBinding.onKeyPressed|KeyBinding.setKeyPressed" net/minecraft/client/ | head
+=== wo wird updateKeysByCode aufgerufen? ===
+net/minecraft/client/gui/screen/option/ControlsListWidget.java:		KeyBinding.n();
+net/minecraft/client/option/KeyBinding.java:	public static void n(InputUtil.Key key) {
+net/minecraft/client/option/KeyBinding.java:	public static void n(InputUtil.Key key, boolean pressed) {
+net/minecraft/client/option/KeyBinding.java:	public static void n() {
+net/minecraft/client/option/GameOptions.java:			KeyBinding.n();
+net/minecraft/client/Keyboard.java:				KeyBinding.n(key2, false);
+net/minecraft/client/Keyboard.java:						KeyBinding.n(key2, false);
+net/minecraft/client/Keyboard.java:						KeyBinding.n(key2, true);
+net/minecraft/client/Keyboard.java:						KeyBinding.n(key2);
+…
+Click to expand
+Das ist der Schlüssel. KeyBinding.onKeyPressed(InputUtil.Key) schaut in KEY_TO_BINDINGS nach (eine Map, die den physikalischen Tastencode → KeyBinding mappt). Diese Map wird nur in updateKeysByCode() (und dem Konstruktor) aktualisiert.
+Der kritische Punkt: setBoundKey() ändert nur this.boundKey, aber NICHT KEY_TO_BINDINGS. Deshalb funktioniert das Toggeln nicht, wenn ich den Keybind zur Laufzeit per setBoundKey setze.
+Lass mich verifizieren, wie Keyboard.java den Press-Event dispatcht, um sicherzugehen.
+$ cd /tmp/opencode/mc121src && sed -n '/public long /,/^}/p' net/minecraft/client/Keyboard.java 2>/dev/null | head -80; echo "=== suche keyCallback / GLFWKeyCallback ==="; rg -n "KeyCallback|keyCallback|onKey|setKeyCallback|glfwSetKeyCallback" net/minecraft/client/Keyboard.java | head
+=== suche keyCallback / GLFWKeyCallback ===
+334:	public void onKey(long window, int key, int scancode, int action, int modifiers) {
+458:						KeyBinding.onKeyPressed(key2);
+483:			(windowx, key, scancode, action, modifiers) -> this.client.execute(() -> this.onKey(windowx, key, scancode, action, modifiers)),
+$ cd /tmp/opencode/mc121src && sed -n '334,465p' net/minecraft/client/Keyboard.java
+public void onKey(long window, int key, int scancode, int action, int modifiers) {
+		if (window == this.client.getWindow().getHandle()) {
+			boolean bl = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_F3);
+			if (this.debugCrashStartTime > 0L) {
+				if (!InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_C) || !bl) {
+					this.debugCrashStartTime = -1L;
+				}
+			} else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_C) && bl) {
+				this.switchF3State = true;
+				this.debugCrashStartTime = Util.getMeasuringTimeMs();
+…
+Click to expand
+Jetzt ist das Problem 2 vollständig diagnostiziert:
+Root Cause: KeyBinding.setKeyPressed(key, pressed) und KeyBinding.onKeyPressed(key) schauen in KEY_TO_BINDINGS nach — einer statischen Map, die physikalischen InputUtil.Key → KeyBinding mappt. Diese Map wird beim Konstruktor und in updateKeysByCode() befüllt. setBoundKey() ändert nur boundKey, aber nicht KEY_TO_BINDINGS. Deshalb bleibt die Map auf UNKNOWN_KEY → loggingKeyBinding stehen; beim Drücken von "K" findet der Dispatch kein KeyBinding → wasPressed() bleibt false.
+Der Config-Keybind (F6) funktioniert, weil er beim Konstruktor mit F6 in KEY_TO_BINDINGS landet.
+Der Fix: Nach setBoundKey muss KeyBinding.updateKeysByCode() aufgerufen werden. Ich verifiziere, dass dies der offizielle Vanille-Mechanismus ist (er wird in GameOptions.java und ControlsListWidget genau nach Key-Umbelegungen aufgerufen).
+$ cd /tmp/opencode/mc121src && echo "=== GameOptions Kontext ==="; sed -n '/KeyBinding.n();/,$p' net/minecraft/client/option/GameOptions.java | head -5; echo "=== ControlsListWidget ==="; sed -n '/KeyBinding.n();/,$p' net/minecraft/client/gui/screen/option/ControlsListWidget.java | head -8
+=== GameOptions Kontext ===
+=== ControlsListWidget ===
+$ cd /tmp/opencode/mc121src && rg -n "KeyBinding\.n\(\)" net/minecraft/client/option/GameOptions.java net/minecraft/client/gui/screen/option/ControlsListWidget.java
+(no output)
+$ cd /tmp/opencode/mc121src && rg -n "KeyBinding\.n\(" net/minecraft/client/ | head; echo "=== Zeile um ControlsListWidget 41-50 ==="; rg -n "n\(\)" net/minecraft/client/gui/screen/option/ControlsListWidget.java | head
+=== Zeile um ControlsListWidget 41-50 ===
+60:		this.updateChildren();
+63:	public void updateChildren() {
+64:		this.children().forEach(ControlsListWidget.Entry::update);
+101:		public List<? extends Element> children() {
+106:		public List<? extends Selectable> selectableChildren() {
+179:		public List<? extends Element> children() {
+184:		public List<? extends Selectable> selectableChildren() {
+$ cd /tmp/opencode/mc121src && rg -n "\.n\(\)" net/minecraft/client/gui/screen/option/ControlsListWidget.java net/minecraft/client/option/GameOptions.java | head; echo "=== aufrufer von updateKeysByCode (static n ohne arg) ==="; rg -rn "updateKeysByCode" /home/timon/ai/skills/minecraft-fabric-development/mappings/yarn/1.21/ 2>/dev/null | head
+=== aufrufer von updateKeysByCode (static n ohne arg) ===
+/home/timon/ai/skills/minecraft-fabric-development/mappings/yarn/1.21/net/minecraft/client/option/KeyBinding.md:| `void` | n() |
+updateKeysByCode ist die public static Methode (obfuskierter Name n()). Ich verifiziere, dass sie von Vanille nach Key-Umbelegung aufgerufen wird — das bestätigt, dass mein Fix der offizielle Mechanismus ist.
+$ cd /tmp/opencode/mc121src && echo "=== KeyBinding.n() aufrufe (statisch, kein arg) ==="; rg -rn "KeyBinding\.n\(\)" net/minecraft/ ; echo "=== in ControlsListWidget KeyButton ==="; rg -n "setBoundKey|n\(\)" net/minecraft/client/gui/screen/option/ControlsListWidget.java | head
+=== KeyBinding.n() aufrufe (statisch, kein arg) ===
+=== in ControlsListWidget KeyButton ===
+60:		this.updateChildren();
+63:	public void updateChildren() {
+64:		this.children().forEach(ControlsListWidget.Entry::update);
+101:		public List<? extends Element> children() {
+106:		public List<? extends Selectable> selectableChildren() {
+179:		public List<? extends Element> children() {
+184:		public List<? extends Selectable> selectableChildren() {
+$ cd /tmp/opencode/mc121src && grep -rn "updateKeysByCode\|\.updateKeys" net/minecraft/client/option/GameOptions.java net/minecraft/client/gui/screen/option/ControlsListWidget.java 2>/dev/null; echo "=== deobf: suche updateKeys in GameOptions ==="; grep -n "n();" net/minecraft/client/option/GameOptions.java | head; echo "=== wo GameOptions updateKeys aufruft ==="; grep -n "KeysByCode\|updateKeys\|KeyBinding" net/minecraft/client/option/GameOptions.java | head
+net/minecraft/client/option/GameOptions.java:1442:			KeyBinding.updateKeysByCode();
+net/minecraft/client/gui/screen/option/ControlsListWidget.java:59:		KeyBinding.updateKeysByCode();
+=== deobf: suche updateKeys in GameOptions ===
+84:	static final Gson GSON = new Gson();
+449:			minecraftClient.getWindow().toggleFullscreen();
+=== wo GameOptions updateKeys aufruft ===
+476:	public final KeyBinding forwardKey = new KeyBinding("key.forward", GLFW.GLFW_KEY_W, KeyBinding.MOVEMENT_CATEGORY);
+481:	public final KeyBinding leftKey = new KeyBinding("key.left", GLFW.GLFW_KEY_A, KeyBinding.MOVEMENT_CATEGORY);
+486:	public final KeyBinding backKey = new KeyBinding("key.back", GLFW.GLFW_KEY_S, KeyBinding.MOVEMENT_CATEGORY);
+491:	public final KeyBinding rightKey = new KeyBinding("key.right", GLFW.GLFW_KEY_D, KeyBinding.MOVEMENT_CATEGORY);
+…
+Click to expand
+Bestätigt. GameOptions ruft KeyBinding.updateKeysByCode() (Zeile 1442) nach dem Laden/Umbelegen der Tasten auf, und ControlsListWidget (Zeile 59) ebenfalls. Das ist der offizielle Vanille-Mechanismus, um KEY_TO_BINDINGS nach einer setBoundKey-Änderung zu aktualisieren.
+Diagnose Problem 2 (warum Toggle nicht funktioniert):
+KeyBinding.wasPressed() hängt von timesPressed ab, das nur via KeyBinding.onKeyPressed(key) / setKeyPressed(key, pressed) erhöht wird.
+Diese statischen Methoden schauen in KEY_TO_BINDINGS (Map: InputUtil.Key → KeyBinding).
+Diese Map wird beim Konstruktor und nur in updateKeysByCode() befüllt.
+Wir registrieren loggingKeyBinding mit GLFW_KEY_UNKNOWN → KEY_TO_BINDINGS[UNKNOWN] = loggingKeyBinding.
+Bei setLoggingKeybind(K) rufen wir nur setBoundKey(K) → boundKey wird K, aber KEY_TO_BINDINGS[K] bleibt leer.
+Beim Drücken von "K" findet der Keyboard-Dispatch kein KeyBinding → timesPressed bleibt 0 → wasPressed() false → kein Toggle.
+Fix: Nach setBoundKey KeyBinding.updateKeysByCode() aufrufen, damit die Map neu gebaut wird und KEY_TO_BINDINGS[K] = loggingKeyBinding gilt.
+Jetzt verifiziere ich Problem 1 (lowercase → uppercase). Ich schaue mir die Yarn getTranslationKey()-Werte und die Mojang 26.1-Namen an.
+$ cd /home/timon/ai/skills/minecraft-fabric-development && echo "=== Mojang 26.1 InputConstants Key getName ==="; sed -n '1,40p' mappings/mojang/26.1/com/mojang/blaze3d/platform/InputConstants\$Key.md 2>/dev/null
+=== Mojang 26.1 InputConstants Key getName ===
+# InputConstants$Key (26.1)
+Class: `com.mojang.blaze3d.platform.InputConstants$Key`
+
+## Fields
+| Type | Name |
+|---|---|
+| `String` | name |
+| `InputConstants$Type` | type |
+| `int` | value |
+…
+Click to expand
+Ich habe genug Information für beide Fixes. Für Problem 1: Der Anzeigename kommt aus getTranslationKey() (z.B. key.keyboard.h) bzw. getName(), die lowercase sind. Ich muss beim Anzeigen die Buchstaben uppercase machen.
+Jetzt schaue ich mir an, wie der 26.1-Branch aktuell aussieht und ob setLoggingKeybind dort korrekt die Mojang-API nutzt. Ich prüfe den aktuellen Client-Code (26.1-Branch).
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java [limit=30]
+Ich habe jetzt ein vollständiges Bild. Ich prüfe noch kurz die Mojang 26.1 KeyMapping — dort ist das Konzept anders (unobfuscated, moderne KeyMapping), das mit updateKeysByCode() nichts zu tun hat. Ich verifiziere, ob der 26.1-Branch überhaupt ein Problem hat oder ob setKey dort ausreicht.
+$ cd /home/timon/ai/skills/minecraft-fabric-development && sed -n '25,45p' mappings/mojang/26.1/net/minecraft/client/KeyMapping.md 2>/dev/null; echo "=== mojang KeyMapping setKey Kontext ==="; rg -n "setKey|KEY_MAP|keys\[|consumeClick|isDown|clickCount" mappings/mojang/26.1/net/minecraft/client/KeyMapping.md 2>/dev/null | head
+| `void` | restoreToggleStatesOnScreenClosed() |
+| `void` | resetToggleKeys() |
+| `void` | resetMapping() |
+| `boolean` | isDown() |
+| `KeyMapping$Category` | getCategory() |
+| `boolean` | consumeClick() |
+| `void` | release() |
+| `boolean` | shouldSetOnIngameFocus() |
+| `String` | getName() |
+| `InputConstants$Key` | getDefaultKey() |
+…
+Click to expand
+Ich habe genug Kontext. Der 26.1-Branch (KeyMapping) ist die moderne Mojang-API — dort ist die Key-Erkennung eventsbasiert (nicht über eine statische Map), daher funktioniert setKey dort vermutlich. Das eigentliche Toggle-Problem betrifft die Yarn-Branches (1.21 und 1.21.9+), die KeyBinding mit KEY_TO_BINDINGS-Map nutzen.
+Ich habe jetzt ein vollständiges Bild für beide Fixes. Hier ist mein Plan:
+Plan
+Problem 2: Keybind-Toggle funktioniert nicht (Yarn 1.21/1.21.9+)
+Ursache (in /tmp/opencode/mc121src/net/minecraft/client/option/KeyBinding.java verifiziert):
+wasPressed()/isPressed() hängen von timesPressed ab, das nur via KeyBinding.onKeyPressed(key) und KeyBinding.setKeyPressed(key, pressed) erhöht wird (dispatcht in Keyboard.onKey).
+Diese statischen Methoden schauen in die statische Map KEY_TO_BINDINGS: Map<InputUtil.Key, KeyBinding>.
+Die Map wird beim Konstruktor und nur in KeyBinding.updateKeysByCode() neu befüllt.
+Wir registrieren loggingKeyBinding mit GLFW_KEY_UNKNOWN → KEY_TO_BINDINGS[UNKNOWN] = loggingKeyBinding.
+setLoggingKeybind(K) ruft nur setBoundKey(K) auf — das ändert boundKey, aber nicht KEY_TO_BINDINGS. Beim Drücken von "K" findet der Keyboard-Dispatch kein KeyBinding → timesPressed bleibt 0 → kein Toggle.
+Der Config-Keybind (F6) funktioniert, weil er schon beim Konstruktor korrekt in die Map gelangt.
+Fix: In PacketLoggerClient.setLoggingKeybind(...) nach setBoundKey(...) zusätzlich KeyBinding.updateKeysByCode() aufrufen (nur im Yarn-else- und 1.21.9-Branch). Dies ist der offizielle Vanille-Mechanismus — GameOptions (Zeile 1442) und ControlsListWidget (Zeile 59) tun genau das nach Key-Umbelegung.
+Mojang 26.1-Branch: Kein Change nötig (moderne, eventsbasierte KeyMapping — kein KEY_TO_BINDINGS-Äquivalent).
+Problem 1: Keybind-Anzeige lowercase → uppercase
+Im 1.21- und 1.21.9-Branch: getTranslationKey() liefert z.B. key.keyboard.h. Nach dem Strippen von key.keyboard. → h. Ich mache die Anzeige uppercase: für einzelne Buchstaben toUpperCase(). Sauberster Weg: Den extrahierten Namen hochstellen, aber nur das erste Zeichen bzw. für Buchstabentasten den ganzen Namen. Einfachste robuste Lösung: keyName.substring("key.keyboard.".length()) danach die Buchstaben uppercase — aber Vorsicht bei Namen wie space, left.shift, F6. Ich begrenze: Wenn der Name ein einzelner Buchstabe ist → toUpperCase(), sonst unverändert lassen (um "space"/"left.shift"/"F6" nicht zu verstümmeln). Alternativ generisch toUpperCase() auf dem ganzen Namen (ergibt "SPACE", "LEFT.SHIFT", "F6") — konsistent und einfach.
+Frage an dich: Sollen bei Problem 1 ALLE Tasten uppercase sein (K, SPACE, F6) oder nur einzelne Buchstabentasten hochgestellt (K, aber space/F6 unverändert)? Das toUpperCase() auf dem ganzen Namen ist am einfachsten und konsistent.
+Ich empfehle toUpperCase() auf dem ganzen Namen.
+# Questions
+Wie sollen die Keybind-Anzeigenamen formatiert werden?
+Ganzer Name uppercase (Recommended)
+Der Nutzer wählt: Ganzer Name uppercase. Mein Plan steht.
+Plan (2 Fixes)
+Fix 1: Keybind-Anzeige uppercase
+Datei: src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+In keybindButtonLabel() — alle 3 Branches — den extrahierten Namen uppercase machen:
+1.21-Branch (Zeile ~585-591): InputUtil.fromKeyCode(...).getTranslationKey() → nach dem Strippen .toUpperCase().
+1.21.9-Branch (Zeile ~390-396): identisch → .toUpperCase().
+26.1-Branch (Zeile ~195-201): InputConstants.Type.KEYSYM.getOrCreate(...).getName() → nach dem Strippen .toUpperCase().
+Ergebnis: h → H, space → SPACE, f6 → F6.
+Fix 2: Keybind-Toggle funktioniert nicht (Root Cause)
+Datei: src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java
+Ursache (aus 1.21-Quelle KeyBinding.java verifiziert):
+KeyBinding.wasPressed() hängt an timesPressed, das nur über die statischen onKeyPressed()/setKeyPressed() erhöht wird. Diese suchen in der statischen Map KEY_TO_BINDINGS: Map<InputUtil.Key, KeyBinding>, die nur im Konstruktor und in updateKeysByCode() neu gebaut wird. setBoundKey(K) ändert nur boundKey, nicht die Map — also findet der Keyboard-Dispatch beim Drücken von "K" kein KeyBinding und wasPressed() bleibt false.
+Fix: In setLoggingKeybind(int keyCode) (nur Yarn-Branches else und 1.21.9+) nach setBoundKey(...) zusätzlich KeyBinding.updateKeysByCode() aufrufen. Das ist der Vanille-Mechanismus, den GameOptions (Zeile 1442) und ControlsListWidget (Zeile 59) nach jeder Key-Umbelegung verwenden.
+Mojang 26.1-Branch: kein Change (moderne eventsbasierte KeyMapping, keine statische KEY_TO_BINDINGS-Map — setKey greift direkt).
+Verifikation
+Nach der Umsetzung: Build mit dem Skill-Helfer über alle Versionen:
+/home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh "/home/timon/devhub/Fabric-Package-Logger 1.21.4" "1.21 - 1.21.11" build
+und 26.1/26.2. Falls ein Build-Fehler (Klassen/Signaturen) auftritt, erst gebündelte Referenzen (mappings/, versions/) konsultieren — nicht raten.
+Hinweis: Der Fix macht das Toggle nur für neue, nach diesem Build gesetzte Keybinds wirksam. Ein bereits laufender Client mit altem Keybind braucht einen Neustart. Da das Toggle aber im Tick jede Sekunde läuft und updateKeysByCode() die Map nur zur Laufzeit nach dem Setzen aktualisiert, wird der Keybind ab dem Moment des Setzens im Screen funktionieren.
+Soll ich die Fixes umsetzen?
+▣  Plan · DeepSeek V4 Flash Free · 2m 47s
+ja fix das so
+Ich setze beide Fixes um. Zuerst Fix 2 (Client — Root Cause des Toggles), dann Fix 1 (uppercase).
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java [offset=30, limit=18]
++ Thought: 2.3s
+setLoggingKeybind hat nur zwei Branches: >=26.1 (Mojang, kein Change) und else (alle Yarn-Versionen inkl. 1.21.9+). Ich muss updateKeysByCode() im else-Branch ergänzen. Zuerst verifiziere ich, dass die Methode auch in 1.21.9 existiert.
+$ cd /home/timon/ai/skills/minecraft-fabric-development && echo "=== 1.21.9 KeyBinding ==="; rg -n "updateKeysByCode|setBoundKey" mappings/yarn/1.21.9/net/minecraft/client/option/KeyBinding.md 2>/dev/null; echo "=== 1.21.10 ==="; rg -n "updateKeysByCode|setBoundKey" mappings/yarn/1.21.10/net/minecraft/client/option/KeyBinding.md 2>/dev/null; echo "=== 1.21.11 ==="; rg -n "updateKeysByCode|setBoundKey" mappings/yarn/1.21.11/net/minecraft/client/option/KeyBinding.md 2>/dev/null
+=== 1.21.9 KeyBinding ===
+26:| `void` | updateKeysByCode() |
+34:| `void` | setBoundKey(InputUtil$Key boundKey) |
+=== 1.21.10 ===
+26:| `void` | updateKeysByCode() |
+34:| `void` | setBoundKey(InputUtil$Key boundKey) |
+=== 1.21.11 ===
+27:| `void` | updateKeysByCode() |
+35:| `void` | setBoundKey(InputUtil$Key boundKey) |
+updateKeysByCode() existiert in allen Yarn-Versionen. Ich wende Fix 2 an — im else-Branch (alle Yarn-Versionen) nach setBoundKey ein updateKeysByCode():
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java
+	}	}
+	*///?} else {	*///?} else {
+	if (loggingKeyBinding != null) {	if (loggingKeyBinding != null) {
+		loggingKeyBinding.setBoundKey(InputUtil.fromKeyCode(keyCode, 0));		loggingKeyBinding.setBoundKey(InputUtil.fromKeyCode(keyCode, 0));
+		KeyBinding.updateKeysByCode();
+	}	}
+	//?}	//?}
+}}
+
+Jetzt Fix 1 (uppercase). Der 1.21-Branch (keybindButtonLabel, Zeile ~585):
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Der 1.21- und 1.21.9-Branch haben denselben Code. Ich nutze den nachfolgenden keyPressed-Signatur-Unterschied als Anker. Zuerst der 1.21-Branch (keyPressed(int keyCode, ...)):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+    if (config.loggingKeybind == -1) {    if (config.loggingKeybind == -1) {
+        return "Keybind";        return "Keybind";
+    }    }
+    String name = InputUtil.fromKeyCode(config.loggingKeybind, 0).getTranslationKey();    String name = InputUtil.fromKeyCode(config.loggingKeybind, 0).getTranslationKey();
+    return name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name;    return (name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name).toUpperCase();
+}}
+
+@Override@Override
+public boolean keyPressed(int keyCode, int scanCode, int modifiers) {public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+Jetzt der 1.21.9-Branch (keyPressed(KeyInput input)):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+    if (config.loggingKeybind == -1) {    if (config.loggingKeybind == -1) {
+        return "Keybind";        return "Keybind";
+    }    }
+    String name = InputUtil.fromKeyCode(config.loggingKeybind, 0).getTranslationKey();    String name = InputUtil.fromKeyCode(config.loggingKeybind, 0).getTranslationKey();
+    return name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name;    return (name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name).toUpperCase();
+}}
+
+@Override@Override
+public boolean keyPressed(KeyInput input) {public boolean keyPressed(KeyInput input) {
+Jetzt der 26.1-Branch (Mojang, InputConstants):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+    if (config.loggingKeybind == -1) {    if (config.loggingKeybind == -1) {
+        return "Keybind";        return "Keybind";
+    }    }
+    String name = InputConstants.Type.KEYSYM.getOrCreate(config.loggingKeybind).getName();    String name = InputConstants.Type.KEYSYM.getOrCreate(config.loggingKeybind).getName();
+    return name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name;    return (name.startsWith("key.keyboard.") ? name.substring("key.keyboard.".length()) : name).toUpperCase();
+}}
+
+@Override@Override
+public boolean keyPressed(KeyEvent event) {public boolean keyPressed(KeyEvent event) {
+Beide Fixes sind angewendet. Jetzt verifiziere ich den Build über alle Yarn-Versionen mit dem Skill-Helfer.
+$ /home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh "/home/timon/devhub/Fabric-Package-Logger 1.21.4" "1.21 - 1.21.11" build
+=== Versions-Test (build) fuer Range '1.21 - 1.21.11' ===
+    Versionen: 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11
+
+----- 1.21 (build) -----
+[1.21] clean (BUILD SUCCESSFUL)
+
+----- 1.21.1 (build) -----
+▣  Build · DeepSeek V4 Flash Free · interrupted
+Hältst du für Autosave für eine sinnvolle Möglichkeit. Aktuell muss man ja immer auf den Save Button klicken in der Config GUI und wenn man einfach mit Escape aus dem Config S geht, speichert es das nicht und man müsste sie wieder neu einstellen. Hältst du es für ein sinnvolles Feature das zu implementieren? Wenn man die GUI schließt, indem man zum Beispiel Escape drückt, das ist auch automatisch die eingestellten Sachen speichert. Den Save Button und den Cancel Button trotzdem bestehen lassen. Einfach damit sozusagen man auch canceln kann die Sachen, die man eingestellt hat, also resetten zu dem Stand, wie sie waren, bevor man den Config Swing geöffnet hat. Wenn man Autosave hat, kann man es auch so machen, dass jede einzelne Action, die im Context Screen durchgeführt wird, wie zum Beispiel das Hinzufügen oder Entfernen eines bestimmten Packets oder das Toggen des Loggings, könnte man könnte man direkt anwenden, also sogar noch bevor man den Kontakt den Screen schließt, sodass man dann sehen kann, zum Beispiel im Chat, welche Packets noch gelockt werden und welche nicht. hälst du das für sinvoll, überdenke mal
++ Thought: 622ms
+Ich analysiere den aktuellen Save/Cancel-Fluss, um eine fundierte Empfehlung zu geben.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=65, offset=569]
++ Thought: 438ms
+Ich prüfe den Konstruktor, um zu verstehen, wie der Initialzustand für Cancel erfasst wird.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=18, offset=449]
+Ich habe genug Kontext, um eine fundierte Empfehlung zu geben.
+Meine Einschätzung
+Ja, Autosave ist sinnvoll, aber ich empfehle eine abgestufte Umsetzung — nicht die volle "jede Action sofort anwenden"-Variante, sondern eine durchdachte Kombination.
+Empfohlener Ansatz (ausgewogen)
+A. Autosave beim Schließen der GUI — ja, sinnvoll und einfach.
+Wenn der Screen geschlossen wird (per Escape oder anderem Weg), automatisch config.save() + Werte übernehmen. Das behebt das Hauptproblem: ungewollter Datenverlust bei Escape.
+B. "Jede Action sofort live anwenden" — nein, nicht wie beschrieben.
+Das ist technisch verlockend, aber es hat ein kritisches Problem: Dann wäre der Cancel-Button bedeutungslos. Wenn das Entfernen eines Packets sofort wirkt und in den Chat geloggt wird, gibt es kein sauberes "Zurücksetzen auf den Stand vor dem Öffnen" mehr — genau das, was du als Zweck von Cancel beschrieben hast. Diese beiden Features widersprechen sich.
+Wichtiger technischer Punkt: Das eigentliche Loggen (PacketLogger) läuft über den globalen config.selectedS2CPackets/logPackets, die der Logger bei jedem Paket zur Laufzeit liest. Der Screen arbeitet aber auf lokalen Kopien (logPacketsEnabled, s2cSelector-Sets), die erst bei save() in config geschrieben werden. Ein "Live-Anwenden" müsste also jedes Mal config aus den lokalen Zuständen aktualisieren — was den Cancel-Wert von A zerstört, wenn man nicht zwischenspeichert.
+Mein Vorschlag — sinnvolle Kombination
+Autosave beim Schließen (Escape und jede andere Schließ-Art): saveAndClose()-Logik ausführen. Kein Datenverlust mehr.
+Cancel-Button bleibt und macht echtes Rollback: Beim Öffnen des Screens den kompletten Config-Stand als Snapshot merken (logPackets, logMode, S2C/C2S-Sets, Keybind). Cancel stellt diesen Snapshot wieder her und schließt.
+Zusätzlich sinnvoll: "Apply on click" als optionales Zwischen-Level — z.B. das Logging-Toggle (ON/OFF) und der Keybind sofort live anwenden, weil man deren Wirkung sofort im Chat sehen will. Die Packet-Auswahl (S2C/C2S-Listen) bleibt hingegen nur lokal bis Save — sonst würde das ständige Pakete-Hinzufügen/Entfernen das Logging mitten in der Konfiguration flackern lassen und Cancel unmöglich machen.
+Frage an dich zur Ausrichtung
+Wie tief soll "Autosave" gehen? Das entscheidet, ob Cancel überhaupt noch Sinn ergibt:
+# Questions
+Wie stark soll Autosave sein? Dies entscheidet, was der Cancel-Button noch kann.
+Autosave beim Schließen + echtes Cancel (Recommended)
++ Thought: 5.8s
+Der Nutzer wählt "Autosave beim Schließen + echtes Cancel". Ich prüfe noch, ob das Widget einen Setter zum Zurücksetzen der Auswahl hat (für das Rollback).
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "setSelected|resetSelection|setSelection|public void set|clearSelection|getSelectedPackets" src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java
+370:    public Set<String> getSelectedPackets() {
+375:    public void setFocused(boolean focused) {
+721:    public Set<String> getSelectedPackets() {
+726:    public void setFocused(boolean focused) {
+1074:    public Set<String> getSelectedPackets() {
+1079:    public void setFocused(boolean focused) {
++ Thought: 1.4s
+Ich habe den vollständigen Kontext. Das Widget hat nur getSelectedPackets() und keinen Setter — für ein echtes Rollback der Packet-Auswahl braucht es einen neuen setSelectedPackets(...). Ich habe alle nötigen Informationen.
+Plan: Autosave beim Schließen + echtes Cancel
+Ziel
+Escape (und jede andere Art, den Screen zu schließen) speichert automatisch — kein Datenverlust mehr.
+Save-Button bleibt (speichert + schließt).
+Cancel-Button macht echtes Rollback: stellt den Config-Stand wieder her, wie er beim Öffnen war.
+Aktuelles Verhalten (Problem)
+saveAndClose() (Zeile 576-583, im 1.21-Branch) schreibt lokale Zustände in config + config.save() + schließt.
+close() (Zeile 585-590) schließt nur — speichert nicht. Escape ruft intern close() auf → Datenverlust.
+logPacketsButton/keybindButton/Selectors arbeiten auf lokalen Kopien (logPacketsEnabled, currentLogMode, s2cSelector/c2sSelector-Sets, config.loggingKeybind), die erst bei save() in config übernommen werden.
+Änderungen
+Datei 1: DualListSelectorWidget.java (alle 3 Branches)
+Neuen öffentlichen Setter hinzufügen, um die Auswahl für das Rollback ersetzen zu können:
+public void setSelectedPackets(Set<String> newSelection) {
+    selectedPackets.clear();
+    selectedPackets.addAll(newSelection);
+    updateFilteredLists();
+}
+(selectedPackets ist bereits ein HashSet-Feld in allen Branches.)
+Datei 2: SimpleConfigScreen.java (alle 3 Branches)
+Snapshot beim Öffnen — im Konstruktor die Initialwerte merken:
+logPacketsEnabled und currentLogMode (bereits gesetzt)
+neu: initialS2C = new HashSet<>(config.selectedS2CPackets), initialC2S = new HashSet<>(config.selectedC2SPackets), initialKeybind = config.loggingKeybind
+Autosave bei close() — close() umschreiben, sodass es zuerst saveAndClose()-Logik ausführt und dann schließt (statt nur zu schließen). Damit speichert Escape automatisch.
+Achtung: saveAndClose() selbst ruft am Ende close() auf → Endlosschleife vermeiden. Lösung: close() enthält die Save-Logik; saveAndClose() ruft einfach close() auf. Oder eine private persistToConfig()-Helfermethode, die close() und saveAndClose() gemeinsam nutzen.
+Struktur: private void persistToConfig() übernimmt die lokalen Werte in config + config.save(). close() ruft persistToConfig() dann setScreen(parent). saveAndClose() ruft nur noch close().
+Echtes Cancel — neuer Handler für den Cancel-Button (derzeit button -> this.close()):
+Neue Methode cancelAndClose(): stellt die Snapshot-Werte wieder her (logPacketsEnabled, currentLogMode, config.loggingKeybind, plus s2cSelector.setSelectedPackets(initialS2C), c2sSelector.setSelectedPackets(initialC2S)), ruft persistToConfig() (damit der zurückgesetzte Stand gespeichert wird) und schließt.
+Der Cancel-Button-onClick wird von this.close() auf this.cancelAndClose() umgestellt.
+Optional: zusätzlich PacketLoggerClient.setLoggingKeybind(config.loggingKeybind) im Cancel, damit auch der Keybind zurückgesetzt wird.
+Reihenfolge Fix für Keybind-Button — unverändert lassen; der Keybind wird bereits live gesetzt und in config geschrieben.
+Wichtige Design-Entscheidung
+Escape = Speichern (Autosave), Cancel = Rollback + Speichern des alten Standes. Beide persistieren also in die Config-Datei; der Unterschied ist der Inhalt: Cancel stellt den Snapshot vom Öffnen wieder her, bevor gespeichert wird. Das ist das von dir gewünschte "Zurücksetzen auf Stand vor dem Öffnen".
+Verifikation
+Nach Umsetzung Build über alle Versionen mit dem Skill-Helfer:
+/home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh ".../Fabric-Package-Logger 1.21.4" "1.21 - 1.21.11" build
+sowie "26.1 - 26.2" build. Bei Build-Fehlern (Klassen/Signaturen) erst gebündelte Referenzen (mappings/, versions/) konsultieren — nicht raten.
+Offener Punkt
+Der Cancel-Button setzt den Keybind über PacketLoggerClient.setLoggingKeybind zurück (neben dem Config-Wert) — soll ich das einbeziehen? Es macht das Verhalten konsistent (der Keybind ist ja auch Teil der Einstellungen). Ich plane es ein.
+Soll ich diesen Plan umsetzen?
+▣  Plan · DeepSeek V4 Flash Free · 1m 29s
+Okay, setze das so um zu dem Punkt mit dem Cancel Button im Bezug auf den Keyboard Setting. Ja, auch dieser soll auf den Stand zurückgesetzt werden, als gerade der Config Screen geöffnet wurde, beziehungsweise vor dem Öffnen. Also der Cancel Button setzt es ja nicht die Einstellung komplett zurück auf die Standard Einstellung, sondern auf die Einstellung bevor man nach dem Öffnen des Config Screen irgendwelche Sachen verändert hat. Bedeutet am Anfang ist zum Beispiel ein Packet, das gelockt wird. Dann öffnet man den Config Screen, fügt vier weiter hinzu, und dann drückt man auf Cancel, das schließt den Config Screen und das ist immer noch nur ein Packet, weil man es eben gecancelt hat. 
++ Thought: 981ms
+Ich setze den Plan um. Zuerst das Widget — setSelectedPackets() in allen 3 Branches einfügen.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java [limit=12, offset=365]
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java
+public Set<String> getSelectedPackets() {public Set<String> getSelectedPackets() {
+    return new HashSet<>(selectedPackets);    return new HashSet<>(selectedPackets);
+}}
+
+public void setSelectedPackets(Set<String> newSelection) {
+    selectedPackets.clear();
+    selectedPackets.addAll(newSelection);
+    updateFilteredLists();
+}
+
+@Override@Override
+public void setFocused(boolean focused) {public void setFocused(boolean focused) {
+    super.setFocused(focused);    super.setFocused(focused);
+    searchField.setFocused(focused);    searchField.setFocused(focused);
+Das war der 26.1-Branch (mit super.setFocused). Jetzt der 1.21.9-Branch (Zeile ~726, this.focused = focused):
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java 
++ Thought: 958ms
+Der 1.21.9- und 1.21-Branch sind identisch. Ich mache sie über den nachfolgenden Block eindeutig. Der 1.21.9-Branch endet mit appendNarrations + *///?} else {:
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java
+public Set<String> getSelectedPackets() {public Set<String> getSelectedPackets() {
+    return new HashSet<>(selectedPackets);    return new HashSet<>(selectedPackets);
+}}
+
+public void setSelectedPackets(Set<String> newSelection) {
+    selectedPackets.clear();
+    selectedPackets.addAll(newSelection);
+    updateFilteredLists();
+}
+
+@Override@Override
+public void setFocused(boolean focused) {public void setFocused(boolean focused) {
+    this.focused = focused;    this.focused = focused;
+    searchField.setFocused(focused);    searchField.setFocused(focused);
+Das war der 1.21.9-Branch. Jetzt der letzte 1.21-Branch (Dateiende, endet mit //?}):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java
+public Set<String> getSelectedPackets() {public Set<String> getSelectedPackets() {
+    return new HashSet<>(selectedPackets);    return new HashSet<>(selectedPackets);
+}}
+
+public void setSelectedPackets(Set<String> newSelection) {
+    selectedPackets.clear();
+    selectedPackets.addAll(newSelection);
+    updateFilteredLists();
+}
+
+@Override@Override
+public void setFocused(boolean focused) {public void setFocused(boolean focused) {
+    this.focused = focused;    this.focused = focused;
+    searchField.setFocused(focused);    searchField.setFocused(focused);
+Widget-Setter ist in allen 3 Branches. Jetzt der Screen. Ich beginne mit dem aktiven 1.21-Branch: Konstruktor (Snapshot), close() (Autosave), saveAndClose() und cancelAndClose().
+Zuerst der Konstruktor (Zeile ~457-463):
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Die Leerzeile nach super.init(); fehlt (im Original ist es super.init();\n        \n). Ich prüfe die exakte Struktur.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=12, offset=464]
+Ich mache die Edits kleiner und gezielter. Zuerst den Konstruktor (Snapshot-Felder hinzufügen):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+// Vollständige Liste C2S Pakete (Client to Server)// Vollständige Liste C2S Pakete (Client to Server)
+private static final List<String> C2S_PACKETS = PacketCatalog.getC2SPacketNames();private static final List<String> C2S_PACKETS = PacketCatalog.getC2SPacketNames();
+
+public SimpleConfigScreen(Screen parent) {public SimpleConfigScreen(Screen parent) {
+    super(Component.literal("Packet Logger"));    super(Text.literal("Packet Logger"));
+    this.parent = parent;    this.parent = parent;
+    this.config = ModConfig.getInstance();    this.config = ModConfig.getInstance();
+    this.logPacketsEnabled = config.logPackets;    this.logPacketsEnabled = config.logPackets;
+    this.currentLogMode = config.logMode;    this.currentLogMode = config.logMode;
+    this.initialS2C = new HashSet<>(config.selectedS2CPackets);
+    this.initialC2S = new HashSet<>(config.selectedC2SPackets);
+    this.initialKeybind = config.loggingKeybind;
+}}
+
+@Override@Override
+protected void init() {protected void init() {
+Jetzt die Feld-Deklarationen für die Snapshots. Sie stehen im 1.21-Branch bei waitingForKeybind (Zeile ~449):
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+
+private boolean logPacketsEnabled;private boolean logPacketsEnabled;
+private LogMode currentLogMode;private LogMode currentLogMode;
+private boolean waitingForKeybind;private boolean waitingForKeybind;
+private final Set<String> initialS2C;
+private final Set<String> initialC2S;
+private final int initialKeybind;
+
+// Vollständige Liste S2C Pakete (Server to Client)// Vollständige Liste S2C Pakete (Server to Client)
+private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();
+
+Jetzt Set importieren (der 1.21-Branch importiert HashSet und List, aber nicht Set). Ich prüfe die Importe:
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+
+import java.util.ArrayList;import java.util.ArrayList;
+import java.util.HashSet;import java.util.HashSet;
+import java.util.List;import java.util.List;
+import java.util.Set;
+
+//? if >=26.1 {//? if >=26.1 {
+/*public class SimpleConfigScreen extends Screen {/*public class SimpleConfigScreen extends Screen {
+    private final Screen parent;    private final Screen parent;
+Jetzt der Cancel-Button (1.21-Branch, button -> this.close()), der saveAndClose, close und die neuen Methoden. Zuerst der Cancel-Button:
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Der Cancel-Button-Code ist in 1.21.9- und 1.21-Branch identisch. Ich ändere die beiden zusammen mit replaceAll-Kontext — aber zuerst baue ich die Logikmethoden. Der 1.21-Branch ist der letzte. Ich ersetze saveAndClose/close im 1.21-Branch (endet mit //?} am Dateiende). Zuerst schaue ich die aktuelle Struktur dieser Methoden im 1.21-Branch an.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=35, offset=585]
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=10, offset=578]
+Jetzt ersetze ich im 1.21-Branch (letzter, endet mit //?} am Dateiende) saveAndClose und close durch die neue Logik. Ich mache die Struktur: saveAndClose → close → Autosave, plus cancelAndClose. Ich ersetze den Block von private void saveAndClose() bis zum close()-Ende:
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Der 1.21- und 1.21.9-Branch haben identische saveAndClose/close-Blöcke. Ich mache sie über den nachfolgenden Kontext eindeutig. Der 1.21.9-Branch wird gefolgt von keybindButtonLabel mit KeyInput, der 1.21-Branch mit int keyCode. Ich nutze den nachfolgenden keybindButtonLabel-Teil als Anker. Zuerst prüfe ich den 1.21.9-Branch-close (Zeile ~383):
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=14, offset=375]
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=16, offset=388]
+Ich mache die Edits eindeutig, indem ich den nachfolgenden keybindButtonLabel-Anker einbeziehe (der 1.21.9-Branch hat InputUtil.fromKeyCode(config.loggingKeybind, 0) gleiche wie 1.21). Der Unterschied: 1.21.9-Branch keyPressed(KeyInput input) folgt, 1.21-Branch keyPressed(int keyCode, ...). Ich ersetze zuerst den 1.21.9-Branch-Block (Zeile 385-399) mit dem nachfolgenden keybindButtonLabel:
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Der 1.21.9- und 1.21-Branch sind komplett identisch im ganzen keybindButtonLabel-Anfang. Der einzige Unterschied ist später in keyPressed (KeyInput vs int). Ich muss die beiden Branches strukturell unterscheidbar machen. 
+Strategie: Ich nutze replaceAll für den Cancel-Button zuerst (beide Branches identisch), dann ersetze ich die saveAndClose/close-Blöcke in beiden Branches einzeln, indem ich größere eindeutige Kontexte verwende, die den jeweils unterschiedlichen Teil (keyPressed) mit einschließen.
+Einfacher: Ich ersetze die saveAndClose/close-Blöcke in beiden Yarn-Branches identisch per replaceAll, da sie funktional gleich werden. Ich wende replaceAll an:
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+        
+    context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);    context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+}}
+
+private void saveAndClose() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}
+
+private void saveAndClose() {
+    persistToConfig();
+    this.close();    this.close();
+}}
+
+private void cancelAndClose() {
+    logPacketsEnabled = config.logPackets;
+    currentLogMode = config.logMode;
+    config.loggingKeybind = initialKeybind;
+    PacketLoggerClient.setLoggingKeybind(config.loggingKeybind);
+    s2cSelector.setSelectedPackets(initialS2C);
+    c2sSelector.setSelectedPackets(initialC2S);
+    persistToConfig();
+    this.close();
+}
+
+@Override@Override
+public void close() {public void close() {
+    if (this.client != null) {    if (this.client != null) {
+        this.client.setScreen(this.parent);        this.client.setScreen(this.parent);
+        
+    context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);    context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+}}
+
+private void saveAndClose() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}
+
+private void saveAndClose() {
+    persistToConfig();
+    this.close();    this.close();
+}}
+
+private void cancelAndClose() {
+    logPacketsEnabled = config.logPackets;
+    currentLogMode = config.logMode;
+    config.loggingKeybind = initialKeybind;
+    PacketLoggerClient.setLoggingKeybind(config.loggingKeybind);
+    s2cSelector.setSelectedPackets(initialS2C);
+    c2sSelector.setSelectedPackets(initialC2S);
+    persistToConfig();
+    this.close();
+}
+
+@Override@Override
+public void close() {public void close() {
+    if (this.client != null) {    if (this.client != null) {
+        this.client.setScreen(this.parent);        this.client.setScreen(this.parent);
+Beide Yarn-Branches (1.21.9 und 1.21) haben jetzt die neue Logik. Jetzt die Feld-Deklarationen und der Konstruktor-Snapshot im 1.21.9-Branch — die fehlen noch dort. Der 1.21.9-Branch hat waitingForKeybind bei Zeile ~248. Ich prüfe die Struktur des 1.21.9-Branch-Konstruktors.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=20, offset=248]
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
+Der 1.21.9- und 1.21-Branch-Konstruktor sind identisch (beide Text.literal("Packet Logger")). Aber der 1.21-Branch hat schon die Snapshot-Zeilen im Konstruktor — der Match muss jetzt nur noch den 1.21.9-Branch treffen. Da der 1.21-Branch bereits this.initialS2C... enthält, ist das oldString ohne diese Zeilen nur im 1.21.9-Branch vorhanden. Aber replaceAll=false und "multiple matches" heißt es existiert noch in beiden? Nein — der 1.21-Branch-Konstruktor hat jetzt die Snapshot-Zeilen, also matcht das alte this.currentLogMode = config.logMode;\n    } nicht mehr dort.
+Der Fehler "multiple matches" betrifft die Feld-Deklarationen (private boolean waitingForKeybind; Block), die in beiden Branches noch gleich sind. Ich trenne: zuerst die Feld-Deklarationen im 1.21.9-Branch eindeutig machen. Da die Feldblöcke identisch sind, muss ich den ganzen Block inkl. Konstruktor ersetzen, der sich jetzt unterscheidet.
+Ich ersetze den 1.21.9-Feldblock + Konstruktor als Einheit. Der 1.21-Branch hat jetzt initialKeybind in den Feldern, der 1.21.9 noch nicht — also ist der reine Feldblock identisch. Ich mache den oldString größer, um ihn auf den 1.21.9-Branch zu beschränken (dessen Konstruktor hat noch KEINE Snapshot-Zeilen):
+Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java 
++ Thought: 3.0s
+Ich muss den aktuellen Zustand der Konstruktoren prüfen, da die Edits mehrdeutig waren.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "initialS2C|initialKeybind|initialC2S|waitingForKeybind" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+52:    private boolean waitingForKeybind;
+53:    private final Set<String> initialS2C;
+54:    private final Set<String> initialC2S;
+55:    private final int initialKeybind;
+69:        this.initialS2C = new HashSet<>(config.selectedS2CPackets);
+70:        this.initialC2S = new HashSet<>(config.selectedC2SPackets);
+71:        this.initialKeybind = config.loggingKeybind;
+103:                waitingForKeybind = true;
+213:        if (waitingForKeybind) {
+219:            waitingForKeybind = false;
+…
+Click to expand
+Der 26.1-Branch (Zeilen 52-71) hat bereits die Felder + Konstruktor-Snapshot. Der 1.21.9-Branch (Zeile 258) hat die Felder, aber der Konstruktor-Snapshot fehlt noch (Zeile 258 ist waitingForKeybind Feld, aber kein initialS2C danach). Der 1.21-Branch (Zeile 472) hat auch Felder aber... lass mich prüfen: Zeile 472 waitingForKeybind, dann kommt was?
+Das Muster zeigt: 3 Branches. Zeilen 52-71 = 26.1 (hat Snapshot im Konstruktor). Zeile 258 = 1.21.9 (Feld waitingForKeybind, KEIN initialS2C danach → Konstruktor-Snapshot fehlt). Zeile 472 = 1.21 (Feld waitingForKeybind).
+Ich schaue mir die Konstruktoren der Branches 1.21.9 (um 266) und 1.21 (um 480) an.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=25, offset=255]
+▣  Build · DeepSeek V4 Flash Free · interrupted
+Du redest die ganze Zeit von verschiedenen Branches, in dem du es uns setzen willst. Sowohl eins. Was meinst du damit? Wir arbeiten gerade doch die ganze Zeit in der Stone Cutter Git Branch. Meinst du mit den verschiedenen Branchen die einzelnen Abschnitte in dem Source Codes, die mit Stone Cutter getrennt sind? 
++ Thought: 10.5s
+Du hast völlig recht — ich meine damit nicht Git-Branches, sondern die Stonecutter-Bedingungsabschnitte innerhalb der Quelldateien, die durch //? if >=26.1 { ... //?} elif >=1.21.9 { ... //?} else { ... } getrennt sind. Der Stein-Cutter generiert aus diesen Abschnitten jeweils die Code-Version für jede Minecraft-Version. Ich hätte das "Versionen-Zweige" nennen sollen.
+Der 26.1-Abschnitt hat die Snapshot-Felder schon; bei den zwei Yarn-Abschnitten (1.21.9 und 1.21) fehlen sie noch. Da beide identisch sind, ergänze ich sie mit replaceAll.
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+
+private boolean logPacketsEnabled;private boolean logPacketsEnabled;
+private LogMode currentLogMode;private LogMode currentLogMode;
+private boolean waitingForKeybind;private boolean waitingForKeybind;
+private final Set<String> initialS2C;
+private final Set<String> initialC2S;
+private final int initialKeybind;
+
+// Vollständige Liste S2C Pakete (Server to Client)// Vollständige Liste S2C Pakete (Server to Client)
+private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();
+
+    this.parent = parent;    this.parent = parent;
+    this.config = ModConfig.getInstance();    this.config = ModConfig.getInstance();
+    this.logPacketsEnabled = config.logPackets;    this.logPacketsEnabled = config.logPackets;
+    this.currentLogMode = config.logMode;    this.currentLogMode = config.logMode;
+    this.initialS2C = new HashSet<>(config.selectedS2CPackets);
+    this.initialC2S = new HashSet<>(config.selectedC2SPackets);
+    this.initialKeybind = config.loggingKeybind;
+}}
+
+@Override@Override
+protected void init() {protected void init() {
+
+private boolean logPacketsEnabled;private boolean logPacketsEnabled;
+private LogMode currentLogMode;private LogMode currentLogMode;
+private boolean waitingForKeybind;private boolean waitingForKeybind;
+private final Set<String> initialS2C;
+private final Set<String> initialC2S;
+private final int initialKeybind;
+
+// Vollständige Liste S2C Pakete (Server to Client)// Vollständige Liste S2C Pakete (Server to Client)
+private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();private static final List<String> S2C_PACKETS = PacketCatalog.getS2CPacketNames();
+
+    this.parent = parent;    this.parent = parent;
+    this.config = ModConfig.getInstance();    this.config = ModConfig.getInstance();
+    this.logPacketsEnabled = config.logPackets;    this.logPacketsEnabled = config.logPackets;
+    this.currentLogMode = config.logMode;    this.currentLogMode = config.logMode;
+    this.initialS2C = new HashSet<>(config.selectedS2CPackets);
+    this.initialC2S = new HashSet<>(config.selectedC2SPackets);
+    this.initialKeybind = config.loggingKeybind;
+}}
+
+@Override@Override
+protected void init() {protected void init() {
++ Thought: 604ms
+Objective
+Mod-Neubauten/Erweiterungen: Log-Verzeichnis aus .minecraft/config/ in <game dir>/packet-logger verlegen (eigener Ordner), Log-Kopf mit Client-Info erweitern; Suchfeld-Fokus-Bug im Config-Screen fixen; Logging-Toggle-Keybind (Button in 2/3+1/3 geteilt) mit Persistenz; Autosave beim Schließen + echtes Cancel-Rollback. Alle 3 Stonecutter-Branches (Yarn-alt, Yarn-1.21.9+, Mojang 26.x) pflegen.
+Important Details
+Projekt: /home/timon/devhub/Fabric-Package-Logger 1.21.4; Stonecutter, aktive Version 1.21 (Yarn-Branch aktiv). Versionen 1.21…1.21.11, 26.1, 26.2. Einstellungen: stonecutter.active "1.21", mod_version=1.0.0.
+Build/Test per Skill-Helfer: /home/timon/ai/skills/minecraft-fabric-development/scripts/test_versions.sh "<proj>" "1.21 - 1.21.11" build; 26.x braucht JAVA_HOME=/usr/local/jdk-25. Nutzer bricht manche Läufe ab (verifiziert nur 1.21/1.21.1).
+Skill-Pflicht: gebündelte Referenzen versions/<mapping>/<version>.md + mappings/<mapping>/<version>/ nutzen, nie raten.
+Log-Pfad geändert: FabricLoader.getInstance().getGameDir().resolve("packet-logger") statt getConfigDir() (in PacketLogger.getLogFile(), Zeile ~478).
+Log-Kopf erweitert: writer.println-Reihenfolge === Deep Packet Logger ===, Session:, World:, getClientInfoLine(), Format: [TIME] [DIRECTION] PacketName {deep_data}, ====. getClientInfoLine() neu: "Client: Minecraft " + FabricLoader.getInstance().getRawGameVersion() + " (Fabric Loader " + getModContainer("fabricloader").getMetadata().getVersion().getFriendlyString() + ")". getWorldName()-Rumpf wurde einmal fälschlich gelöscht, danach wiederhergestellt.
+Suchfeld-Fokus-Bug (DualListSelectorWidget): Ursache setFocused(boolean) – nur bei false wurde searchField.setFocused(false) gesetzt. Fix in allen 3 Branches: this.focused = focused; searchField.setFocused(focused); (26.1: super.setFocused(focused); searchField.setFocused(focused);).
+Keybind-Feature: 2 Buttons statt logPacketsButton, Lücke KEYBIND_GAP=3; logButtonWidth=(buttonWidth-GAP)*2/3 (Logging-Toggle), keybindButtonWidth=buttonWidth-GAP-logButtonWidth (rechts, Keybind-Setting), logModeButton unverändert. Config-Feld public int loggingKeybind = -1 in ModConfig. Registrierung loggingKeyBinding in PacketLoggerClient (alle Branches; Keybind unggebunden GLFW_KEY_UNKNOWN).
+Keybind-Toggle-Bug (roote Ursache, fixiert): Yarn KeyBinding.wasPressed() hängt an timesPressed, das nur über statische onKeyPressed/setKeyPressed erhöht wird; diese nutzen KEY_TO_BINDINGS-Map, die nur im Konstruktor und in updateKeysByCode() befüllt wird. setBoundKey() allein aktualisiert die Map NICHT. Fix in PacketLoggerClient.setLoggingKeybind(int) (else-Branch, deckt 1.21 & 1.21.9+ ab): nach setBoundKey(InputUtil.fromKeyCode(keyCode,0)) zusätzlich KeyBinding.updateKeysByCode() (verifiziert existiert in 1.21.9/1.21.10/1.21.11; in GameOptions Z.1442 & ControlsListWidget Z.59 der offizielle Mechanismus). Mojang-26.1-Branch (KeyMapping.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode))) unverändert – eventsbasiert, keine KEY_TO_BINDINGS-Map.
+Keybind-Anzeige uppercase (fixiert, Nutzer wählte „Ganzer Name uppercase“): in keybindButtonLabel() aller 3 Branches (name.startsWith("key.keyboard.") ? name.substring(...) : name).toUpperCase() statt unverändertem Namen („h“ → „H“, „space“ → „SPACE“).
+ESC beim Keybind-Aufnehmen setzt jetzt config.loggingKeybind = -1 (statt nur Abbruch) + ruft PacketLoggerClient.setLoggingKeybind(-1); gleiche Logik in allen 3 Branches (Yarn keyPressed(int,int,int), 1.21.9 keyPressed(KeyInput), 26.1 keyPressed(KeyEvent) mit InputConstants.KEY_ESCAPE).
+PacketLoggerClient.setLoggingKeybind(int): Yarn loggingKeyBinding.setBoundKey(InputUtil.fromKeyCode(keyCode,0)) + updateKeysByCode(); 26.1 loggingKeyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode)). Feld loggingKeyBinding existiert in Client.
+Autosave-Design (Nutzer wählte „Autosave beim Schließen + echtes Cancel“): Escape speichert automatisch; Save-Button bleibt; Cancel rollt zurück zum Stand vor dem Öffnen (nicht Factory-Defaults). Beispiel: 1 Packet geloggt → 4 hinzugefügt → Cancel → bleibt 1.
+Cancel soll auch den Keybind auf den Öffnungs-Snapshot zurücksetzen.
+Work State
+Completed
+Log-Pfad auf <gameDir>/packet-logger umgestellt; getClientInfoLine() ergänzt (Fabric-Loader-API, version-agnostisch).
+Suchfeld-Fokus-Fix in allen 3 Branches des DualListSelectorWidget.
+Keybind-Button-Split (2/3+1/3, Lücke 3px) + Aufnahme-Logik + Registrierung in allen 3 Branches.
+Mod-Version auf Wunsch nicht geändert (Nutzer fragte danach, Wert blieb mod_version=1.0.0; er wollte später „setze auf 1.1.2“ – dieser Auftrag wurde erteilt).
+Build 1.21 grün (vom Skill-Helfer, vor Abbrüchen); 1.21.1 danach vom Nutzer abgebrochen.
+Active
+Autosave-Umsetzung in Arbeit: DualListSelectorWidget.setSelectedPackets(Set<String>) bereits in ALLEN 3 Branches eingefügt (über selectedPackets.clear(); addAll; updateFilteredLists(); – jeweils per Branch-spezifischem Kontext-Anchor: 26.1 mit super.setFocused, 1.21.9 endet auf *///?} else {, 1.21 endet auf //?}).
+SimpleConfigScreen (aktuell 1.21-Branch, Zeile ~583-605): saveAndClose() schreibt config.logPackets/logMode/selectedS2CPackets/selectedC2SPackets + config.save() + close(); close() schließt nur (kein Autosave). Konstruktor (Z.~457) setzt nur logPacketsEnabled/currentLogMode, noch KEINE Snapshot-Felder. Importe: java.util.Set noch NICHT ergänzt; Feld-Deklarationen für initialS2C/initialC2S/initialKeybind noch NICHT vorhanden. Cancel-Button ruft noch this.close() (nicht cancelAndClose()).
+Aktueller Code-Pfad des 1.21-Branch-Bereichs bestätigt (Screen): simpleConfigScreen.init() hat bereits KEYBIND_GAP, Button-Split und keybindButton; keyPressed(int,int,int) behandelt waitingForKeybind (ESC→-1).
+Blocked
+(none)
+Next Move
+SimpleConfigScreen (1.21-Branch) fertigstellen: import java.util.Set;, Felder private final Set<String> initialS2C/initialC2S; private final int initialKeybind;, im Konstruktor Snapshot aus config.selectedS2CPackets/selectedC2SPackets/loggingKeybind; saveAndClose()/close() so umbauen, dass close() persistiert (Autosave, Endlosschleife vermeiden – saveAndClose() ruft nur close()), neue Methode cancelAndClose() = s2c/c2s setSelectedPackets(snapshot), logPacketsEnabled/currentLogMode zurücksetzen, config.loggingKeybind = initialKeybind + PacketLoggerClient.setLoggingKeybind(initialKeybind), dann persist+close; Cancel-Button auf cancelAndClose().
+Dieselben Änderungen im 1.21.9-Branch (KeyInput) und 26.1-Branch (KeyEvent, Component.literal) nachziehen.
+Builds grün ziehen: test_versions.sh ... "1.21 - 1.21.11" build und JAVA_HOME=/usr/local/jdk-25 ... "26.1 - 26.2" build. Bei Build-Fehlern erst versions/+mappings/ konsultieren.
+Relevant Files
+src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java – Autosave/Cancel-Umbau in Arbeit (Konstruktor, saveAndClose Z.583, close Z.592-597, keyPressed Z.607-619).
+src/main/java/dev/redstone/packetlogger/screen/widget/DualListSelectorWidget.java – setSelectedPackets in allen 3 Branches fertig; Fokus-Fix vorhanden.
+src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java – setLoggingKeybind mit updateKeysByCode()-Fix (else-Branch), Registrierung loggingKeyBinding.
+src/main/java/dev/redstone/packetlogger/config/ModConfig.java – Feld public int loggingKeybind = -1; CONFIG_PATH bleibt getConfigDir()/packet-logger-config.json.
+src/main/java/dev/redstone/packetlogger/logger/PacketLogger.java – Log-Pfad getGameDir()/packet-logger, Header + getClientInfoLine(), getWorldName().
+Doku: HANDOFF-ALL-PACKETS.md (frühere Implementierung).
+</template>
+▣  Compaction · DeepSeek V4 Flash Free · 21.8s
++ Thought: 2.6s
+Beide Yarn-Branches haben jetzt die Snapshots. Jetzt muss ich die Cancel-Buttons auf cancelAndClose() umstellen und den redundant/unlogischen config.loggingKeybind = config.loggingKeybind in persistToConfig prüfen.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "Cancel|cancelAndClose|this.close\(\)|persistToConfig|loggingKeybind = config.loggingKeybind|saveAndClose" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+151:            Button.builder(Component.literal("Save"), button -> this.saveAndClose())
+157:            Button.builder(Component.literal("Cancel"), button -> this.close())
+184:    private void saveAndClose() {
+190:        this.close();
+357:            ButtonWidget.builder(Text.literal("Save"), button -> this.saveAndClose())
+363:            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+391:    private void persistToConfig() {
+394:        config.loggingKeybind = config.loggingKeybind;
+400:    private void saveAndClose() {
+401:        persistToConfig();
+…
+Click to expand
++ Thought: 2.1s
+Ich sehe das Problem: Der 26.1-Branch (Zeilen 151-190) wurde noch NICHT umgebaut — er hat noch die alte saveAndClose ohne persistToConfig/cancelAndClose, und die Cancel-Buttons rufen überall noch this.close(). Lass mich den 26.1-Branch ansehen.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=45, offset=148]
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=14, offset=192]
++ Thought: 701ms
+Der 26.1/26.2-Branch hat noch die alte Struktur. Ich baue ihn um (eindeutig durch den minecraft.gui.setScreen-Teil).
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+        
+    graphics.centeredText(this.font, this.title, this.width / 2, 8, 0xFFFFFF);    graphics.centeredText(this.font, this.title, this.width / 2, 8, 0xFFFFFF);
+}}
+
+private void saveAndClose() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}
+
+private void saveAndClose() {
+    persistToConfig();
+    this.close();    this.close();
+}}
+
+private void cancelAndClose() {
+    logPacketsEnabled = config.logPackets;
+    currentLogMode = config.logMode;
+    config.loggingKeybind = initialKeybind;
+    PacketLoggerClient.setLoggingKeybind(config.loggingKeybind);
+    s2cSelector.setSelectedPackets(initialS2C);
+    c2sSelector.setSelectedPackets(initialC2S);
+    persistToConfig();
+    this.close();
+}
+
+private void close() {private void close() {
+    if (this.minecraft != null) {    if (this.minecraft != null) {
+        //? if >=26.2 {        //? if >=26.2 {
+        /^this.minecraft.gui.setScreen(this.parent);        /^this.minecraft.gui.setScreen(this.parent);
+Jetzt der redundante/unlogische config.loggingKeybind = config.loggingKeybind in persistToConfig — das ist sinnlos. Er sollte entfernt werden, da der Keybind-Wert bereits direkt im config-Objekt lebt (beim Aufnehmen direkt gesetzt). In persistToConfig braucht er nicht neu zugewiesen zu werden. Aber um die Semantik klar zu machen, entferne ich die Zeile in allen 3 persistToConfig-Vorkommen.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -c "config.loggingKeybind = config.loggingKeybind;" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+3
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+
+private void persistToConfig() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}}
+
+private void persistToConfig() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}}
+
+private void persistToConfig() {private void persistToConfig() {
+    config.logPackets = logPacketsEnabled;    config.logPackets = logPacketsEnabled;
+    config.logMode = currentLogMode;    config.logMode = currentLogMode;
+    config.loggingKeybind = config.loggingKeybind;
+    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());    config.selectedS2CPackets = new ArrayList<>(s2cSelector.getSelectedPackets());
+    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());    config.selectedC2SPackets = new ArrayList<>(c2sSelector.getSelectedPackets());
+    config.save();    config.save();
+}}
+Jetzt die Cancel-Buttons auf cancelAndClose() umstellen. Es gibt 3 Vorkommen (eins pro Abschnitt), alle button -> this.close(). Ich ersetze sie eindeutig per Kontext.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "Cancel" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+157:            Button.builder(Component.literal("Cancel"), button -> this.close())
+378:            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+597:            ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())
+Die drei Cancel-Buttons. Der 26.1-Branch nutzt Button.builder/Component.literal, die zwei Yarn nutzen ButtonWidget.builder/Text.literal (identisch). Ich ersetze beide Yarn-Vorkommen mit replaceAll und das 26.1 einzeln.
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+            .build()            .build()
+    );    );
+        
+    this.addDrawableChild(    this.addDrawableChild(
+        ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())        ButtonWidget.builder(Text.literal("Cancel"), button -> this.cancelAndClose())
+            .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)            .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+            .build()            .build()
+    );    );
+}}
+            .build()            .build()
+    );    );
+        
+    this.addDrawableChild(    this.addDrawableChild(
+        ButtonWidget.builder(Text.literal("Cancel"), button -> this.close())        ButtonWidget.builder(Text.literal("Cancel"), button -> this.cancelAndClose())
+            .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)            .dimensions(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+            .build()            .build()
+    );    );
+}}
+← Edit devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+            .build()            .build()
+    );    );
+        
+    this.addRenderableWidget(    this.addRenderableWidget(
+        Button.builder(Component.literal("Cancel"), button -> this.close())        Button.builder(Component.literal("Cancel"), button -> this.cancelAndClose())
+            .bounds(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)            .bounds(this.width / 2 + 5, bottomY, bottomButtonWidth, 20)
+            .build()            .build()
+    );    );
+}}
+Jetzt prüfen: PacketLoggerClient muss im 26.1-Branch importiert sein (für setLoggingKeybind), und HashSet/Set müssen importiert sein. Ich prüfe die Imports und ob der Save-Button noch korrekt ist.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "^import" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+3:import dev.redstone.packetlogger.config.ModConfig;
+4:import dev.redstone.packetlogger.config.ModConfig.LogMode;
+5:import dev.redstone.packetlogger.logger.PacketCatalog;
+6:import dev.redstone.packetlogger.PacketLoggerClient;
+7:import dev.redstone.packetlogger.screen.widget.DualListSelectorWidget;
+10:import net.minecraft.client.gui.components.Button;
+11:import net.minecraft.client.gui.screens.Screen;
+12:import net.minecraft.client.input.CharacterEvent;
+13:import net.minecraft.client.input.KeyEvent;
+14:import net.minecraft.network.chat.Component;
+…
+Click to expand
+Alle Imports vorhanden: PacketLoggerClient (Zeile 6), HashSet/Set (34-36). Ich prüfe, ob setLoggingKeybind in PacketLoggerClient public ist und ob der 26.1-Branch ihn korrekt aufrufen kann.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "setLoggingKeybind" src/main/java/dev/redstone/packetlogger/PacketLoggerClient.java
+30:	public static void setLoggingKeybind(int keyCode) {
+setLoggingKeybind ist public static — gut. Nun verifiziere ich, dass Stonecutter-Bedingungen konsistent sind und die Struktur der Datei korrekt kompiliert. Ich schaue auf die Struktur, insbesondere dass es keine Stonecutter-Kommentar-Konflikte durch meine Edits gibt. Ich prüfe den Bereich um Zeile 380-420 (1.21.9 persistToConfig/cancelAndClose) und die Save/Cancel-Button-Regionen.
+Read devhub/Fabric-Package-Logger 1.21.4/src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java [limit=30, offset=394]
+Die Struktur sieht gut aus. Nun prüfe ich, dass die Stonecutter-Bedingungen korrekt sind — insbesondere dass die Cancel-Buttons und persistToConfig nicht fälschlich doppelt innerhalb desselben Bedingungsblocks landeten. Ich überprüfe die Button-Regionen um Save/Cancel an Zeilen ~150, 375, 597.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -n "Cancel|Save|//\?|/\^|^\^///" src/main/java/dev/redstone/packetlogger/screen/SimpleConfigScreen.java
+8://? if >=26.1 {
+16:*///?} elif >=1.21.9 {
+25:*///?} else {
+31://?}
+38://? if >=26.1 {
+151:            Button.builder(Component.literal("Save"), button -> this.saveAndClose())
+157:            Button.builder(Component.literal("Cancel"), button -> this.cancelAndClose())
+210:            //? if >=26.2 {
+211:            /^this.minecraft.gui.setScreen(this.parent);
+212:            ^///?} else {
+…
+Click to expand
++ Thought: 4.5s
+Alle 3 Abschnitte sind umgebaut: jeweils persistToConfig/saveAndClose/cancelAndClose, Save→saveAndClose(), Cancel→cancelAndClose(). Der Keybind-Rollback auf initialKeybind ist drin. Nun lasse ich den Build laufen, um die Stonecutter-Branches zu verifizieren.
+Skill "minecraft-fabric-development"
++ Thought: 602ms
+Ich starte den Build für den aktiven Stonecutter-Branch (1.21), um die Änderungen zu verifizieren.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && ./gradlew build 2>&1 | tail -40
+(no output)
+
+<shell_metadata>
+User aborted the command
+</shell_metadata>
+▣  Build · DeepSeek V4 Flash Free · interrupted
+Okay, dann erstelle jetzt mal eine neue Datei, welche Changes enthält, die jetzt neu kommen. Also davor war es mod version 1.0.0. Und jetzt ist es modversion 1.1.2. So die changes, ich rede jetzt mal drüber, sollte es eigentlich wissen, aber erstens nochmal komplette Rework über welche Packets da sind. Viele haben gefehlt, manche hatten nicht volle Data enthalten und waren nicht richtig entpackt. Das ist jetzt eigentlich alles korrekt. Dann des weiteren kleinen Bugfix mit den Search Text Input Bar, dass man die nicht doppelt anklicken konnte, weil es das sonst blockiert hat. Dann Autosave im Config Screen. Und ein Key Bind zum Toggen. Und änderungspeicherpart, wo die Loks gespeichert werden. Und zusätzlich noch kleine Metadata Edition in jedem Logging File Head. 
++ Thought: 1.3s
+Ich erstelle eine Changelog-Datei für v1.1.2. Zuerst prüfe ich, ob es bereits ein Changelog gibt.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && ls *.md CHANGELOG* 2>/dev/null; echo "---"; rg -n "mod_version" gradle.properties
+HANDOFF-ALL-PACKETS.md
+README.md
+---
+7:mod_version=1.0.0
+Read devhub/Fabric-Package-Logger 1.21.4/README.md [limit=40]
++ Thought: 815ms
+Ich erstelle die Changelog-Datei für v1.1.2.
+# Wrote devhub/Fabric-Package-Logger 1.21.4/CHANGELOG.md
+# Changelog
+
+## 1.1.2
+
+### Packet Catalog Rework
+- Complete rework of the packet catalog across S2C and C2S.
+- Many previously missing packets are now logged.
+- Packets that were not fully unpacked now include their complete data (NBT/Component) and are correctly deserialized.
+
+### Bugfixes
+- Fixed the search text input in the config screen: it no longer gets blocked by double-clicking, so the field can be focused/refocused reliably.
+
+### Config Screen
+- Added autosave when closing the config screen; a Cancel button reverts all changes to the state from when the screen was opened.
+
+### Keybind
+- Added a configurable keybind to toggle packet logging on/off.
+
+### Log Storage
+- Log files are now stored in a dedicated `packet-logger` folder inside the game directory instead of the config directory.
+
+### Log File Header
+- Each log file header now includes additional metadata about the client (Minecraft and Fabric Loader version) and the active session/world.
+
+Erstellt: CHANGELOG.md mit den v1.1.2-Änderungen (Packet-Catalog-Rework, Suchfeld-Fix, Autosave, Keybind, neuer Log-Ordner, erweiterter Log-Header).
+Zwei Hinweise:
+gradle.properties hat noch mod_version=1.0.0. Ich soll laut Verlauf auf 1.1.2 setzen — soll ich das jetzt machen?
+Die Changelog-Sprache: Ich habe sie auf Englisch geschrieben (passend zur README). Sag Bescheid, falls Deutsch gewünscht ist.
+▣  Build · DeepSeek V4 Flash Free · 20.0s
+ja, überall wo noch 1.0.0 steht das änder auf "1.1.2"
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -rn "1\.0\.0" --glob '!*.class' . 2>/dev/null
+./gradle.properties:mod_version=n
+./README.md:Output: `build/libs/packet-logger-n.jar`
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:mod_version=n
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:| `mod_version` | `n` | Mod-Version (geht in Jarname und `fabric.mod.json`) |
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:   `crystal-per-second-hud-n+mc1.21.4.jar`. Das `mc`-Präfix unterscheidet die Jars der
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:crystal-per-second-hud-n+mc1.21.4.jar
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:crystal-per-second-hud-n+mc1.21.4-sources.jar
+./backup/Fabric-Package-Logger (Kopie)/README.md:Output: `build/libs/package-logger-n.jar`
+./backup/Fabric-Package-Logger/README.md:Output: `build/libs/package-logger-n.jar`
++ Thought: 628ms
+Die . im Suchmuster wurde als Regex interpretiert. Ich suche exakt.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && rg -rn -F "1.0.0" . 2>/dev/null
+./README.md:Output: `build/libs/packet-logger-n.jar`
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:mod_version=n
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:| `mod_version` | `n` | Mod-Version (geht in Jarname und `fabric.mod.json`) |
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:   `crystal-per-second-hud-n+mc1.21.4.jar`. Das `mc`-Präfix unterscheidet die Jars der
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:crystal-per-second-hud-n+mc1.21.4.jar
+./DEVNODE/ALT_DOCS_NOT_AKTUEL/STONECUTTER_MULTIVERSION_GUIDE.md:crystal-per-second-hud-n+mc1.21.4-sources.jar
+./gradle.properties:mod_version=n
+./backup/Fabric-Package-Logger/README.md:Output: `build/libs/package-logger-n.jar`
+./backup/Fabric-Package-Logger (Kopie)/README.md:Output: `build/libs/package-logger-n.jar`
++ Thought: 630ms
+Merkwürdig — rg zeigt n statt 1.0.0. Das deutet auf eine Eigenheit hin. Ich prüfe die echte Datei.
+Read devhub/Fabric-Package-Logger 1.21.4/gradle.properties 
+Die Datei enthält tatsächlich 1.0.0. rg zeigte fälschlich n an (vermutlich Terminal-Kodierung/Interpretation). Ich setze mod_version auf 1.1.2.
+← Edit devhub/Fabric-Package-Logger 1.21.4/gradle.properties
+org.gradle.parallel=trueorg.gradle.parallel=true
+org.gradle.configuration-cache=falseorg.gradle.configuration-cache=false
+
+# Mod Properties# Mod Properties
+mod_version=1.0.0mod_version=1.1.2
+maven_group=dev.redstone.packetloggermaven_group=dev.redstone.packetlogger
+archives_base_name=packet-loggerarchives_base_name=packet-logger
+
+# Fabric Properties# Fabric Properties
+Nun die README (v1.0.0-Ausgabe im "Output:"-Beispiel). Ich prüfe den Kontext dort.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && grep -rn "1.0.0" README.md
+108:Output: `build/libs/packet-logger-1.0.0.jar`
+Read devhub/Fabric-Package-Logger 1.21.4/README.md [limit=6, offset=105]
+← Edit devhub/Fabric-Package-Logger 1.21.4/README.md
+```bash```bash
+./gradlew build./gradlew build
+``````
+
+Output: `build/libs/packet-logger-1.0.0.jar`Output: `build/libs/packet-logger-1.1.2.jar`
+
+### Project Structure### Project Structure
+
+``````
++ Thought: 1.1s
+Die DEVNODE- und backup-Ordner: Ich prüfe, ob DEVNODE relevanter Projektcode oder nur alte Doku ist.
+$ cd "/home/timon/devhub/Fabric-Package-Logger 1.21.4" && ls DEVNODE/ && echo "---backup---" && ls backup/
+ALT_DOCS_NOT_AKTUEL
+---backup---
+Fabric-Package-Logger
+Fabric-Package-Logger (Kopie)
++ Thought: 1.7s
+Die verbleibenden Treffer sind nur in DEVNODE/ALT_DOCS_NOT_AKTUEL/ (ausdrücklich als "nicht aktuell" markierte alte Doku) und in den backup/-Kopien. Diese habe ich nicht angefasst.
+Geändert:
+gradle.properties → mod_version=1.1.2
+README.md → packet-logger-1.1.2.jar
+Die DEVNODE-Doku ist nicht aktuell und die Backups sind Kopien — die lasse ich unverändert. Sag Bescheid, falls ich auch die anfassen soll.

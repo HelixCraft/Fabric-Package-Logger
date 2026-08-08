@@ -1,33 +1,33 @@
 package dev.redstone.packetlogger.screen;
 
 //? if >=26.1 {
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+/*import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-//?} else {
-/*import net.minecraft.client.MinecraftClient;
+*///?} else {
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-*///?}
+//?}
 
 //? if <26.1 {
 //? if >=1.21.9 {
-import net.minecraft.client.gui.Click;
-//?}
+/*import net.minecraft.client.gui.Click;
+*///?}
 //?}
 
 import java.util.function.Consumer;
 
 //? if >=26.1 {
-public class ColorEditorScreen extends Screen {
+/*public class ColorEditorScreen extends Screen {
     private final Screen parent;
     private final Consumer<Integer> onColorSelected;
 
@@ -143,7 +143,7 @@ public class ColorEditorScreen extends Screen {
         return field;
     }
 
-    /* --- Logic & Listeners --- */
+    /^ --- Logic & Listeners --- ^/
 
     private void updateFromHSVFields() {
         if (isUpdatingFields) return;
@@ -220,7 +220,7 @@ public class ColorEditorScreen extends Screen {
         isUpdatingFields = false;
     }
 
-    /* --- Rendering --- */
+    /^ --- Rendering --- ^/
 
     @Override
     public void extractBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
@@ -404,7 +404,7 @@ public class ColorEditorScreen extends Screen {
         }
     }
 
-    /* --- Mouse Interaction --- */
+    /^ --- Mouse Interaction --- ^/
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubled) {
@@ -536,7 +536,7 @@ public class ColorEditorScreen extends Screen {
         updateFields(true);
     }
 
-    /* --- Helpers --- */
+    /^ --- Helpers --- ^/
 
     private int getARGB() {
         int[] rgb = hsvToRgb(hue, saturation, value);
@@ -605,7 +605,7 @@ public class ColorEditorScreen extends Screen {
     @Override
     public boolean isPauseScreen() { return false; }
 }
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*public class ColorEditorScreen extends Screen {
     private final Screen parent;
     private final Consumer<Integer> onColorSelected;
@@ -1038,7 +1038,7 @@ public class ColorEditorScreen extends Screen {
     @Override public boolean shouldPause() { return false; }
 }
 *///?} else {
-/*public class ColorEditorScreen extends Screen {
+public class ColorEditorScreen extends Screen {
     private final Screen parent;
     private final Consumer<Integer> onColorSelected;
 
@@ -1461,4 +1461,4 @@ public class ColorEditorScreen extends Screen {
     @Override public void close() { if (this.client != null) this.client.setScreen(parent); }
     @Override public boolean shouldPause() { return false; }
 }
-*///?}
+//?}

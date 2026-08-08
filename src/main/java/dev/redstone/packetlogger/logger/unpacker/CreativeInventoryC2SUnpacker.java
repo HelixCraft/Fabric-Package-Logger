@@ -1,12 +1,12 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.world.item.ItemStack;
+/*import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.protocol.game.ServerboundSetCreativeModeSlotPacket;
-//?} else {
-/*import net.minecraft.item.ItemStack;
+*///?} else {
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
-*///?}
+//?}
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -17,40 +17,40 @@ import java.lang.reflect.Method;
  */
 public class CreativeInventoryC2SUnpacker implements PacketUnpacker<
 //? if >=26.1 {
-    ServerboundSetCreativeModeSlotPacket
-//?} else {
-    /*CreativeInventoryActionC2SPacket*/
+    /*ServerboundSetCreativeModeSlotPacket
+*///?} else {
+    CreativeInventoryActionC2SPacket
 //?}
 > {
 
     @Override
     public String unpack(
 //? if >=26.1 {
-        ServerboundSetCreativeModeSlotPacket packet
-//?} else {
-        /*CreativeInventoryActionC2SPacket packet*/
+        /*ServerboundSetCreativeModeSlotPacket packet
+*///?} else {
+        CreativeInventoryActionC2SPacket packet
 //?}
     ) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
         //? if >=26.1 {
-        // Slot (record accessor)
+        /*// Slot (record accessor)
         int slot = packet.slotNum();
         sb.append("slot:").append(slot);
 
         // ItemStack (record accessor)
         ItemStack stack = packet.itemStack();
         if (stack == null) stack = ItemStack.EMPTY;
-        //?} else {
-        /*// Slot via Reflection (API kann sich ändern)
+        *///?} else {
+        // Slot via Reflection (API kann sich ändern)
         int slot = getFieldValue(packet, "slot", Integer.class, -1);
         sb.append("slot:").append(slot);
 
         // ItemStack via Reflection
         ItemStack stack = getFieldValue(packet, "stack", ItemStack.class, ItemStack.EMPTY);
         if (stack == null) stack = ItemStack.EMPTY;
-        *///?}
+        //?}
         sb.append(",item:").append(ItemStackFormatter.format(stack));
 
         sb.append("}");
@@ -59,7 +59,7 @@ public class CreativeInventoryC2SUnpacker implements PacketUnpacker<
 
     //? if >=26.1 {
     //?} else {
-    /*@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     private <T> T getFieldValue(Object obj, String fieldName, Class<T> type, T defaultValue) {
         try {
             // Versuche Getter
@@ -86,5 +86,5 @@ public class CreativeInventoryC2SUnpacker implements PacketUnpacker<
         }
         return defaultValue;
     }
-    *///?}
+    //?}
 }

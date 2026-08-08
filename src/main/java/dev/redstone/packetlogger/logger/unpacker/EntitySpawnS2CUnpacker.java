@@ -1,20 +1,20 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+/*import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.phys.Vec3;
-//?} else {
-/*import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+*///?} else {
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.Registries;
-*///?}
+//?}
 
 /**
  * Unpacker für EntitySpawnS2CPacket.
  * Zeigt UUID, exakte Koordinaten, EntityType und Velocity.
  */
 //? if >=26.1 {
-public class EntitySpawnS2CUnpacker implements PacketUnpacker<ClientboundAddEntityPacket> {
+/*public class EntitySpawnS2CUnpacker implements PacketUnpacker<ClientboundAddEntityPacket> {
 
     @Override
     public String unpack(ClientboundAddEntityPacket packet) {
@@ -61,7 +61,7 @@ public class EntitySpawnS2CUnpacker implements PacketUnpacker<ClientboundAddEnti
         return sb.toString();
     }
 }
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*public class EntitySpawnS2CUnpacker implements PacketUnpacker<EntitySpawnS2CPacket> {
 
     @Override
@@ -109,7 +109,7 @@ public class EntitySpawnS2CUnpacker implements PacketUnpacker<ClientboundAddEnti
     }
 }
 *///?} else {
-/*public class EntitySpawnS2CUnpacker implements PacketUnpacker<EntitySpawnS2CPacket> {
+public class EntitySpawnS2CUnpacker implements PacketUnpacker<EntitySpawnS2CPacket> {
 
     @Override
     public String unpack(EntitySpawnS2CPacket packet) {
@@ -155,4 +155,4 @@ public class EntitySpawnS2CUnpacker implements PacketUnpacker<ClientboundAddEnti
         return sb.toString();
     }
 }
-*///?}
+//?}

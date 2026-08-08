@@ -8,29 +8,29 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=26.1 {
-import io.netty.channel.ChannelFutureListener;
+/*import io.netty.channel.ChannelFutureListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
-//?} else {
-/*import net.minecraft.network.ClientConnection;
+*///?} else {
+import net.minecraft.network.ClientConnection;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.Packet;
-*///?}
+//?}
 
 /**
  * Mixin für ClientConnection um alle Pakete zu loggen.
  * Basiert auf dem Meteor Client Ansatz.
  */
 //? if >=26.1 {
-@Mixin(Connection.class)
+/*@Mixin(Connection.class)
 public class ClientConnectionMixin {
 
     private static boolean debugLogged = false;
 
-    /**
+    /^*
      * Intercepted alle eingehenden Pakete (Server -> Client).
      * channelRead0(ChannelHandlerContext, Packet) wird für jedes empfangene Paket aufgerufen.
-     */
+     ^/
     @Inject(
         method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/protocol/Packet;)V",
         at = @At("HEAD")
@@ -50,11 +50,11 @@ public class ClientConnectionMixin {
         }
     }
 
-    /**
+    /^*
      * Intercepted alle ausgehenden Pakete (Client -> Server).
      * Die 3-arg-Variante send(Packet, ChannelFutureListener, boolean) ist der gemeinsame
      * Funnel: sowohl send(Packet) als auch send(Packet, listener) delegieren hierher.
-     */
+     ^/
     @Inject(
         method = "send(Lnet/minecraft/network/protocol/Packet;Lio/netty/channel/ChannelFutureListener;Z)V",
         at = @At("HEAD")
@@ -68,8 +68,8 @@ public class ClientConnectionMixin {
         }
     }
 }
-//?} else {
-/*@Mixin(ClientConnection.class)
+*///?} else {
+@Mixin(ClientConnection.class)
 public class ClientConnectionMixin {
 
     private static boolean debugLogged = false;
@@ -113,4 +113,4 @@ public class ClientConnectionMixin {
         }
     }
 }
-*///?}
+//?}

@@ -32,6 +32,8 @@ A deep packet logging mod for Minecraft Fabric that captures all network traffic
 
 Press **F6** to open the config screen.
 
+You can also assign a keybind in the config screen to toggle packet logging on/off. It is unbound by default.
+
 ### Packet Selection
 
 Use the dual-list selector to choose which packets to log:
@@ -49,7 +51,7 @@ Use the dual-list selector to choose which packets to log:
 Logs are saved to:
 
 ```
-MINECRAFT_FOLDER/config/packet-logger/packets_2026-01-04_15-30-45_servername.log
+MINECRAFT_FOLDER/packet-logger/packets_2026-01-04_15-30-45_servername.log
 ```
 
 A new log file is created when:
@@ -72,6 +74,7 @@ Config saved at: `.minecraft/config/packet-logger-config.json`
   "logPackets": true,
   "logMode": "FILE",
   "deepLogging": true,
+  "loggingKeybind": -1,
   "selectedS2CPackets": ["InventoryS2CPacket"],
   "selectedC2SPackets": ["ClickSlotC2SPacket"]
 }
@@ -105,18 +108,18 @@ You can download the mod from Modrinth. Simply place the downloaded `.jar` file 
 ./gradlew build
 ```
 
-Output: `build/libs/packet-logger-1.0.0.jar`
+Output: `build/libs/packet-logger-1.1.2.jar`
 
 ### Project Structure
 
 ```
-src/client/java/dev/redstone/packetlogger/
-├── PackageLoggerClient.java       # Client entrypoint
+src/main/java/dev/redstone/packetlogger/
+├── PacketLoggerClient.java       # Client entrypoint
 ├── config/
-│   └── ModConfig.java             # Configuration
+│   └── ModConfig.java            # Configuration
 ├── logger/
-│   ├── PacketLogger.java          # Main logger
-│   └── unpacker/                  # Specialized packet unpackers
+│   ├── PacketLogger.java         # Main logger
+│   └── unpacker/                 # Specialized packet unpackers
 │       ├── ItemStackFormatter.java
 │       ├── InventoryS2CUnpacker.java
 │       └── ...
@@ -129,178 +132,9 @@ src/client/java/dev/redstone/packetlogger/
 
 ## Available Packets
 
-### S2C Packets (Server → Client)
+All packets are loaded dynamically from the game's `PacketType` registries and are selectable in the config screen's dual-list selector. Both S2C (Server → Client) and C2S (Client → Server) packets are covered across all protocol phases.
 
-<details>
-<summary>Click to expand (108 packets)</summary>
-
-- AdvancementUpdateS2CPacket
-- BlockBreakingProgressS2CPacket
-- BlockEntityUpdateS2CPacket
-- BlockEventS2CPacket
-- BlockUpdateS2CPacket
-- BossBarS2CPacket
-- BundleS2CPacket
-- ChangeUnlockedRecipesS2CPacket
-- ChatMessageS2CPacket
-- ChatSuggestionsS2CPacket
-- ChunkBiomeDataS2CPacket
-- ChunkDataS2CPacket
-- ChunkDeltaUpdateS2CPacket
-- ChunkLoadDistanceS2CPacket
-- ChunkRenderDistanceCenterS2CPacket
-- ChunkSentS2CPacket
-- ClearTitleS2CPacket
-- CloseScreenS2CPacket
-- CommandSuggestionsS2CPacket
-- CommandTreeS2CPacket
-- CooldownUpdateS2CPacket
-- CraftFailedResponseS2CPacket
-- DamageTiltS2CPacket
-- DeathMessageS2CPacket
-- DebugSampleS2CPacket
-- DifficultyS2CPacket
-- EndCombatS2CPacket
-- EnterCombatS2CPacket
-- EnterReconfigurationS2CPacket
-- EntitiesDestroyS2CPacket
-- EntityAnimationS2CPacket
-- EntityAttachS2CPacket
-- EntityAttributesS2CPacket
-- EntityDamageS2CPacket
-- EntityEquipmentUpdateS2CPacket
-- EntityPassengersSetS2CPacket
-- EntityPositionS2CPacket
-- EntityS2CPacket
-- EntitySetHeadYawS2CPacket
-- EntitySpawnS2CPacket
-- EntityStatusEffectS2CPacket
-- EntityStatusS2CPacket
-- EntityTrackerUpdateS2CPacket
-- EntityVelocityUpdateS2CPacket
-- ExperienceBarUpdateS2CPacket
-- ExperienceOrbSpawnS2CPacket
-- ExplosionS2CPacket
-- GameJoinS2CPacket
-- GameMessageS2CPacket
-- GameStateChangeS2CPacket
-- HealthUpdateS2CPacket
-- InventoryS2CPacket
-- ItemPickupAnimationS2CPacket
-- LightUpdateS2CPacket
-- LookAtS2CPacket
-- MapUpdateS2CPacket
-- NbtQueryResponseS2CPacket
-- OpenHorseScreenS2CPacket
-- OpenScreenS2CPacket
-- OpenWrittenBookS2CPacket
-- OverlayMessageS2CPacket
-- ParticleS2CPacket
-- PlayerAbilitiesS2CPacket
-- PlayerActionResponseS2CPacket
-- PlayerListHeaderS2CPacket
-- PlayerListS2CPacket
-- PlayerPositionLookS2CPacket
-- PlayerRemoveS2CPacket
-- PlayerRespawnS2CPacket
-- PlayerSpawnPositionS2CPacket
-- PlaySoundFromEntityS2CPacket
-- PlaySoundS2CPacket
-- ProfilelessChatMessageS2CPacket
-- ProjectilePowerS2CPacket
-- RemoveEntityStatusEffectS2CPacket
-- RemoveMessageS2CPacket
-- ScoreboardDisplayS2CPacket
-- ScoreboardObjectiveUpdateS2CPacket
-- ScoreboardScoreResetS2CPacket
-- ScoreboardScoreUpdateS2CPacket
-- ScreenHandlerPropertyUpdateS2CPacket
-- ScreenHandlerSlotUpdateS2CPacket
-- SelectAdvancementTabS2CPacket
-- ServerMetadataS2CPacket
-- SetCameraEntityS2CPacket
-- SetTradeOffersS2CPacket
-- SignEditorOpenS2CPacket
-- SimulationDistanceS2CPacket
-- StartChunkSendS2CPacket
-- StatisticsS2CPacket
-- StopSoundS2CPacket
-- SubtitleS2CPacket
-- SynchronizeRecipesS2CPacket
-- TeamS2CPacket
-- TickStepS2CPacket
-- TitleFadeS2CPacket
-- TitleS2CPacket
-- UnloadChunkS2CPacket
-- UpdateSelectedSlotS2CPacket
-- UpdateTickRateS2CPacket
-- VehicleMoveS2CPacket
-- WorldBorderCenterChangedS2CPacket
-- WorldBorderInitializeS2CPacket
-- WorldBorderInterpolateSizeS2CPacket
-- WorldBorderSizeChangedS2CPacket
-- WorldBorderWarningBlocksChangedS2CPacket
-- WorldBorderWarningTimeChangedS2CPacket
-- WorldEventS2CPacket
-- WorldTimeUpdateS2CPacket
-
-</details>
-
-### C2S Packets (Client → Server)
-
-<details>
-<summary>Click to expand (47 packets)</summary>
-
-- AcknowledgeChunksC2SPacket
-- AcknowledgeReconfigurationC2SPacket
-- AdvancementTabC2SPacket
-- BoatPaddleStateC2SPacket
-- BookUpdateC2SPacket
-- ButtonClickC2SPacket
-- ChatCommandSignedC2SPacket
-- ChatMessageC2SPacket
-- ClickSlotC2SPacket
-- ClientCommandC2SPacket
-- ClientStatusC2SPacket
-- CloseHandledScreenC2SPacket
-- CommandExecutionC2SPacket
-- CraftRequestC2SPacket
-- CreativeInventoryActionC2SPacket
-- DebugSampleSubscriptionC2SPacket
-- HandSwingC2SPacket
-- JigsawGeneratingC2SPacket
-- MessageAcknowledgmentC2SPacket
-- PickFromInventoryC2SPacket
-- PlayerActionC2SPacket
-- PlayerInputC2SPacket
-- PlayerInteractBlockC2SPacket
-- PlayerInteractEntityC2SPacket
-- PlayerInteractItemC2SPacket
-- PlayerMoveC2SPacket
-- PlayerSessionC2SPacket
-- QueryBlockNbtC2SPacket
-- QueryEntityNbtC2SPacket
-- RecipeBookDataC2SPacket
-- RecipeCategoryOptionsC2SPacket
-- RenameItemC2SPacket
-- RequestCommandCompletionsC2SPacket
-- SelectMerchantTradeC2SPacket
-- SlotChangedStateC2SPacket
-- SpectatorTeleportC2SPacket
-- TeleportConfirmC2SPacket
-- UpdateBeaconC2SPacket
-- UpdateCommandBlockC2SPacket
-- UpdateCommandBlockMinecartC2SPacket
-- UpdateDifficultyC2SPacket
-- UpdateDifficultyLockC2SPacket
-- UpdateJigsawC2SPacket
-- UpdatePlayerAbilitiesC2SPacket
-- UpdateSelectedSlotC2SPacket
-- UpdateSignC2SPacket
-- UpdateStructureBlockC2SPacket
-- VehicleMoveC2SPacket
-
-</details>
+See [PACKETS-1.21.4.md](PACKETS-1.21.4.md) for an example listing of all packets for Minecraft 1.21.4.
 
 ## License
 

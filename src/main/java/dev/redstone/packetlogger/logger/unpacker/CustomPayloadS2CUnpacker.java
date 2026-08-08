@@ -1,14 +1,14 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+/*import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.resources.Identifier;
-//?} else {
-/*import net.minecraft.network.packet.CustomPayload;
+*///?} else {
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.util.Identifier;
-*///?}
+//?}
 
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -19,35 +19,35 @@ import java.nio.charset.StandardCharsets;
  */
 public class CustomPayloadS2CUnpacker implements PacketUnpacker<
 //? if >=26.1 {
-    ClientboundCustomPayloadPacket
-//?} else {
-    /*CustomPayloadS2CPacket*/
+    /*ClientboundCustomPayloadPacket
+*///?} else {
+    CustomPayloadS2CPacket
 //?}
 > {
 
     @Override
     public String unpack(
 //? if >=26.1 {
-        ClientboundCustomPayloadPacket packet
-//?} else {
-        /*CustomPayloadS2CPacket packet*/
+        /*ClientboundCustomPayloadPacket packet
+*///?} else {
+        CustomPayloadS2CPacket packet
 //?}
     ) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
         //? if >=26.1 {
-        CustomPacketPayload payload = packet.payload();
-        //?} else {
-        /*CustomPayload payload = packet.payload();
-        *///?}
+        /*CustomPacketPayload payload = packet.payload();
+        *///?} else {
+        CustomPayload payload = packet.payload();
+        //?}
 
         // Channel ID
         //? if >=26.1 {
-        Identifier channelId = payload.type().id();
-        //?} else {
-        /*Identifier channelId = payload.getId().id();
-        *///?}
+        /*Identifier channelId = payload.type().id();
+        *///?} else {
+        Identifier channelId = payload.getId().id();
+        //?}
         sb.append("channel:\"").append(channelId.toString()).append("\"");
 
         // Payload Type
@@ -65,9 +65,9 @@ public class CustomPayloadS2CUnpacker implements PacketUnpacker<
 
     private String extractPayloadData(
 //? if >=26.1 {
-            CustomPacketPayload payload
-//?} else {
-            /*CustomPayload payload*/
+            /*CustomPacketPayload payload
+*///?} else {
+            CustomPayload payload
 //?}
     ) {
         try {
@@ -89,9 +89,9 @@ public class CustomPayloadS2CUnpacker implements PacketUnpacker<
 
     private String extractBrandPayload(
 //? if >=26.1 {
-            CustomPacketPayload payload
-//?} else {
-            /*CustomPayload payload*/
+            /*CustomPacketPayload payload
+*///?} else {
+            CustomPayload payload
 //?}
     ) {
         try {

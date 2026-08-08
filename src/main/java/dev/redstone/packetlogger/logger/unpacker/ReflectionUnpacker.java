@@ -1,22 +1,22 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.world.item.ItemStack;
+/*import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
-//?} else {
-/*import net.minecraft.item.ItemStack;
+*///?} else {
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-*///?}
+//?}
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -50,7 +50,7 @@ public class ReflectionUnpacker {
                 return ItemStackFormatter.format((ItemStack) obj);
             }
             //? if >=26.1 {
-            if (obj instanceof CompoundTag) {
+            /*if (obj instanceof CompoundTag) {
                 return ((CompoundTag) obj).toString();
             }
             if (obj instanceof Tag) {
@@ -59,7 +59,7 @@ public class ReflectionUnpacker {
             if (obj instanceof Component) {
                 return formatComponent((Component) obj);
             }
-            //?} elif >=1.21.5 {
+            *///?} elif >=1.21.5 {
             /*if (obj instanceof NbtCompound) {
                 return ((NbtCompound) obj).asString().orElse(obj.toString());
             }
@@ -70,7 +70,7 @@ public class ReflectionUnpacker {
                 return "\"" + escapeString(((Text) obj).getString()) + "\"";
             }
             *///?} else {
-            /*if (obj instanceof NbtCompound) {
+            if (obj instanceof NbtCompound) {
                 return ((NbtCompound) obj).asString();
             }
             if (obj instanceof NbtElement) {
@@ -79,13 +79,13 @@ public class ReflectionUnpacker {
             if (obj instanceof Text) {
                 return "\"" + escapeString(((Text) obj).getString()) + "\"";
             }
-            *///?}
+            //?}
             if (obj instanceof BlockPos) {
                 BlockPos pos = (BlockPos) obj;
                 return "{x:" + pos.getX() + ",y:" + pos.getY() + ",z:" + pos.getZ() + "}";
             }
             //? if >=26.1 {
-            if (obj instanceof Vec3) {
+            /*if (obj instanceof Vec3) {
                 Vec3 vec = (Vec3) obj;
                 return "{x:" + vec.x + ",y:" + vec.y + ",z:" + vec.z + "}";
             }
@@ -93,8 +93,8 @@ public class ReflectionUnpacker {
                 ChunkPos pos = (ChunkPos) obj;
                 return "{x:" + pos.x() + ",z:" + pos.z() + "}";
             }
-            //?} else {
-            /*if (obj instanceof Vec3d) {
+            *///?} else {
+            if (obj instanceof Vec3d) {
                 Vec3d vec = (Vec3d) obj;
                 return "{x:" + vec.x + ",y:" + vec.y + ",z:" + vec.z + "}";
             }
@@ -102,7 +102,7 @@ public class ReflectionUnpacker {
                 ChunkPos pos = (ChunkPos) obj;
                 return "{x:" + pos.x + ",z:" + pos.z + "}";
             }
-            *///?}
+            //?}
             if (obj instanceof UUID) {
                 return "\"" + obj.toString() + "\"";
             }
@@ -241,10 +241,10 @@ public class ReflectionUnpacker {
     }
     
     //? if >=26.1 {
-    /**
+    /*/^*
      * Formatiert eine Component inkl. Style (Farbe, Formatierung) und Siblings.
      * getString() allein verwirft den Style — daher hier manuell ausgelesen.
-     */
+     ^/
     private static String formatComponent(Component component) {
         StringBuilder sb = new StringBuilder("{");
         sb.append("text:\"").append(escapeString(component.getContents() instanceof net.minecraft.network.chat.contents.PlainTextContents
@@ -274,7 +274,7 @@ public class ReflectionUnpacker {
         sb.append("}");
         return sb.toString();
     }
-    //?}
+    *///?}
 
     private static String escapeString(String s) {
         if (s == null) return "";

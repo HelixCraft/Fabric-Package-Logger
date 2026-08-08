@@ -78,6 +78,13 @@ dependencies {
 
     // Gson für JSON-Serialisierung (bereits in Minecraft enthalten)
     implementation "com.google.code.gson:gson:2.10.1"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 def javaVersion = sc.current.parsed >= "26.1" ? 25 : 21

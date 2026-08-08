@@ -36,4 +36,5 @@ replay_*.log
 *.zip
 .stonecutter-report.md
 
-.backup
+backup/
+DEVNODE/backup/

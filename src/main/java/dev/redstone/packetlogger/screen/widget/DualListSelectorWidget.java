@@ -1,7 +1,7 @@
 package dev.redstone.packetlogger.screen.widget;
 
 //? if >=26.1 {
-import net.minecraft.client.Minecraft;
+/*import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -11,7 +11,7 @@ import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Click;
@@ -25,7 +25,7 @@ import net.minecraft.client.input.CharInput;
 import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 *///?} else {
-/*import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
@@ -34,7 +34,7 @@ import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-*///?}
+//?}
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +47,7 @@ import java.util.function.Consumer;
  * Mit Suchfunktion und Buttons zum Hinzufügen/Entfernen.
  */
 //? if >=26.1 {
-public class DualListSelectorWidget extends AbstractWidget {
+/*public class DualListSelectorWidget extends AbstractWidget {
     private final int x;
     private final int y;
     private final Font textRenderer;
@@ -371,12 +371,16 @@ public class DualListSelectorWidget extends AbstractWidget {
         return new HashSet<>(selectedPackets);
     }
     
+    public void setSelectedPackets(Set<String> newSelection) {
+        selectedPackets.clear();
+        selectedPackets.addAll(newSelection);
+        updateFilteredLists();
+    }
+    
     @Override
     public void setFocused(boolean focused) {
         super.setFocused(focused);
-        if (!focused) {
-            searchField.setFocused(false);
-        }
+        searchField.setFocused(focused);
     }
     
     @Override
@@ -388,7 +392,7 @@ public class DualListSelectorWidget extends AbstractWidget {
     public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private final int x;
     private final int y;
@@ -724,12 +728,16 @@ public class DualListSelectorWidget extends AbstractWidget {
         return new HashSet<>(selectedPackets);
     }
     
+    public void setSelectedPackets(Set<String> newSelection) {
+        selectedPackets.clear();
+        selectedPackets.addAll(newSelection);
+        updateFilteredLists();
+    }
+    
     @Override
     public void setFocused(boolean focused) {
         this.focused = focused;
-        if (!focused) {
-            searchField.setFocused(false);
-        }
+        searchField.setFocused(focused);
     }
     
     @Override
@@ -747,7 +755,7 @@ public class DualListSelectorWidget extends AbstractWidget {
     }
 }
 *///?} else {
-/*public class DualListSelectorWidget implements Drawable, Element, Selectable {
+public class DualListSelectorWidget implements Drawable, Element, Selectable {
     private final int x;
     private final int y;
     private final int width;
@@ -1079,12 +1087,16 @@ public class DualListSelectorWidget extends AbstractWidget {
         return new HashSet<>(selectedPackets);
     }
     
+    public void setSelectedPackets(Set<String> newSelection) {
+        selectedPackets.clear();
+        selectedPackets.addAll(newSelection);
+        updateFilteredLists();
+    }
+    
     @Override
     public void setFocused(boolean focused) {
         this.focused = focused;
-        if (!focused) {
-            searchField.setFocused(false);
-        }
+        searchField.setFocused(focused);
     }
     
     @Override
@@ -1101,4 +1113,4 @@ public class DualListSelectorWidget extends AbstractWidget {
     public void appendNarrations(NarrationMessageBuilder builder) {
     }
 }
-*///?}
+//?}

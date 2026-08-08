@@ -2,17 +2,17 @@ package dev.redstone.packetlogger.logger.unpacker;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 //? if >=26.1 {
-import net.minecraft.network.HashedStack;
+/*import net.minecraft.network.HashedStack;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.inventory.ContainerInput;
-//?} elif >=1.21.5 {
+*///?} elif >=1.21.5 {
 /*import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 *///?} else {
-/*import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
-*///?}
+//?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * Zeigt Slot-ID, Action-Type, Button und alle modifizierten Slots.
  */
 //? if >=26.1 {
-public class ClickSlotC2SUnpacker implements PacketUnpacker<ServerboundContainerClickPacket> {
+/*public class ClickSlotC2SUnpacker implements PacketUnpacker<ServerboundContainerClickPacket> {
 
     @Override
     public String unpack(ServerboundContainerClickPacket packet) {
@@ -79,7 +79,7 @@ public class ClickSlotC2SUnpacker implements PacketUnpacker<ServerboundContainer
         }
     }
 }
-//?} elif >=1.21.5 {
+*///?} elif >=1.21.5 {
 /*public class ClickSlotC2SUnpacker implements PacketUnpacker<ClickSlotC2SPacket> {
 
     @Override
@@ -140,7 +140,7 @@ public class ClickSlotC2SUnpacker implements PacketUnpacker<ServerboundContainer
     }
 }
 *///?} else {
-/*public class ClickSlotC2SUnpacker implements PacketUnpacker<ClickSlotC2SPacket> {
+public class ClickSlotC2SUnpacker implements PacketUnpacker<ClickSlotC2SPacket> {
 
     @Override
     public String unpack(ClickSlotC2SPacket packet) {
@@ -197,4 +197,4 @@ public class ClickSlotC2SUnpacker implements PacketUnpacker<ServerboundContainer
         }
     }
 }
-*///?}
+//?}

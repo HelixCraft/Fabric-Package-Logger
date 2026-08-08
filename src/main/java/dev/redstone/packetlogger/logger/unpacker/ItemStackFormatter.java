@@ -1,7 +1,7 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.core.Holder;
+/*import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -20,8 +20,8 @@ import net.minecraft.world.item.component.WritableBookContent;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-//?} else {
-/*import net.minecraft.component.ComponentMap;
+*///?} else {
+import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.Enchantment;
@@ -30,7 +30,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
-*///?}
+//?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +39,12 @@ import java.util.List;
  * Formatiert ItemStacks mit allen Components/NBT-Daten im JSON-ähnlichen Format.
  */
 //? if >=26.1 {
-public class ItemStackFormatter {
+/*public class ItemStackFormatter {
 
-    /**
+    /^*
      * Formatiert einen ItemStack im Minecraft-NBT-Stil.
      * Format: {id:"minecraft:diamond_sword",count:1,components:{...}}
-     */
+     ^/
     public static String format(ItemStack stack) {
         if (stack == null || stack.isEmpty()) {
             return "{id:\"minecraft:air\",count:0}";
@@ -70,10 +70,10 @@ public class ItemStackFormatter {
         return sb.toString();
     }
 
-    /**
+    /^*
      * Formatiert einen ItemStack für Container-Slot-Format.
      * Format: {item:{id:"...",count:...},slot:X}
-     */
+     ^/
     public static String formatForSlot(ItemStack stack, int slot) {
         if (stack == null || stack.isEmpty()) {
             return null; // Leere Slots werden ignoriert
@@ -276,6 +276,14 @@ public class ItemStackFormatter {
                 }
             }
 
+            // Generischer Fallback: alle weiteren (nicht explizit behandelten) Components erfassen
+            for (var component : stack.getComponents()) {
+                String key = BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(component.type()).toString();
+                if (!isExplicitlyHandled(key)) {
+                    parts.add("\"" + key + "\":" + ReflectionUnpacker.unpackWithReflection(component.value()));
+                }
+            }
+
         } catch (Exception e) {
             parts.add("\"error\":\"" + escapeString(e.getMessage()) + "\"");
         }
@@ -295,6 +303,18 @@ public class ItemStackFormatter {
         return enchantSb.toString();
     }
 
+    private static boolean isExplicitlyHandled(String key) {
+        return switch (key) {
+            case "minecraft:custom_name", "minecraft:item_name", "minecraft:damage",
+                 "minecraft:max_damage", "minecraft:enchantments", "minecraft:stored_enchantments",
+                 "minecraft:lore", "minecraft:unbreakable", "minecraft:custom_model_data",
+                 "minecraft:potion_contents", "minecraft:dyed_color", "minecraft:custom_data",
+                 "minecraft:attribute_modifiers", "minecraft:container", "minecraft:bundle_contents",
+                 "minecraft:written_book_content", "minecraft:writable_book_content" -> true;
+            default -> false;
+        };
+    }
+
     private static String escapeString(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\")
@@ -304,8 +324,8 @@ public class ItemStackFormatter {
                 .replace("\t", "\\t");
     }
 }
-//?} else {
-/*public class ItemStackFormatter {
+*///?} else {
+public class ItemStackFormatter {
 
     // Formatiert einen ItemStack im Minecraft-NBT-Stil.
     // Format: {id:"minecraft:diamond_sword",count:1,components:{...}}
@@ -552,6 +572,14 @@ public class ItemStackFormatter {
                     parts.add(bookSb.toString());
                 }
             }
+
+            // Generischer Fallback: alle weiteren (nicht explizit behandelten) Components erfassen
+            for (var component : stack.getComponents()) {
+                String key = Registries.DATA_COMPONENT_TYPE.getId(component.type()).toString();
+                if (!isExplicitlyHandled(key)) {
+                    parts.add("\"" + key + "\":" + ReflectionUnpacker.unpackWithReflection(component.value()));
+                }
+            }
             
         } catch (Exception e) {
             parts.add("\"error\":\"" + escapeString(e.getMessage()) + "\"");
@@ -559,9 +587,21 @@ public class ItemStackFormatter {
         
         return String.join(",", parts);
     }
+
+    private static boolean isExplicitlyHandled(String key) {
+        return switch (key) {
+            case "minecraft:custom_name", "minecraft:item_name", "minecraft:damage",
+                 "minecraft:max_damage", "minecraft:enchantments", "minecraft:stored_enchantments",
+                 "minecraft:lore", "minecraft:unbreakable", "minecraft:custom_model_data",
+                 "minecraft:potion_contents", "minecraft:dyed_color", "minecraft:custom_data",
+                 "minecraft:attribute_modifiers", "minecraft:container", "minecraft:bundle_contents",
+                 "minecraft:written_book_content", "minecraft:writable_book_content" -> true;
+            default -> false;
+        };
+    }
     
     private static String escapeString(String s) {
         return TextFormatter.escapeString(s);
     }
 }
-*///?}
+//?}

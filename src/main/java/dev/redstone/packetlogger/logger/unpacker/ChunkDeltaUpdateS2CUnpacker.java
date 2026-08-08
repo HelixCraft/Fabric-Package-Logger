@@ -1,10 +1,10 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
-//?} else {
-/*import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
-*///?}
+/*import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
+*///?} else {
+import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
+//?}
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
  * Zeigt alle geänderten Blöcke mit Position und BlockState.
  */
 //? if >=26.1 {
-public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ClientboundSectionBlocksUpdatePacket> {
+/*public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ClientboundSectionBlocksUpdatePacket> {
 
     @Override
     public String unpack(ClientboundSectionBlocksUpdatePacket packet) {
@@ -66,8 +66,8 @@ public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ClientboundSe
         return sb.toString();
     }
 }
-//?} else {
-/*public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ChunkDeltaUpdateS2CPacket> {
+*///?} else {
+public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ChunkDeltaUpdateS2CPacket> {
     
     @Override
     public String unpack(ChunkDeltaUpdateS2CPacket packet) {
@@ -118,4 +118,4 @@ public class ChunkDeltaUpdateS2CUnpacker implements PacketUnpacker<ClientboundSe
         return sb.toString();
     }
 }
-*///?}
+//?}

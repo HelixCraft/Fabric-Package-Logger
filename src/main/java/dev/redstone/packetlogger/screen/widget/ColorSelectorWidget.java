@@ -3,7 +3,7 @@ package dev.redstone.packetlogger.screen.widget;
 import java.util.function.Consumer;
 
 //? if >=26.1 {
-import net.minecraft.client.Minecraft;
+/*import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
@@ -12,7 +12,7 @@ import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
@@ -22,19 +22,19 @@ import net.minecraft.client.input.CharInput;
 import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 *///?} else {
-/*import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-*///?}
+//?}
 
 /**
  * Kompaktes Color-Selector-Widget: Hex-Input + Color-Box
  * Klick auf Box öffnet den Color-Editor-Dialog
  */
 //? if >=26.1 {
-public class ColorSelectorWidget extends AbstractWidget {
+/*public class ColorSelectorWidget extends AbstractWidget {
     private final EditBox hexField;
     private final Consumer<Integer> onColorChanged;
     private final Runnable onBoxClicked;
@@ -164,7 +164,7 @@ public class ColorSelectorWidget extends AbstractWidget {
     public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*public class ColorSelectorWidget extends ClickableWidget {
     private final TextFieldWidget hexField;
     private final Consumer<Integer> onColorChanged;
@@ -296,7 +296,7 @@ public class ColorSelectorWidget extends AbstractWidget {
     }
 }
 *///?} else {
-/*public class ColorSelectorWidget extends ClickableWidget {
+public class ColorSelectorWidget extends ClickableWidget {
     private final TextFieldWidget hexField;
     private final Consumer<Integer> onColorChanged;
     private final Runnable onBoxClicked;
@@ -426,4 +426,4 @@ public class ColorSelectorWidget extends AbstractWidget {
     protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
     }
 }
-*///?}
+//?}

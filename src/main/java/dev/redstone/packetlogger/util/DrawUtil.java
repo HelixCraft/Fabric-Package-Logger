@@ -1,6 +1,6 @@
 //? if >=26.1 {
 //?} else {
-/*package dev.redstone.packetlogger.util;
+package dev.redstone.packetlogger.util;
 
 import net.minecraft.client.gui.DrawContext;
 
@@ -13,4 +13,4 @@ public class DrawUtil {
         context.fill(x + width - 1, y + 1, x + width, y + height - 1, color); // Right
     }
 }
-*///?}
+//?}

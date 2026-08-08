@@ -28,6 +28,7 @@ public class ModConfig {
     public boolean deepLogging = true; // Detailliertes Logging mit NBT-Daten
     public List<String> selectedS2CPackets = new ArrayList<>();
     public List<String> selectedC2SPackets = new ArrayList<>();
+    public int loggingKeybind = -1; // GLFW keycode, -1 = kein Keybind
 
     public enum LogMode {
         CHAT("Chat"),

@@ -3,14 +3,14 @@ package dev.redstone.packetlogger.screen.widget;
 import java.util.function.Consumer;
 
 //? if >=26.1 {
-import net.minecraft.client.Minecraft;
+/*import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-//?} elif >=1.21.9 {
+*///?} elif >=1.21.9 {
 /*import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
@@ -18,12 +18,12 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 *///?} else {
-/*import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-*///?}
+//?}
 
 /**
  * Vollwertiger Color Picker mit:
@@ -35,7 +35,7 @@ import net.minecraft.util.math.MathHelper;
  * - Live-Vorschau
  */
 //? if >=26.1 {
-public class ColorPickerWidget extends AbstractWidget {
+/*public class ColorPickerWidget extends AbstractWidget {
     private final Consumer<Integer> onColorChanged;
     
     // HSV Farbmodell
@@ -398,7 +398,7 @@ public class ColorPickerWidget extends AbstractWidget {
     public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }
-//?} else if >=1.21.9 {
+*///?} else if >=1.21.9 {
 /*public class ColorPickerWidget extends ClickableWidget {
     private final Consumer<Integer> onColorChanged;
     
@@ -763,7 +763,7 @@ public class ColorPickerWidget extends AbstractWidget {
     }
 }
 *///?} else {
-/*public class ColorPickerWidget extends ClickableWidget {
+public class ColorPickerWidget extends ClickableWidget {
     private final Consumer<Integer> onColorChanged;
     
     // HSV Farbmodell
@@ -1120,4 +1120,4 @@ public class ColorPickerWidget extends AbstractWidget {
     protected void appendClickableNarrations(net.minecraft.client.gui.screen.narration.NarrationMessageBuilder builder) {
     }
 }
-*///?}
+//?}

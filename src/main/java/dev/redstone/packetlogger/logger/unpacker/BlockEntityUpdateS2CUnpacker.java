@@ -1,23 +1,23 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.nbt.CompoundTag;
+/*import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.BlockPos;
-//?} else {
-/*import net.minecraft.nbt.NbtCompound;
+*///?} else {
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.math.BlockPos;
-*///?}
+//?}
 
 /**
  * Unpacker für BlockEntityUpdateS2CPacket.
  * Zeigt Position, BlockEntity-Typ und komplettes NBT.
  */
 //? if >=26.1 {
-public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockEntityDataPacket> {
+/*public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockEntityDataPacket> {
     @Override
     public String unpack(ClientboundBlockEntityDataPacket packet) {
         StringBuilder sb = new StringBuilder();
@@ -49,8 +49,8 @@ public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<ClientboundB
         return sb.toString();
     }
 }
-//?} else {
-/*public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<BlockEntityUpdateS2CPacket> {
+*///?} else {
+public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<BlockEntityUpdateS2CPacket> {
     @Override
     public String unpack(BlockEntityUpdateS2CPacket packet) {
         StringBuilder sb = new StringBuilder();
@@ -82,4 +82,4 @@ public class BlockEntityUpdateS2CUnpacker implements PacketUnpacker<ClientboundB
         return sb.toString();
     }
 }
-*///?}
+//?}

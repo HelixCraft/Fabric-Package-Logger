@@ -1,18 +1,18 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.world.level.block.state.BlockState;
+/*import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.core.BlockPos;
-//?} else {
-/*import net.minecraft.block.BlockState;
+*///?} else {
+import net.minecraft.block.BlockState;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
-*///?}
+//?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * Zeigt Position und kompletten BlockState mit allen Properties.
  */
 //? if >=26.1 {
-public class BlockUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockUpdatePacket> {
+/*public class BlockUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockUpdatePacket> {
 
     @Override
     public String unpack(ClientboundBlockUpdatePacket packet) {
@@ -73,8 +73,8 @@ public class BlockUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockUp
         return property.getName(state.getValue(property));
     }
 }
-//?} else {
-/*public class BlockUpdateS2CUnpacker implements PacketUnpacker<BlockUpdateS2CPacket> {
+*///?} else {
+public class BlockUpdateS2CUnpacker implements PacketUnpacker<BlockUpdateS2CPacket> {
     
     @Override
     public String unpack(BlockUpdateS2CPacket packet) {
@@ -126,4 +126,4 @@ public class BlockUpdateS2CUnpacker implements PacketUnpacker<ClientboundBlockUp
         return property.name(state.get(property));
     }
 }
-*///?}
+//?}

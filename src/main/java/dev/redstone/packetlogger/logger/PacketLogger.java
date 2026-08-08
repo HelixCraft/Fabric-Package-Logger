@@ -4,7 +4,7 @@ import dev.redstone.packetlogger.config.ModConfig;
 import dev.redstone.packetlogger.logger.unpacker.*;
 import net.fabricmc.loader.api.FabricLoader;
 //? if >=26.1 {
-import net.minecraft.client.Minecraft;
+/*import net.minecraft.client.Minecraft;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.network.protocol.game.ServerboundSetCreativeModeSlotPacket;
@@ -14,8 +14,8 @@ import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-//?} else {
-/*import net.minecraft.client.MinecraftClient;
+*///?} else {
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
@@ -25,7 +25,7 @@ import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-*///?}
+//?}
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -58,7 +58,7 @@ public class PacketLogger {
     }
 
     //? if >=26.1 {
-    private static void registerUnpackers() {
+    /*private static void registerUnpackers() {
         // Inventory/Item Pakete
         registerPacket(ClientboundContainerSetContentPacket.class, "InventoryS2CPacket", new InventoryS2CUnpacker());
         registerPacket(ClientboundContainerSetSlotPacket.class, "ScreenHandlerSlotUpdateS2CPacket", new SlotUpdateS2CUnpacker());
@@ -253,8 +253,8 @@ public class PacketLogger {
         registerPacketName(ServerboundPickItemFromBlockPacket.class, "PickFromInventoryC2SPacket");
         registerPacketName(ServerboundPickItemFromEntityPacket.class, "PickFromInventoryC2SPacket");
     }
-    //?} else {
-    /*private static void registerUnpackers() {
+    *///?} else {
+    private static void registerUnpackers() {
         // Inventory/Item Pakete
         registerPacket(InventoryS2CPacket.class, "InventoryS2CPacket", new InventoryS2CUnpacker());
         registerPacket(ScreenHandlerSlotUpdateS2CPacket.class, "ScreenHandlerSlotUpdateS2CPacket", new SlotUpdateS2CUnpacker());
@@ -295,7 +295,7 @@ public class PacketLogger {
         registerPacketName(PlaySoundS2CPacket.class, "PlaySoundS2CPacket");
         registerPacketName(WorldTimeUpdateS2CPacket.class, "WorldTimeUpdateS2CPacket");
     }
-    *///?}
+    //?}
 
     private static <T extends Packet<?>> void registerPacket(Class<T> clazz, String name, PacketUnpacker<T> unpacker) {
         PACKET_NAMES.put(clazz, name);
@@ -333,7 +333,7 @@ public class PacketLogger {
 
     public static void logIncoming(Packet<?> packet) {
         //? if >=26.1 {
-        // BundleS2CPacket ist ein Container: der Server packt Spawn/Metadata/SetPassengers/Teleport
+        /*// BundleS2CPacket ist ein Container: der Server packt Spawn/Metadata/SetPassengers/Teleport
         // haeufig hier hinein. Er kommt als EIN Objekt durch channelRead0 - ohne Entpacken bleiben
         // alle inneren Pakete (u.a. EntityPassengersSetS2CPacket) unsichtbar. Also rekursiv entpacken.
         if (packet instanceof ClientboundBundlePacket bundle) {
@@ -342,7 +342,7 @@ public class PacketLogger {
             }
             return;
         }
-        //?}
+        *///?}
         logPacket(packet, true);
     }
 
@@ -381,11 +381,24 @@ public class PacketLogger {
     }
 
     private static String getDeobfuscatedName(Packet<?> packet) {
-        Class<?> clazz = packet.getClass();
+        return getPacketName(packet.getClass());
+    }
+
+    /**
+     * Ermittelt den Anzeige-/Filter-Namen eines Paket-Typs. Innere Klassen
+     * (z.B. {@code PlayerMoveC2SPacket.PositionAndOnGround}) werden auf den
+     * Namen der umschließenden Klasse reduziert, damit Untervarianten eines
+     * Pakets unter einer gemeinsamen Auswahl zusammengefasst werden.
+     */
+    public static String getPacketName(Class<?> clazz) {
         String mappedName = PACKET_NAMES.get(clazz);
         if (mappedName != null) return mappedName;
 
-        String simpleName = clazz.getSimpleName();
+        Class<?> outer = clazz;
+        while (outer.getEnclosingClass() != null) {
+            outer = outer.getEnclosingClass();
+        }
+        String simpleName = outer.getSimpleName();
         if (simpleName.contains("Packet")) return simpleName;
         return simpleName;
     }
@@ -419,7 +432,7 @@ public class PacketLogger {
 
     private static void logToChat(String timestamp, String direction, String packetName, String packetData, boolean incoming) {
         //? if >=26.1 {
-        Minecraft client = Minecraft.getInstance();
+        /*Minecraft client = Minecraft.getInstance();
         if (client.player == null) return;
 
         MutableComponent timeText = Component.literal("[" + timestamp + "] ").withStyle(ChatFormatting.GRAY);
@@ -430,8 +443,8 @@ public class PacketLogger {
 
         MutableComponent fullMessage = Component.empty().append(timeText).append(dirText).append(nameText).append(dataText);
         client.player.sendSystemMessage(fullMessage);
-        //?} else {
-        /*MinecraftClient client = MinecraftClient.getInstance();
+        *///?} else {
+        MinecraftClient client = MinecraftClient.getInstance();
         if (client.inGameHud == null || client.inGameHud.getChatHud() == null) return;
 
         MutableText timeText = Text.literal("[" + timestamp + "] ").formatted(Formatting.GRAY);
@@ -442,7 +455,7 @@ public class PacketLogger {
 
         MutableText fullMessage = Text.empty().append(timeText).append(dirText).append(nameText).append(dataText);
         client.inGameHud.getChatHud().addMessage(fullMessage);
-        *///?}
+        //?}
     }
 
     private static void logToFile(String timestamp, String direction, String packetName, String packetData) {
@@ -462,8 +475,8 @@ public class PacketLogger {
     private static Path getLogFile() throws IOException {
         if (currentSessionId == null || currentLogFile == null) {
             currentSessionId = LocalDateTime.now().format(FILE_DATE_FORMAT);
-            Path configDir = FabricLoader.getInstance().getConfigDir();
-            Path logDir = configDir.resolve("packet-logger");
+            Path gameDir = FabricLoader.getInstance().getGameDir();
+            Path logDir = gameDir.resolve("packet-logger");
             Files.createDirectories(logDir);
 
             String worldName = getWorldName();
@@ -474,6 +487,7 @@ public class PacketLogger {
                 writer.println("=== Deep Packet Logger ===");
                 writer.println("Session: " + currentSessionId);
                 writer.println("World: " + worldName);
+                writer.println(getClientInfoLine());
                 writer.println("Format: [TIME] [DIRECTION] PacketName {deep_data}");
                 writer.println("==========================================");
                 writer.println();
@@ -486,7 +500,7 @@ public class PacketLogger {
     private static String getWorldName() {
         try {
             //? if >=26.1 {
-            Minecraft client = Minecraft.getInstance();
+            /*Minecraft client = Minecraft.getInstance();
             if (client != null) {
                 if (client.getCurrentServer() != null) {
                     return sanitizeFileName(client.getCurrentServer().ip);
@@ -495,8 +509,8 @@ public class PacketLogger {
                     return sanitizeFileName(client.getSingleplayerServer().getWorldData().getLevelName());
                 }
             }
-            //?} else {
-            /*MinecraftClient client = MinecraftClient.getInstance();
+            *///?} else {
+            MinecraftClient client = MinecraftClient.getInstance();
             if (client != null) {
                 if (client.getCurrentServerEntry() != null) {
                     return sanitizeFileName(client.getCurrentServerEntry().address);
@@ -505,9 +519,21 @@ public class PacketLogger {
                     return sanitizeFileName(client.getServer().getSaveProperties().getLevelName());
                 }
             }
-            *///?}
+            //?}
         } catch (Exception e) { }
         return "unknown";
+    }
+
+    private static String getClientInfoLine() {
+        try {
+            String gameVersion = FabricLoader.getInstance().getRawGameVersion();
+            String loaderVersion = FabricLoader.getInstance()
+                    .getModContainer("fabricloader").map(c -> c.getMetadata().getVersion().getFriendlyString())
+                    .orElse("unknown");
+            return "Client: Minecraft " + gameVersion + " (Fabric Loader " + loaderVersion + ")";
+        } catch (Exception e) {
+            return "Client: unknown";
+        }
     }
 
     private static String sanitizeFileName(String name) {

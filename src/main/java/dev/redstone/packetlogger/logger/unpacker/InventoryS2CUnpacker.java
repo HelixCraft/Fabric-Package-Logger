@@ -1,21 +1,21 @@
 package dev.redstone.packetlogger.logger.unpacker;
 
 //? if >=26.1 {
-import net.minecraft.client.Minecraft;
+/*import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.core.registries.BuiltInRegistries;
-//?} else {
-/*import net.minecraft.client.MinecraftClient;
+*///?} else {
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.InventoryS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.registry.Registries;
-*///?}
+//?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
  * {components:{"minecraft:container":[{item:{...},slot:X}]},id:"minecraft:generic_9x3"}
  */
 //? if >=26.1 {
-public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainerSetContentPacket> {
+/*public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainerSetContentPacket> {
 
     @Override
     public String unpack(ClientboundContainerSetContentPacket packet) {
@@ -72,9 +72,9 @@ public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainer
         return sb.toString();
     }
 
-    /**
+    /^*
      * Versucht den Screen-Typ aus der SyncId zu ermitteln.
-     */
+     ^/
     private String getScreenType(int syncId) {
         try {
             Minecraft client = Minecraft.getInstance();
@@ -93,7 +93,7 @@ public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainer
         return null;
     }
 }
-//?} elif >=1.21.5 {
+*///?} elif >=1.21.5 {
 /*public class InventoryS2CUnpacker implements PacketUnpacker<InventoryS2CPacket> {
 
     @Override
@@ -160,7 +160,7 @@ public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainer
     }
 }
 *///?} else {
-/*public class InventoryS2CUnpacker implements PacketUnpacker<InventoryS2CPacket> {
+public class InventoryS2CUnpacker implements PacketUnpacker<InventoryS2CPacket> {
 
     @Override
     public String unpack(InventoryS2CPacket packet) {
@@ -225,4 +225,4 @@ public class InventoryS2CUnpacker implements PacketUnpacker<ClientboundContainer
         return null;
     }
 }
-*///?}
+//?}
