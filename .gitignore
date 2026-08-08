@@ -38,3 +38,4 @@ replay_*.log
 
 backup/
 DEVNODE/
+.opencode/
