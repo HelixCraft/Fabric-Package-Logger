@@ -92,13 +92,13 @@ import net.minecraft.util.math.MathHelper;
         currentY += SV_SIZE + SPACING;
         
         // 2. Hue Slider
-        context.text(client.font, "Hue", getX(), currentY, 0xFFFFFF, false);
+        context.text(client.font, "Hue", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderHueSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
         
         // 3. Alpha Slider
-        context.text(client.font, "Alpha", getX(), currentY, 0xFFFFFF, false);
+        context.text(client.font, "Alpha", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderAlphaSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
@@ -173,7 +173,7 @@ import net.minecraft.util.math.MathHelper;
         
         for (int i = 0; i < 3; i++) {
             int currentY = y + i * (SLIDER_HEIGHT + 10);
-            context.text(client.font, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFF, false);
+            context.text(client.font, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFFFF, false);
             currentY += 10;
             
             // Gradient
@@ -209,7 +209,7 @@ import net.minecraft.util.math.MathHelper;
         
         // Hex
         String hex = String.format("#%08X", getARGB());
-        context.text(client.font, hex, x, y + 6, 0xFFFFFF, false);
+        context.text(client.font, hex, x, y + 6, 0xFFFFFFFF, false);
     }
     
     @Override
@@ -456,13 +456,13 @@ import net.minecraft.util.math.MathHelper;
         currentY += SV_SIZE + SPACING;
         
         // 2. Hue Slider
-        context.drawText(client.textRenderer, "Hue", getX(), currentY, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, "Hue", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderHueSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
         
         // 3. Alpha Slider
-        context.drawText(client.textRenderer, "Alpha", getX(), currentY, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, "Alpha", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderAlphaSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
@@ -537,7 +537,7 @@ import net.minecraft.util.math.MathHelper;
         
         for (int i = 0; i < 3; i++) {
             int currentY = y + i * (SLIDER_HEIGHT + 10);
-            context.drawText(client.textRenderer, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFF, false);
+            context.drawText(client.textRenderer, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFFFF, false);
             currentY += 10;
             
             // Gradient
@@ -573,7 +573,7 @@ import net.minecraft.util.math.MathHelper;
         
         // Hex
         String hex = String.format("#%08X", getARGB());
-        context.drawText(client.textRenderer, hex, x, y + 6, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, hex, x, y + 6, 0xFFFFFFFF, false);
     }
     
     @Override
@@ -820,13 +820,13 @@ public class ColorPickerWidget extends ClickableWidget {
         currentY += SV_SIZE + SPACING;
         
         // 2. Hue Slider
-        context.drawText(client.textRenderer, "Hue", getX(), currentY, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, "Hue", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderHueSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
         
         // 3. Alpha Slider
-        context.drawText(client.textRenderer, "Alpha", getX(), currentY, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, "Alpha", getX(), currentY, 0xFFFFFFFF, false);
         currentY += 10;
         renderAlphaSlider(context, getX(), currentY);
         currentY += SLIDER_HEIGHT + SPACING;
@@ -901,7 +901,7 @@ public class ColorPickerWidget extends ClickableWidget {
         
         for (int i = 0; i < 3; i++) {
             int currentY = y + i * (SLIDER_HEIGHT + 10);
-            context.drawText(client.textRenderer, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFF, false);
+            context.drawText(client.textRenderer, labels[i] + ": " + rgb[i], x, currentY, 0xFFFFFFFF, false);
             currentY += 10;
             
             // Gradient
@@ -937,7 +937,7 @@ public class ColorPickerWidget extends ClickableWidget {
         
         // Hex
         String hex = String.format("#%08X", getARGB());
-        context.drawText(client.textRenderer, hex, x, y + 6, 0xFFFFFF, false);
+        context.drawText(client.textRenderer, hex, x, y + 6, 0xFFFFFFFF, false);
     }
     
     @Override
