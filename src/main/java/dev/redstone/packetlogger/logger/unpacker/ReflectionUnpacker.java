@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class ReflectionUnpacker {
     
-    private static final int MAX_DEPTH = 5;
+    private static final int MAX_DEPTH = 12;
     private static final int MAX_COLLECTION_SIZE = 100;
     
     public static String unpackWithReflection(Object obj) {
