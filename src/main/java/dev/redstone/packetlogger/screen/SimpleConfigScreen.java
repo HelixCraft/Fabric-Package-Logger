@@ -178,7 +178,7 @@ import java.util.Set;
         
         super.extractRenderState(graphics, mouseX, mouseY, delta);
         
-        graphics.centeredText(this.font, this.title, this.width / 2, 8, 0xFFFFFF);
+        graphics.centeredText(this.font, this.title, this.width / 2, 8, 0xFFFFFFFF);
     }
     
     private void persistToConfig() {
@@ -400,7 +400,7 @@ import java.util.Set;
         
         super.render(context, mouseX, mouseY, delta);
         
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFFFF);
     }
     
     private void persistToConfig() {
@@ -619,7 +619,7 @@ public class SimpleConfigScreen extends Screen {
         
         super.render(context, mouseX, mouseY, delta);
         
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFFFF);
     }
     
     private void persistToConfig() {

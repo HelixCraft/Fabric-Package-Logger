@@ -11,6 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /*import io.netty.channel.ChannelFutureListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
+*///?} elif >=1.21.6 {
+/*import io.netty.channel.ChannelFutureListener;
+import net.minecraft.network.ClientConnection;
+import net.minecraft.network.packet.Packet;
 *///?} else {
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.PacketCallbacks;
@@ -100,6 +104,20 @@ public class ClientConnectionMixin {
     }
 
     // Intercept alle ausgehenden Pakete (Client -> Server)
+    //? if >=1.21.6 {
+    /*@Inject(
+        method = "send(Lnet/minecraft/network/packet/Packet;Lio/netty/channel/ChannelFutureListener;Z)V",
+        at = @At("HEAD")
+    )
+    private void onSendPacket(Packet<?> packet, ChannelFutureListener listener, boolean flush, CallbackInfo ci) {
+        try {
+            // Alle ausgehenden Pakete sind C2S
+            PacketLogger.logOutgoing(packet);
+        } catch (Exception e) {
+            System.err.println("[PacketLogger] Error in onSendPacket: " + e.getMessage());
+        }
+    }
+    *///?} else {
     @Inject(
         method = "send(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/PacketCallbacks;)V",
         at = @At("HEAD")
@@ -112,5 +130,6 @@ public class ClientConnectionMixin {
             System.err.println("[PacketLogger] Error in onSendPacket: " + e.getMessage());
         }
     }
+    //?}
 }
 //?}

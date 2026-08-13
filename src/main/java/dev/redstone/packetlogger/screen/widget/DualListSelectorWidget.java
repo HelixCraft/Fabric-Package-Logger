@@ -153,7 +153,7 @@ import java.util.function.Consumer;
         graphics.outline(x, y, width, height, 0xFF3A3A3A);
         
         // Titel
-        graphics.text(textRenderer, title, x + PADDING, y + 2, 0xFFFFFF, false);
+        graphics.text(textRenderer, title, x + PADDING, y + 2, 0xFFFFFFFF, false);
         
         // Suchfeld
         searchField.extractRenderState(graphics, mouseX, mouseY, delta);
@@ -182,7 +182,7 @@ import java.util.function.Consumer;
         graphics.outline(px, py, pw, ph, 0xFF4A4A4A);
         
         // Label
-        graphics.text(textRenderer, label, px + 2, py - 10, 0xAAAAAA, false);
+        graphics.text(textRenderer, label, px + 2, py - 10, 0xFFAAAAAA, false);
         
         // Items
         int itemY = py + 2;
@@ -207,7 +207,7 @@ import java.util.function.Consumer;
             
             // Packet Name (gekürzt) - zentriert vertikal
             String displayText = getShortPacketName(pkt, pw - 18);
-            graphics.text(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xDDDDDD, false);
+            graphics.text(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xFFDDDDDD, false);
         }
         
         // Scrollbar
@@ -510,7 +510,7 @@ import java.util.function.Consumer;
         context.drawStrokedRectangle(x, y, width, height, 0xFF3A3A3A);
         
         // Titel
-        context.drawText(textRenderer, title, x + PADDING, y + 2, 0xFFFFFF, false);
+        context.drawText(textRenderer, title, x + PADDING, y + 2, 0xFFFFFFFF, false);
         
         // Suchfeld
         searchField.render(context, mouseX, mouseY, delta);
@@ -539,7 +539,7 @@ import java.util.function.Consumer;
         context.drawStrokedRectangle(px, py, pw, ph, 0xFF4A4A4A);
         
         // Label
-        context.drawText(textRenderer, label, px + 2, py - 10, 0xAAAAAA, false);
+        context.drawText(textRenderer, label, px + 2, py - 10, 0xFFAAAAAA, false);
         
         // Items
         int itemY = py + 2;
@@ -564,7 +564,7 @@ import java.util.function.Consumer;
             
             // Packet Name (gekürzt) - zentriert vertikal
             String displayText = getShortPacketName(pkt, pw - 18);
-            context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xDDDDDD, false);
+            context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xFFDDDDDD, false);
         }
         
         // Scrollbar
@@ -872,7 +872,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         context.drawBorder(x, y, width, height, 0xFF3A3A3A);
         
         // Titel
-        context.drawText(textRenderer, title, x + PADDING, y + 2, 0xFFFFFF, false);
+        context.drawText(textRenderer, title, x + PADDING, y + 2, 0xFFFFFFFF, false);
         
         // Suchfeld
         searchField.render(context, mouseX, mouseY, delta);
@@ -901,7 +901,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
         context.drawBorder(px, py, pw, ph, 0xFF4A4A4A);
         
         // Label
-        context.drawText(textRenderer, label, px + 2, py - 10, 0xAAAAAA, false);
+        context.drawText(textRenderer, label, px + 2, py - 10, 0xFFAAAAAA, false);
         
         // Items
         int itemY = py + 2;
@@ -926,7 +926,7 @@ public class DualListSelectorWidget implements Drawable, Element, Selectable {
             
             // Packet Name (gekürzt) - zentriert vertikal
             String displayText = getShortPacketName(pkt, pw - 18);
-            context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xDDDDDD, false);
+            context.drawText(textRenderer, displayText, px + 14, currentItemY + textYOffset, 0xFFDDDDDD, false);
         }
         
         // Scrollbar

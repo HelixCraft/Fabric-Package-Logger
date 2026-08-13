@@ -773,7 +773,7 @@ import java.util.function.Consumer;
         this.renderBackground(context, mouseX, mouseY, delta);
         context.fill(dialogX, dialogY, dialogX + dialogWidth, dialogY + dialogHeight, 0xFF000000);
         context.drawStrokedRectangle(dialogX, dialogY, dialogWidth, dialogHeight, 0xFFFFFFFF);
-        context.drawText(this.textRenderer, "", dialogX + PADDING, dialogY + PADDING, 0xFFFFFF, false);
+        context.drawText(this.textRenderer, "", dialogX + PADDING, dialogY + PADDING, 0xFFFFFFFF, false);
         int startX = dialogX + PADDING;
         int startY = dialogY + 30;
         renderSVPicker(context, startX, startY);
@@ -827,7 +827,7 @@ import java.util.function.Consumer;
         vals[2] = rgb[0]/255f; vals[3] = rgb[1]/255f; vals[4] = rgb[2]/255f;
         for (int i = 0; i < 6; i++) {
             int cy = y + i * 20;
-            context.drawText(this.textRenderer, labels[i], x, cy + 2, 0xFFFFFF, false);
+            context.drawText(this.textRenderer, labels[i], x, cy + 2, 0xFFFFFFFF, false);
             int barX = x + 15;
             int sliderType = i + 1;
             drawSliderTrack(context, barX, cy, sliderType);
@@ -1201,7 +1201,7 @@ public class ColorEditorScreen extends Screen {
         this.renderBackground(context, mouseX, mouseY, delta);
         context.fill(dialogX, dialogY, dialogX + dialogWidth, dialogY + dialogHeight, 0xFF000000);
         context.drawBorder(dialogX, dialogY, dialogWidth, dialogHeight, 0xFFFFFFFF);
-        context.drawText(this.textRenderer, "", dialogX + PADDING, dialogY + PADDING, 0xFFFFFF, false);
+        context.drawText(this.textRenderer, "", dialogX + PADDING, dialogY + PADDING, 0xFFFFFFFF, false);
         int startX = dialogX + PADDING;
         int startY = dialogY + 30;
         renderSVPicker(context, startX, startY);
@@ -1255,7 +1255,7 @@ public class ColorEditorScreen extends Screen {
         vals[2] = rgb[0]/255f; vals[3] = rgb[1]/255f; vals[4] = rgb[2]/255f;
         for (int i = 0; i < 6; i++) {
             int cy = y + i * 20;
-            context.drawText(this.textRenderer, labels[i], x, cy + 2, 0xFFFFFF, false);
+            context.drawText(this.textRenderer, labels[i], x, cy + 2, 0xFFFFFFFF, false);
             int barX = x + 15;
             int sliderType = i + 1;
             drawSliderTrack(context, barX, cy, sliderType);
